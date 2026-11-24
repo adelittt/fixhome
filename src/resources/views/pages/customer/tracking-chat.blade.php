@@ -80,7 +80,7 @@
                     <div class="absolute top-4 left-4 z-20 bg-surface/95 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-xs font-bold">
                         <span id="gps-pulse-dot" class="w-2.5 h-2.5 rounded-full {{ in_array($booking->status_order, ['otw', 'working']) ? 'bg-secondary animate-ping' : 'bg-tertiary' }}"></span>
                         <span id="gps-status-text" class="text-primary">
-                            {{ $booking->status_order === 'paid' ? 'Menunggu Keberangkatan Teknisi' : 'Pelacakan Live GPS (BR-06)' }}
+                            {{ $booking->status_order === 'paid' ? 'Menunggu Keberangkatan Teknisi' : 'Pelacakan Live GPS' }}
                         </span>
                     </div>
 
@@ -184,7 +184,7 @@
                             </div>
                         </div>
                         <span class="px-3 py-1 bg-secondary-container text-primary rounded-full text-[10px] font-bold">
-                            BR-03 Aktif
+                            Chat Aktif
                         </span>
                     </div>
 
@@ -192,7 +192,7 @@
                     <div id="chat-messages" class="chat-scroll flex-1 min-h-0 overflow-y-auto p-4 space-y-3 text-xs bg-surface-container-low/60">
                         <div class="text-center my-2">
                             <span class="px-3.5 py-1 bg-secondary-container/80 text-primary rounded-full text-[10px] font-semibold">
-                                🔒 Kanal Chat Dua Arah Aktif (BR-03)
+                                Kanal Chat Dua Arah Aktif
                             </span>
                         </div>
 

@@ -50,11 +50,11 @@
                     <div class="space-y-3 relative z-10">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold uppercase tracking-wider text-tertiary-fixed">Total Saldo Bersih (95% Mitra)</span>
-                            <span class="text-[10px] bg-surface/20 px-2.5 py-0.5 rounded-full font-bold">BR-04</span>
+                            <span class="text-[10px] bg-surface/20 px-2.5 py-0.5 rounded-full font-bold">95% / 5%</span>
                         </div>
                         <h2 id="total-pendapatan-val" class="font-headline-lg text-3xl font-bold tracking-tight font-butler">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</h2>
                         <p class="text-[11px] text-inverse-on-surface/80 pt-2 border-t border-inverse-on-surface/15 leading-relaxed">
-                            Sistem memotong 5% komisi admin secara otomatis di setiap pembayaran (BR-04, BR-12).
+                            Sistem memotong 5% komisi platform secara otomatis di setiap pembayaran.
                         </p>
                     </div>
                     <a href="{{ route('teknisi.wallet') }}" class="relative z-10 mt-2 inline-flex items-center justify-between px-4 py-2.5 bg-surface/15 hover:bg-surface/25 rounded-full text-xs font-bold text-on-primary transition-all">
@@ -65,7 +65,7 @@
 
                 <!-- Card 2: Status Kerja -->
                 <div class="neu-card p-6 space-y-3">
-                    <span class="text-xs font-bold text-outline uppercase tracking-wider block">Ketersediaan di Aplikasi (BR-07)</span>
+                    <span class="text-xs font-bold text-outline uppercase tracking-wider block">Ketersediaan di Aplikasi</span>
                     <div class="flex items-center gap-2.5">
                         <span id="card-status-dot" class="w-3.5 h-3.5 rounded-full {{ $teknisi->isReady() ? 'bg-secondary' : 'bg-outline-variant' }}"></span>
                         <h3 id="card-status-title" class="font-headline-sm text-primary font-bold font-butler">
@@ -74,9 +74,9 @@
                     </div>
                     <p id="card-status-desc" class="text-xs text-on-surface-variant leading-relaxed">
                         @if($teknisi->isReady())
-                            Profil Anda aktif di hasil pencarian terdekat customer (BR-02).
+                            Profil Anda aktif di hasil pencarian terdekat customer.
                         @else
-                            Profil Anda disembunyikan dan koordinat GPS dimatikan (BR-08).
+                            Profil Anda disembunyikan dan koordinat GPS dimatikan.
                         @endif
                     </p>
                 </div>
@@ -84,7 +84,7 @@
                 <!-- Card 3: Kebijakan 5 Bulan -->
                 <div class="neu-card p-6 space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-outline uppercase tracking-wider block">Kebijakan Inaktif (BR-09)</span>
+                        <span class="text-xs font-bold text-outline uppercase tracking-wider block">Kebijakan Inaktif</span>
                         <button type="button" onclick="openPolicyModal()" class="text-xs font-bold text-secondary hover:text-primary transition-colors">Info Jadwal</button>
                     </div>
                     <div class="flex items-center justify-between">
@@ -193,7 +193,7 @@
         <div id="policy-modal" class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
             <div class="neu-card-lg max-w-lg w-full p-6 space-y-5">
                 <div class="flex items-center justify-between pb-3 border-b border-outline-variant/40">
-                    <h3 class="font-headline-sm text-primary font-bold font-recoleta">Kebijakan Inaktif 5 Bulan (BR-09 &amp; BR-10)</h3>
+                    <h3 class="font-headline-sm text-primary font-bold font-recoleta">Kebijakan Inaktif 5 Bulan</h3>
                     <button type="button" onclick="closePolicyModal()" class="w-8 h-8 rounded-full neu-btn-secondary text-primary text-lg">&times;</button>
                 </div>
 

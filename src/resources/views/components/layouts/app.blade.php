@@ -6,10 +6,12 @@
     <link href="{{ asset('images/fixhome-icon.png') }}" rel="icon" type="image/png" />
     <title>{{ $title ?? 'FixHome' }} — Solusi Perbaikan Rumah Bergaransi</title>
 
-    <!-- Google Fonts matching FixHome Landing Page -->
+    <!-- Fonts matching FixHome Landing Page -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/recoleta" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/butler" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
 
     <!-- Compiled FixHome Tailwind CSS (No CDN) -->
@@ -27,8 +29,8 @@
         <div class="absolute -top-16 -right-16 w-80 h-80 rounded-full bg-tertiary-fixed/25 blur-3xl"></div>
     </div>
 
-    <!-- DESKTOP TOP NAVBAR -->
-    <header class="hidden lg:block sticky top-0 z-50 bg-surface/90 backdrop-blur-md px-gutter lg:px-margin">
+    <!-- DESKTOP TOP NAVBAR (Harmonized with Landing Page) -->
+    <header class="hidden lg:block sticky top-0 z-50 bg-surface/90 backdrop-blur-md px-gutter lg:px-margin border-b border-white/60">
         <div class="max-w-[1280px] mx-auto h-20 flex items-center justify-between gap-gutter">
 
             <!-- Brand Logo -->
@@ -40,31 +42,31 @@
             <nav class="flex items-center gap-space-lg">
                 @auth
                     @if(Auth::user()->role === 'teknisi')
-                        <a href="{{ route('teknisi.dashboard') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('teknisi.dashboard') ? 'text-primary-container font-bold' : 'text-on-surface-variant hover:text-primary' }}">
+                        <a href="{{ route('teknisi.dashboard') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('teknisi.dashboard') ? 'text-primary-container font-semibold' : 'text-on-surface-variant hover:text-primary' }}">
                             Dashboard Teknisi
                         </a>
-                        <a href="{{ route('teknisi.wallet') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('teknisi.wallet') ? 'text-primary-container font-bold' : 'text-on-surface-variant hover:text-primary' }}">
-                            Dompet Pendapatan (95%)
+                        <a href="{{ route('teknisi.wallet') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('teknisi.wallet') ? 'text-primary-container font-semibold' : 'text-on-surface-variant hover:text-primary' }}">
+                            Dompet Pendapatan
                         </a>
                     @else
-                        <a href="{{ route('customer.home') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.home') ? 'text-primary-container font-bold' : 'text-on-surface-variant hover:text-primary' }}">
+                        <a href="{{ route('customer.home') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.home') ? 'text-primary-container font-semibold' : 'text-on-surface-variant hover:text-primary' }}">
                             Beranda
                         </a>
-                        <a href="{{ route('customer.technicians') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.technicians*') ? 'text-primary-container font-bold' : 'text-on-surface-variant hover:text-primary' }}">
+                        <a href="{{ route('customer.technicians') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.technicians*') ? 'text-primary-container font-semibold' : 'text-on-surface-variant hover:text-primary' }}">
                             Cari Teknisi
                         </a>
-                        <a href="{{ route('customer.orders') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.orders') ? 'text-primary-container font-bold' : 'text-on-surface-variant hover:text-primary' }}">
+                        <a href="{{ route('customer.orders') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.orders') ? 'text-primary-container font-semibold' : 'text-on-surface-variant hover:text-primary' }}">
                             Pesanan Saya
                         </a>
-                        <a href="{{ route('customer.profile') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.profile') ? 'text-primary-container font-bold' : 'text-on-surface-variant hover:text-primary' }}">
+                        <a href="{{ route('customer.profile') }}" class="font-body-md text-body-md py-space-xs px-space-sm transition-colors {{ request()->routeIs('customer.profile') ? 'text-primary-container font-semibold' : 'text-on-surface-variant hover:text-primary' }}">
                             Profil
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('splash') }}" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors py-space-xs px-space-sm">Beranda</a>
-                    <a href="{{ route('splash') }}#layanan" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors py-space-xs px-space-sm">Layanan</a>
+                    <a href="{{ route('splash') }}#top" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors py-space-xs px-space-sm">Beranda</a>
+                    <a href="{{ route('splash') }}#layanan-populer" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors py-space-xs px-space-sm">Layanan</a>
                     <a href="{{ route('splash') }}#cara-kerja" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors py-space-xs px-space-sm">Cara Kerja</a>
-                    <a href="{{ route('splash') }}#keunggulan" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors py-space-xs px-space-sm">Keunggulan</a>
+                    <a href="{{ route('splash') }}#tentang-kami" class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors py-space-xs px-space-sm">Tentang Kami</a>
                 @endauth
             </nav>
 
@@ -143,7 +145,7 @@
 
     </div>
 
-    <!-- DESKTOP FOOTER (Matching Landing Page) -->
+    <!-- DESKTOP FOOTER (Clean, matching Landing Page) -->
     <footer class="hidden lg:block w-full bg-primary-container text-inverse-on-surface pt-space-xl pb-space-lg mt-space-xl relative z-10">
         <div class="max-w-[1280px] mx-auto px-gutter lg:px-margin">
             <div class="grid grid-cols-4 gap-gutter mb-space-xl">
@@ -152,7 +154,7 @@
                         <img alt="FixHome" class="h-7 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                     </div>
                     <p class="font-body-sm text-body-sm text-inverse-on-surface/80 leading-relaxed">
-                        Platform booking jasa perbaikan rumah berbasis radius geospasial terdekat dengan skema bagi hasil transparan: 95% teknisi &amp; 5% operasional platform.
+                        Platform booking jasa perbaikan rumah terdekat dengan tarif terbuka, live chat, dan garansi resmi 14 hari.
                     </p>
                 </div>
 
@@ -165,34 +167,29 @@
                 </div>
 
                 <div class="flex flex-col gap-space-sm">
-                    <h4 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Garansi &amp; Mutu</h4>
-                    <span class="font-body-sm text-body-sm text-inverse-on-surface/80"><strong class="text-tertiary-fixed">BR-01:</strong> Wajib Pin Alamat Utama</span>
-                    <span class="font-body-sm text-body-sm text-inverse-on-surface/80"><strong class="text-tertiary-fixed">BR-02:</strong> Filter Radius Teknisi Ready</span>
-                    <span class="font-body-sm text-body-sm text-inverse-on-surface/80"><strong class="text-tertiary-fixed">BR-03:</strong> Chat Terbuka Pasca Bayar</span>
-                    <span class="font-body-sm text-body-sm text-inverse-on-surface/80"><strong class="text-tertiary-fixed">BR-04:</strong> Bagi Hasil 95% / 5% Otomatis</span>
+                    <h4 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Navigasi</h4>
+                    <a href="{{ route('splash') }}#top" class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors">Beranda</a>
+                    <a href="{{ route('splash') }}#cara-kerja" class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors">Cara Pemesanan</a>
+                    <a href="{{ route('splash') }}#transparansi" class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors">Garansi &amp; Transparansi</a>
+                    <a href="{{ route('splash') }}#tentang-kami" class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors">Tentang Kami</a>
                 </div>
 
                 <div class="flex flex-col gap-space-sm">
-                    <h4 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Akses Cepat Demo</h4>
-                    <div class="flex flex-col gap-2">
-                        <a href="{{ route('quick-login', 'customer@fixhome.com') }}" class="px-3.5 py-2 bg-surface/15 hover:bg-surface/25 text-inverse-on-surface rounded-full text-xs font-semibold transition-colors flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[15px] text-tertiary-fixed">person</span>
-                            <span>Masuk Sebagai Customer</span>
-                        </a>
-                        <a href="{{ route('quick-login', 'budi.teknisi@fixhome.com') }}" class="px-3.5 py-2 bg-surface/15 hover:bg-surface/25 text-inverse-on-surface rounded-full text-xs font-semibold transition-colors flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[15px] text-tertiary-fixed">engineering</span>
-                            <span>Masuk Sebagai Teknisi</span>
-                        </a>
-                        <a href="{{ route('quick-login', 'admin@fixhome.com') }}" class="px-3.5 py-2 bg-surface/15 hover:bg-surface/25 text-inverse-on-surface rounded-full text-xs font-semibold transition-colors flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[15px] text-tertiary-fixed">admin_panel_settings</span>
-                            <span>Admin Panel (Filament)</span>
-                        </a>
-                    </div>
+                    <h4 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Kontak &amp; Bantuan</h4>
+                    <a href="{{ route('splash') }}#cara-kerja" class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors flex items-center gap-space-xs">
+                        <span class="material-symbols-outlined text-[16px]">chat</span>
+                        <span>Live Chat di Aplikasi</span>
+                    </a>
+                    <a href="{{ route('splash') }}#transparansi" class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors flex items-center gap-space-xs">
+                        <span class="material-symbols-outlined text-[16px]">support_agent</span>
+                        <span>Bantuan 24/7</span>
+                    </a>
+                    <span class="font-body-sm text-body-sm text-tertiary-fixed/85 mt-1">Wilayah operasional: Jabodetabek</span>
                 </div>
             </div>
 
             <div class="pt-space-lg flex items-center justify-between text-inverse-on-surface/75 border-t border-inverse-on-surface/15">
-                <p class="font-body-sm text-body-sm">&copy; 2025 FixHome Indonesia. Layanan Booking Jasa Perbaikan Rumah Bergaransi.</p>
+                <p class="font-body-sm text-body-sm">&copy; {{ date('Y') }} FixHome Indonesia. Solusi Perbaikan Rumah Terpercaya.</p>
                 <div class="flex items-center gap-space-sm font-label-sm text-label-sm text-tertiary-fixed">
                     <span class="material-symbols-outlined text-[16px]">verified</span>
                     <span>Garansi Resmi &amp; Teknisi Terverifikasi</span>
@@ -200,20 +197,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Quick Demo Switcher Bar (Harmonized Warm Espresso Theme) -->
-    <div class="w-full bg-primary text-inverse-on-surface py-2.5 px-4 text-xs flex flex-wrap items-center justify-between gap-2 z-40 border-t border-inverse-on-surface/10 relative">
-        <span class="text-on-primary-container font-medium flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[15px] text-tertiary-fixed">bolt</span>
-            <span>Beralih Cepat (Quick Demo):</span>
-        </span>
-        <div class="flex flex-wrap items-center gap-2">
-            <a href="{{ route('quick-login', 'customer@fixhome.com') }}" class="px-3 py-1 bg-secondary-container text-on-secondary-fixed hover:opacity-90 rounded-full text-[11px] font-bold transition-all">Customer</a>
-            <a href="{{ route('quick-login', 'baru@fixhome.com') }}" class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed hover:opacity-90 rounded-full text-[11px] font-bold transition-all">Customer Baru (BR-01)</a>
-            <a href="{{ route('quick-login', 'budi.teknisi@fixhome.com') }}" class="px-3 py-1 bg-primary-fixed text-on-primary-fixed hover:opacity-90 rounded-full text-[11px] font-bold transition-all">Teknisi Mitra</a>
-            <a href="{{ route('quick-login', 'admin@fixhome.com') }}" class="px-3 py-1 bg-surface/15 hover:bg-surface/25 text-inverse-on-surface rounded-full text-[11px] font-bold transition-all border border-inverse-on-surface/20">Admin Panel</a>
-        </div>
-    </div>
 
     @stack('scripts')
 </body>

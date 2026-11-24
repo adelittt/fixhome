@@ -243,7 +243,7 @@
                     <div class="p-4 rounded-[22px] bg-secondary-container/60 text-xs text-on-secondary-fixed leading-relaxed flex items-start gap-3 shadow-[inset_2px_2px_5px_#B2CED0,inset_-2px_-2px_5px_#E6FAFC]">
                         <span class="material-symbols-outlined text-primary text-[22px] shrink-0 mt-0.5">info</span>
                         <span>
-                            <strong>Aturan Bisnis FixHome (BR-03 &amp; BR-05):</strong> Kanal <strong>Chat dua arah</strong> dan fitur <strong>Pelacakan GPS</strong> posisi teknisi secara real-time akan langsung terbuka dan aktif segera setelah tagihan ini berhasil diverifikasi.
+                            <strong>Informasi Layanan:</strong> Kanal <strong>Chat dua arah</strong> dan fitur <strong>Pelacakan GPS</strong> posisi teknisi secara real-time akan langsung terbuka segera setelah pembayaran terverifikasi.
                         </span>
                     </div>
 
@@ -272,7 +272,7 @@
                             </div>
 
                             <div class="p-4 rounded-[18px] bg-surface-container-low space-y-2">
-                                <div class="text-[11px] font-bold text-primary uppercase tracking-wider">Skema Transparansi (BR-04)</div>
+                                <div class="text-[11px] font-bold text-primary uppercase tracking-wider">Skema Transparansi Biaya</div>
                                 <div class="flex items-center justify-between text-on-surface-variant">
                                     <span class="flex items-center gap-1.5">
                                         <span class="w-2 h-2 rounded-full bg-secondary"></span>
@@ -296,7 +296,7 @@
                         </div>
 
                         <div class="p-3.5 rounded-[18px] bg-tertiary-fixed/40 text-[11px] text-on-tertiary-fixed leading-relaxed">
-                            💡 Pembayaran Anda dijamin dengan proteksi transaksi ACID (BR-04, BR-12). Dana diteruskan ke teknisi setelah pekerjaan selesai.
+                            Pembayaran Anda tercatat aman dan transparan. Dana diteruskan ke teknisi setelah pekerjaan selesai.
                         </div>
 
                         @if (!empty($midtransEnabled))

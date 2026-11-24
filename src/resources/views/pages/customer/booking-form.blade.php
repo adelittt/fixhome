@@ -188,7 +188,7 @@
                             </div>
                             <div class="flex items-center justify-between text-on-surface-variant">
                                 <span>Komisi Platform (5%)</span>
-                                <span class="font-semibold text-primary">Termasuk (BR-04)</span>
+                                <span class="font-semibold text-primary">Termasuk</span>
                             </div>
                         </div>
 
@@ -198,7 +198,7 @@
                         </div>
 
                         <div class="p-3.5 rounded-[18px] bg-surface-container-low text-[11px] text-on-surface-variant leading-relaxed space-y-1">
-                            <div class="font-bold text-primary">🔒 Aturan Transparan (KF-07 &amp; KF-10):</div>
+                            <div class="font-bold text-primary">Transparansi Biaya FixHome:</div>
                             <div>&bull; 95% diteruskan ke mitra teknisi</div>
                             <div>&bull; 5% biaya operasional &amp; garansi resmi 14 hari</div>
                             <div>&bull; Biaya jarak: Rp 10.000 per kelipatan 10 km (&lt; 10 km Rp 0)</div>

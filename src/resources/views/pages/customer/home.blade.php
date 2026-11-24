@@ -126,7 +126,7 @@
                             <span>Teknisi Ready &amp; Terverifikasi</span>
                         </div>
                         <h2 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">Teknisi Terdekat (Siap Order)</h2>
-                        <p class="font-body-sm text-on-surface-variant">Disaring otomatis berdasarkan radius jarak terdekat dari rumah Anda (BR-02)</p>
+                        <p class="font-body-sm text-on-surface-variant">Disaring otomatis berdasarkan radius jarak terdekat dari rumah Anda</p>
                     </div>
                     <a href="{{ route('customer.technicians') }}" class="neu-btn-secondary px-4 py-2 text-xs text-primary shrink-0 gap-1">
                         <span>Semua Teknisi</span>

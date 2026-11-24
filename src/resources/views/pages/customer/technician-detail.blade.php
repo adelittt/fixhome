@@ -176,9 +176,9 @@
                         <div class="p-4 rounded-[18px] bg-secondary-container/60 text-xs text-on-secondary-fixed space-y-1.5 shadow-[inset_2px_2px_5px_#B2CED0,inset_-2px_-2px_5px_#E6FAFC]">
                             <span class="font-bold block text-primary">Keuntungan Pesan di FixHome:</span>
                             <p class="text-[11px] leading-relaxed">
-                                &bull; Pelacakan GPS teknisi langsung (BR-05)<br>
-                                &bull; Chat langsung setelah pembayaran (BR-03)<br>
-                                &bull; Skema transparan: 95% teknisi, 5% platform (BR-04)
+                                &bull; Pelacakan GPS teknisi langsung<br>
+                                &bull; Chat langsung setelah pembayaran<br>
+                                &bull; Skema transparan: 95% teknisi, 5% platform
                             </p>
                         </div>
 

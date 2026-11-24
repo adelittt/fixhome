@@ -29,7 +29,7 @@
                 <div class="flex items-center justify-between">
                     <span class="font-title-sm text-primary font-bold font-butler flex items-center gap-2">
                         <span class="material-symbols-outlined text-[19px] text-secondary">location_on</span>
-                        <span>Alamat Terdaftar (BR-01)</span>
+                        <span>Alamat Terdaftar</span>
                     </span>
                     <a href="{{ route('customer.set-address') }}" class="neu-btn-secondary px-3.5 py-1.5 text-xs text-primary">Ubah Lokasi</a>
                 </div>

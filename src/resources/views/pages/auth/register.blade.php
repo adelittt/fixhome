@@ -19,7 +19,7 @@
                     <ul class="text-xs text-inverse-on-surface/90 space-y-3 pt-2">
                         <li class="flex items-start gap-2.5">
                             <span class="material-symbols-outlined text-tertiary-fixed text-[18px] shrink-0">location_searching</span>
-                            <span>Pencarian berbasis radius koordinat terdekat (BR-02)</span>
+                            <span>Pencarian berbasis radius koordinat terdekat</span>
                         </li>
                         <li class="flex items-start gap-2.5">
                             <span class="material-symbols-outlined text-tertiary-fixed text-[18px] shrink-0">verified_user</span>

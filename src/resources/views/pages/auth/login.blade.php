@@ -120,7 +120,7 @@
                                 <input type="checkbox" name="remember" class="w-4 h-4 rounded accent-primary-container">
                                 <span>Ingat saya</span>
                             </label>
-                            <a href="{{ route('splash') }}#keunggulan" class="font-semibold text-primary-container hover:underline">Butuh bantuan?</a>
+                            <a href="{{ route('splash') }}#transparansi" class="font-semibold text-primary-container hover:underline">Butuh bantuan?</a>
                         </div>
 
                         <div class="pt-2">

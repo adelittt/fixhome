@@ -6,7 +6,7 @@
             <div class="mb-space-lg">
                 <div class="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full neu-pill text-secondary font-label-sm font-semibold mb-space-xs font-lucy-rose">
                     <span class="material-symbols-outlined text-[15px] text-tertiary">pin_drop</span>
-                    <span>Langkah 1: Penentuan Alamat Rumah (BR-01)</span>
+                    <span>Langkah 1: Penentuan Alamat Rumah</span>
                 </div>
                 <h1 class="font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-bold font-recoleta">Tentukan Titik Koordinat Rumah Anda</h1>
                 <p class="font-body-md text-body-md text-on-surface-variant mt-1">Cari alamat melalui kolom pencarian di peta atau klik langsung pada peta untuk memposisikan penanda pengerjaan servis.</p>
@@ -51,7 +51,7 @@
 
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
-                                    <label class="block font-label-md text-label-md text-primary">Alamat Lengkap Rumah (BR-01)</label>
+                                    <label class="block font-label-md text-label-md text-primary">Alamat Lengkap Rumah</label>
                                     <button type="button" onclick="searchFromTextarea()" class="text-xs font-bold text-secondary hover:text-primary inline-flex items-center gap-1 transition-colors">
                                         <span class="material-symbols-outlined text-[15px]">search</span>
                                         <span>Cari di Peta</span>
