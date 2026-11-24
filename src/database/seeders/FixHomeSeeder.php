@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Customer;
 use App\Models\Teknisi;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,13 @@ use Spatie\Permission\PermissionRegistrar;
 class FixHomeSeeder extends Seeder
 {
     public function run(): void
+    {
+        Model::withoutEvents(function (): void {
+            $this->seedData();
+        });
+    }
+
+    private function seedData(): void
     {
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 

@@ -23,7 +23,7 @@ if [ -n "${DATABASE_URL:-}" ] || [ -n "${POSTGRES_URL:-}" ] || [ "${DB_CONNECTIO
         $db = Illuminate\Support\Facades\DB::connection("pgsql");
         $schema = Illuminate\Support\Facades\Schema::connection("pgsql");
         $schemaName = preg_replace("/[^a-zA-Z0-9_]/", "", (string) config("database.connections.pgsql.search_path", "fixhome")) ?: "fixhome";
-        $lockKey = 749202;
+        $lockKey = 749203;
         $acquired = false;
         try {
             $db->statement("SET statement_timeout = 15000");
