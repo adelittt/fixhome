@@ -154,15 +154,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            @if (empty($midtransIsProduction))
-                                <div class="p-4 neu-inset text-xs text-on-surface-variant leading-relaxed">
-                                    <span class="font-bold text-primary block mb-1">Mode Uji Coba (QRIS Sandbox):</span>
-                                    Klik kanan kode QR di atas (atau klik <strong>Download QRIS</strong>), lalu simulasikan bayar lunas di
-                                    <a href="https://simulator.sandbox.midtrans.com/qris/index" target="_blank" rel="noopener noreferrer" class="font-bold text-primary underline">Midtrans QRIS Simulator</a>.
-                                    Setelah itu klik <strong>Cek Status Pembayaran</strong> di sebelah kanan.
-                                </div>
-                            @endif
                         </div>
                     @else
                         <div class="neu-card p-6 space-y-5">
