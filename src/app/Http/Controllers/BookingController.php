@@ -551,49 +551,38 @@ class BookingController extends Controller
 
     private function markBookingAsPaid(Booking $booking, Transaksi $transaksi, string $paymentMethod, string $gatewayRef): void
     {
-        DB::transaction(function () use ($booking, $transaksi, $paymentMethod, $gatewayRef) {
-            $freshBooking = Booking::with('customer')->find($booking->id);
-            $freshTransaksi = Transaksi::find($transaksi->id);
-
-            if (!$freshBooking || !$freshTransaksi) {
-                return;
-            }
-
-            if ($freshTransaksi->isPaid() && $freshBooking->status_order !== 'pending_payment') {
-                return;
-            }
-
-            $freshTransaksi->update([
+        if (!$transaksi->isPaid()) {
+            $transaksi->update([
                 'status_pembayaran' => 'paid',
                 'payment_method' => Str::limit($paymentMethod, 100, ''),
                 'payment_gateway_ref' => Str::limit($gatewayRef, 250, ''),
                 'paid_at' => now(),
             ]);
+        }
 
-            if ($freshBooking->status_order === 'pending_payment') {
-                $freshBooking->update([
-                    'status_order' => 'paid',
-                ]);
-            }
+        if ($booking->status_order === 'pending_payment') {
+            $booking->update([
+                'status_order' => 'paid',
+            ]);
+        }
 
-            $senderId = $freshBooking->customer?->user_id ?? Auth::id();
-            if ($senderId && !ChatMessage::where('booking_id', $freshBooking->id)->exists()) {
-                ChatMessage::create([
-                    'booking_id' => $freshBooking->id,
-                    'sender_id' => $senderId,
-                    'pesan' => 'Halo pak, pembayaran sebesar Rp ' . number_format((float) $freshBooking->total_biaya, 0, ',', '.') . ' sudah lunas. Mohon konfirmasi saat berangkat ya!',
-                ]);
-            }
+        $senderId = $booking->customer?->user_id ?? Auth::id();
+        if ($senderId && !ChatMessage::where('booking_id', $booking->id)->exists()) {
+            ChatMessage::create([
+                'booking_id' => $booking->id,
+                'sender_id' => $senderId,
+                'pesan' => 'Halo pak, pembayaran sebesar Rp ' . number_format((float) $booking->total_biaya, 0, ',', '.') . ' sudah lunas. Mohon konfirmasi saat berangkat ya!',
+            ]);
+        }
 
-            if (!PelacakanLokasi::where('booking_id', $freshBooking->id)->exists()) {
-                PelacakanLokasi::create([
-                    'booking_id' => $freshBooking->id,
-                    'current_lat' => -6.2190,
-                    'current_lng' => 106.8230,
-                    'is_active' => true,
-                ]);
-            }
-        });
+        if (!PelacakanLokasi::where('booking_id', $booking->id)->exists()) {
+            PelacakanLokasi::create([
+                'booking_id' => $booking->id,
+                'current_lat' => -6.2190,
+                'current_lng' => 106.8230,
+                'is_active' => true,
+            ]);
+        }
     }
 
     private function formatMidtransPaymentMethod(string $paymentType): string
