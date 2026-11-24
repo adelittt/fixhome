@@ -6,7 +6,7 @@
             <!-- Mobile Only Header Bar -->
             <div class="lg:hidden neu-card-sm px-5 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <img alt="FixHome Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                    <img alt="FixHome" class="h-9 w-9 object-contain shrink-0" src="{{ asset('images/fixhome-icon.png') }}" />
                     <div>
                         <span class="text-[11px] font-label-sm font-semibold text-on-surface-variant block">Selamat Datang</span>
                         <h2 class="font-title-sm text-primary font-bold font-recoleta leading-tight">Halo, {{ Str::words($customer->nama_lengkap ?? Auth::user()->name, 2, '') }}</h2>

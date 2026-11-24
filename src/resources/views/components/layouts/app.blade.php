@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="{{ asset('images/fixhome-icon.png') }}" rel="icon" type="image/png" />
     <title>{{ $title ?? 'FixHome' }} — Solusi Perbaikan Rumah Bergaransi</title>
 
     <!-- Google Fonts matching FixHome Landing Page -->
@@ -31,12 +32,8 @@
         <div class="max-w-[1280px] mx-auto h-20 flex items-center justify-between gap-gutter">
 
             <!-- Brand Logo -->
-            <a href="{{ Auth::check() ? (Auth::user()->isAdmin() ? url('/admin') : (Auth::user()->isTeknisi() ? route('teknisi.dashboard') : route('customer.home'))) : route('splash') }}" class="flex items-center gap-space-md group">
-                <img alt="FixHome Logo" class="h-9 w-9 rounded-lg object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                <div>
-                    <span class="font-headline-sm text-headline-sm text-primary-container tracking-tight font-recoleta block leading-none">FixHome</span>
-                    <span class="text-[10px] text-on-surface-variant font-label-sm tracking-wide block mt-0.5">Solusi Perbaikan Rumah</span>
-                </div>
+            <a aria-label="Beranda FixHome" href="{{ Auth::check() ? (Auth::user()->isAdmin() ? url('/admin') : (Auth::user()->isTeknisi() ? route('teknisi.dashboard') : route('customer.home'))) : route('splash') }}" class="flex items-center group">
+                <img alt="FixHome" class="h-9 w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
             </a>
 
             <!-- Navigation Links -->
@@ -151,9 +148,8 @@
         <div class="max-w-[1280px] mx-auto px-gutter lg:px-margin">
             <div class="grid grid-cols-4 gap-gutter mb-space-xl">
                 <div class="flex flex-col gap-space-sm">
-                    <div class="flex items-center gap-2.5 mb-space-xs">
-                        <img alt="FixHome Logo" class="h-8 w-8 rounded-lg object-contain bg-surface p-0.5" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                        <span class="font-title-md text-title-md text-tertiary-fixed font-semibold font-recoleta">FixHome</span>
+                    <div class="inline-flex items-center rounded-xl bg-surface px-3 py-1.5 mb-space-xs w-fit">
+                        <img alt="FixHome" class="h-7 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                     </div>
                     <p class="font-body-sm text-body-sm text-inverse-on-surface/80 leading-relaxed">
                         Platform booking jasa perbaikan rumah berbasis radius geospasial terdekat dengan skema bagi hasil transparan: 95% teknisi &amp; 5% operasional platform.

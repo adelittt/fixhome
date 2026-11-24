@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="Pesan teknisi perbaikan rumah terverifikasi untuk AC, listrik, pipa, atap, hingga pengecatan. Tarif dasar terbuka, biaya jarak Rp0 di bawah 10 km, dan garansi resmi 14 hari." name="description" />
     <meta content="#775537" name="theme-color" />
-    <link href="{{ asset('images/fixhome-logo.jpg') }}" rel="icon" type="image/jpeg" />
+    <link href="{{ asset('images/fixhome-icon.png') }}" rel="icon" type="image/png" />
     <title>FixHome — Jasa Perbaikan Rumah Terverifikasi &amp; Bergaransi</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -88,9 +88,8 @@
     <!-- HEADER: quiet, architectural, restrained -->
     <header class="sticky top-0 z-50 bg-[#F9F9F9]/92 backdrop-blur-md border-b border-[#E7E0D8]">
         <div class="max-w-[1220px] mx-auto px-5 sm:px-8 h-[72px] flex items-center justify-between gap-6">
-            <a class="inline-flex items-center gap-2.5 min-h-[44px] shrink-0" href="{{ route('splash') }}">
-                <img alt="FixHome" class="h-8 w-8 rounded-md object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                <span class="fh-serif text-[22px] font-semibold tracking-[-0.02em] text-[#5D3E22]">FixHome</span>
+            <a aria-label="Beranda FixHome" class="inline-flex items-center min-h-[44px] shrink-0" href="{{ route('splash') }}">
+                <img alt="FixHome" class="h-8 sm:h-9 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
             </a>
 
             <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-8">
@@ -506,9 +505,8 @@
         <div class="max-w-[1220px] mx-auto px-5 sm:px-8 py-12 lg:py-16">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-10 border-b border-white/15">
                 <div class="lg:col-span-4">
-                    <a class="inline-flex items-center gap-2.5" href="{{ route('splash') }}">
-                        <img alt="FixHome" class="h-8 w-8 rounded-md object-contain bg-white p-0.5" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                        <span class="fh-serif text-[21px] font-semibold text-white">FixHome</span>
+                    <a aria-label="Beranda FixHome" class="inline-flex items-center rounded-xl bg-white px-3.5 py-2 w-fit" href="{{ route('splash') }}">
+                        <img alt="FixHome" class="h-7 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                     </a>
                     <p class="mt-3 text-[14px] text-[#E4D9CE] leading-[1.65] max-w-xs">
                         Platform booking jasa perbaikan rumah terverifikasi dengan biaya transparan, live chat, pelacakan GPS, dan garansi resmi 14 hari.

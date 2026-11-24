@@ -8,9 +8,8 @@
                 <div class="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-secondary-container/15 blur-2xl pointer-events-none"></div>
 
                 <div class="relative z-10 space-y-5">
-                    <a href="{{ route('splash') }}" class="inline-flex items-center gap-3">
-                        <img alt="FixHome Logo" class="h-10 w-10 rounded-xl object-contain bg-surface p-1 shadow-md" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                        <span class="font-headline-sm text-headline-sm text-tertiary-fixed font-recoleta">FixHome</span>
+                    <a href="{{ route('splash') }}" class="inline-flex items-center rounded-xl bg-surface px-3.5 py-2 shadow-sm w-fit">
+                        <img alt="FixHome" class="h-8 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                     </a>
 
                     <h2 class="font-headline-md text-headline-md text-on-primary font-bold font-recoleta leading-snug pt-2">
@@ -50,10 +49,9 @@
                         <a href="{{ route('splash') }}" class="w-9 h-9 rounded-full neu-btn-secondary text-primary">
                             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                         </a>
-                        <div class="flex items-center gap-2">
-                            <img alt="FixHome Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                            <span class="font-headline-sm text-primary-container font-recoleta">FixHome</span>
-                        </div>
+                        <a href="{{ route('splash') }}" class="flex items-center">
+                            <img alt="FixHome" class="h-8 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
+                        </a>
                         <div class="w-9"></div>
                     </div>
 

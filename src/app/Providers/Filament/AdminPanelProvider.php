@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('FixHome')
             ->brandLogo(fn () => view('filament.brand-logo'))
             ->brandLogoHeight('2.75rem')
-            ->favicon(asset('images/fixhome-logo.jpg'))
+            ->favicon(asset('images/fixhome-icon.png'))
             ->passwordReset()
             ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
             ->defaultThemeMode(ThemeMode::Light)
