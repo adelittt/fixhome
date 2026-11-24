@@ -11,64 +11,8 @@ mkdir -p \
     "${STORAGE_DIR}/logs"
 chown -R www-data:www-data "${STORAGE_DIR}"
 
-# Auto-migrate and seed once on PostgreSQL (Neon) in isolated "fixhome" schema (non-blocking lock)
-if [ -n "${DATABASE_URL:-}" ] || [ -n "${POSTGRES_URL:-}" ] || [ "${DB_CONNECTION:-}" = "pgsql" ]; then
-    MIGRATE_URL="${DATABASE_URL_UNPOOLED:-${POSTGRES_URL_NON_POOLING:-${DATABASE_URL:-${POSTGRES_URL:-}}}}"
-    DATABASE_URL="${MIGRATE_URL}" POSTGRES_URL="${MIGRATE_URL}" DB_CONNECTION="pgsql" php -r '
-        require "/var/www/html/vendor/autoload.php";
-        $app = require "/var/www/html/bootstrap/app.php";
-        $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
-        $kernel->bootstrap();
-
-        $db = Illuminate\Support\Facades\DB::connection("pgsql");
-        $schema = Illuminate\Support\Facades\Schema::connection("pgsql");
-        $schemaName = preg_replace("/[^a-zA-Z0-9_]/", "", (string) config("database.connections.pgsql.search_path", "fixhome")) ?: "fixhome";
-        $lockKey = 749203;
-        $acquired = false;
-        try {
-            $db->statement("SET statement_timeout = 15000");
-            $row = $db->selectOne("SELECT pg_try_advisory_lock(?) AS locked", [$lockKey]);
-            $acquired = (bool) ($row->locked ?? false);
-            if ($acquired) {
-                $db->statement("CREATE SCHEMA IF NOT EXISTS \"{$schemaName}\"");
-                $db->statement("SET search_path TO \"{$schemaName}\"");
-
-                $hasTables = $schema->hasTable("users")
-                    && $schema->hasTable("bookings")
-                    && $schema->hasTable("permissions")
-                    && $schema->hasTable("ulasans")
-                    && $schema->hasColumn("teknisi", "status_verifikasi")
-                    && $schema->hasColumn("transaksis", "biaya_jarak");
-                if (!$hasTables) {
-                    fwrite(STDERR, "[fixhome] Running Neon Postgres migrations in schema {$schemaName}...\n");
-                    Illuminate\Support\Facades\Artisan::call("migrate", ["--force" => true]);
-                }
-                $needsSeed = !$db->table("users")->where("email", "customer@fixhome.com")->exists()
-                    || !$db->table("users")->where("email", "admin@fixhome.com")->exists()
-                    || !$db->table("permissions")->where("name", "view_any_booking")->exists()
-                    || $db->table("teknisi")->count() < 6
-                    || !$db->table("transaksis")->where("kode_transaksi", "TRX-FIXHOME002")->exists();
-                if ($needsSeed) {
-                    fwrite(STDERR, "[fixhome] Seeding Neon Postgres FixHome data in schema {$schemaName}...\n");
-                    Illuminate\Support\Facades\Artisan::call("db:seed", ["--class" => "Database\\Seeders\\FixHomeSeeder", "--force" => true]);
-                    fwrite(STDERR, "[fixhome] Neon Postgres seed completed.\n");
-                }
-            }
-        } catch (Throwable $e) {
-            fwrite(STDERR, "[fixhome] Postgres bootstrap error: " . $e->getMessage() . "\n");
-        } finally {
-            if ($acquired) {
-                try {
-                    $db->statement("SELECT pg_advisory_unlock(?)", [$lockKey]);
-                } catch (Throwable $ignore) {}
-            }
-            try {
-                $db->disconnect();
-            } catch (Throwable $ignore) {}
-        }
-    '
-elif [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
-    # Fallback: writable SQLite database in /tmp from pre-seeded template
+# Fallback only: prepare writable SQLite database in /tmp when no Postgres URL is configured
+if [ -z "${DATABASE_URL:-}" ] && [ -z "${POSTGRES_URL:-}" ] && [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
     DB_FILE="${DB_DATABASE:-/tmp/database.sqlite}"
     if [ ! -f "${DB_FILE}" ] && [ -f /var/www/html/database/seed-template.sqlite ]; then
         cp /var/www/html/database/seed-template.sqlite "${DB_FILE}"

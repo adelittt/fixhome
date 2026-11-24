@@ -1,113 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const filterButtons = document.querySelectorAll('#service-filter-bar .filter-tab-btn');
-    const cards = Array.from(document.querySelectorAll('#service-cards-container .service-card-item'));
+    // 1. Mobile Navigation Menu
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('mobile-menu-icon');
 
-    const activeClasses = [
-        'bg-primary-container',
-        'text-on-primary',
-        'shadow-[inset_2px_2px_5px_rgba(0,0,0,0.32),0_4px_12px_rgba(119,85,55,0.22)]',
-        'font-bold',
-    ];
-    const inactiveClasses = [
-        'bg-surface',
-        'text-on-surface-variant',
-        'hover:text-on-surface',
-        'shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D0D0D0]',
-        'font-semibold',
-    ];
+    if (toggleBtn && mobileMenu) {
+        const setOpen = (open) => {
+            mobileMenu.classList.toggle('hidden', !open);
+            toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggleBtn.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+            document.body.classList.toggle('overflow-hidden', open);
+            if (menuIcon) menuIcon.textContent = open ? 'close' : 'menu';
+        };
 
-    const activeBadgeClasses = ['bg-white/20', 'text-on-primary'];
-    const inactiveBadgeClasses = [
-        'bg-surface',
-        'shadow-[inset_1px_1px_3px_#D2D2D2,inset_-1px_-1px_3px_#FFFFFF]',
-        'text-secondary',
-    ];
-
-    filterButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            const filterValue = button.getAttribute('data-filter');
-
-            filterButtons.forEach((btn) => {
-                btn.setAttribute('aria-selected', 'false');
-                btn.classList.remove(...activeClasses);
-                btn.classList.add(...inactiveClasses);
-
-                const badge = btn.querySelector('.filter-badge');
-                if (badge) {
-                    badge.classList.remove(...activeBadgeClasses);
-                    badge.classList.add(...inactiveBadgeClasses);
-                }
-            });
-
-            button.setAttribute('aria-selected', 'true');
-            button.classList.remove(...inactiveClasses);
-            button.classList.add(...activeClasses);
-
-            const currentBadge = button.querySelector('.filter-badge');
-            if (currentBadge) {
-                currentBadge.classList.remove(...inactiveBadgeClasses);
-                currentBadge.classList.add(...activeBadgeClasses);
+        toggleBtn.addEventListener('click', () => setOpen(mobileMenu.classList.contains('hidden')));
+        mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                setOpen(false);
+                toggleBtn.focus();
             }
+        });
+    }
 
-            cards.forEach((card) => {
-                const cardCategories = (card.getAttribute('data-categories') || '').split(' ');
-                const isMatch = filterValue === 'all' || cardCategories.includes(filterValue);
+    // 2. Interactive Pricing & 95/5 Split Simulator (matches Transaksi::calculateSplit)
+    const serviceSelect = document.getElementById('calc-service');
+    const distButtons = Array.from(document.querySelectorAll('.calc-dist-btn'));
+    const elBase = document.getElementById('calc-base');
+    const elDist = document.getElementById('calc-distance');
+    const elTotal = document.getElementById('calc-total');
+    const elTech = document.getElementById('calc-tech');
+    const elFee = document.getElementById('calc-fee');
 
-                if (isMatch) {
-                    card.classList.remove('filter-hidden');
-                    card.style.display = 'flex';
-                    requestAnimationFrame(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                    });
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.94)';
-                    setTimeout(() => {
-                        if (card.style.opacity === '0') {
-                            card.classList.add('filter-hidden');
-                            card.style.display = 'none';
-                        }
-                    }, 240);
-                }
+    if (serviceSelect && distButtons.length > 0 && elTotal) {
+        let distanceMode = 'near';
+
+        const formatIdr = (amount) => 'Rp' + Math.round(amount).toLocaleString('id-ID');
+
+        const recalc = () => {
+            const base = parseInt(serviceSelect.value, 10) || 75000;
+            const distFee = distanceMode === 'far' ? 10000 : 0;
+            const total = base + distFee;
+            const adminFee = Math.round(total * 0.05);
+            const techShare = total - adminFee;
+
+            if (elBase) elBase.textContent = formatIdr(base);
+            if (elDist) elDist.textContent = formatIdr(distFee);
+            if (elTotal) elTotal.textContent = formatIdr(total);
+            if (elTech) elTech.textContent = formatIdr(techShare);
+            if (elFee) elFee.textContent = formatIdr(adminFee);
+        };
+
+        serviceSelect.addEventListener('change', recalc);
+        distButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                distanceMode = btn.getAttribute('data-distance') || 'near';
+                distButtons.forEach((b) => b.classList.toggle('is-active', b === btn));
+                recalc();
             });
         });
-    });
 
-    // Prev/Next card highlight controls
-    const prevBtn = document.getElementById('service-prev-btn');
-    const nextBtn = document.getElementById('service-next-btn');
-    let activeCardIndex = -1;
-
-    function highlightCard(index) {
-        cards.forEach((c) => {
-            c.classList.remove('ring-2', 'ring-primary-container/40', '-translate-y-1');
-        });
-        if (cards[index]) {
-            cards[index].classList.add('ring-2', 'ring-primary-container/40', '-translate-y-1');
-            cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
+        recalc();
     }
 
-    if (prevBtn && nextBtn && cards.length > 0) {
-        prevBtn.addEventListener('click', () => {
-            activeCardIndex = activeCardIndex <= 0 ? cards.length - 1 : activeCardIndex - 1;
-            highlightCard(activeCardIndex);
-        });
-        nextBtn.addEventListener('click', () => {
-            activeCardIndex = (activeCardIndex + 1) % cards.length;
-            highlightCard(activeCardIndex);
-        });
-    }
-
-    // Active section highlight in top navigation
-    const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
+    // 3. Active Section Underline on Scroll
+    const navLinks = Array.from(document.querySelectorAll('header nav a.fh-link[href^="#"]'));
     const sections = navLinks
         .map((link) => {
-            const targetId = link.getAttribute('href')?.slice(1);
-            return targetId ? { link, el: document.getElementById(targetId) } : null;
+            const id = link.getAttribute('href')?.slice(1);
+            return id ? { link, el: document.getElementById(id) } : null;
         })
-        .filter((item) => item && item.el);
+        .filter((x) => x && x.el);
 
     if (sections.length > 0 && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver(
@@ -115,16 +78,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 entries.forEach((entry) => {
                     if (!entry.isIntersecting) return;
                     sections.forEach(({ link, el }) => {
-                        const isActive = el === entry.target;
-                        link.classList.toggle('text-primary-container', isActive);
-                        link.classList.toggle('font-semibold', isActive);
-                        link.classList.toggle('text-on-surface-variant', !isActive);
+                        if (el === entry.target) {
+                            link.setAttribute('aria-current', 'page');
+                            link.classList.add('text-[#1A1C1C]', 'font-semibold');
+                            link.classList.remove('text-[#50453C]');
+                        } else {
+                            link.removeAttribute('aria-current');
+                            link.classList.remove('text-[#1A1C1C]', 'font-semibold');
+                            link.classList.add('text-[#50453C]');
+                        }
                     });
                 });
             },
-            { rootMargin: '-35% 0px -55% 0px' },
+            { rootMargin: '-30% 0px -55% 0px' },
         );
-
         sections.forEach(({ el }) => observer.observe(el));
     }
 });

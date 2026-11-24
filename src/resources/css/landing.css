@@ -25,8 +25,9 @@
     }
 }
 
-::-webkit-scrollbar {
-    display: none;
+::selection {
+    background-color: #775537;
+    color: #ffffff;
 }
 
 .chat-scroll {
@@ -63,6 +64,165 @@
     scrollbar-width: none;
 }
 
+/* ==========================================================================
+   FixHome Editorial Landing System (Scoped to .fh-editorial)
+   ========================================================================== */
+
+.fh-editorial {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.fh-editorial .fh-serif {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'SOFT' 50, 'WONK' 0;
+}
+
+.fh-skip {
+    position: fixed;
+    top: 12px;
+    left: 16px;
+    z-index: 100;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #5d3e22;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    transform: translateY(-160%);
+}
+
+.fh-skip:focus {
+    transform: translateY(0);
+    outline: 2px solid #fae19c;
+    outline-offset: 2px;
+}
+
+.fh-editorial a:focus-visible,
+.fh-editorial button:focus-visible,
+.fh-editorial select:focus-visible {
+    outline: 2px solid #775537;
+    outline-offset: 2px;
+}
+
+/* Gentle radial sky readability behind hero typography only (houses stay vivid) */
+.fh-hero-sky {
+    background: radial-gradient(
+        ellipse 68% 58% at 50% 28%,
+        rgba(249, 249, 249, 0.86) 0%,
+        rgba(249, 249, 249, 0.45) 56%,
+        rgba(249, 249, 249, 0.04) 100%
+    );
+}
+
+/* Crisp Editorial Buttons */
+.fh-btn-solid {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    background-color: #775537;
+    color: #ffffff;
+    font-weight: 600;
+    border: 1px solid #775537;
+    transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.fh-btn-solid:hover {
+    background-color: #5d3e22;
+    border-color: #5d3e22;
+}
+
+.fh-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #5d3e22;
+    font-weight: 600;
+    border: 1px solid #d5c9bd;
+    transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.fh-btn-outline:hover {
+    background-color: #f3ece4;
+    border-color: #775537;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .fh-btn-solid:hover,
+    .fh-btn-outline:hover {
+        transform: translateY(-1px);
+    }
+
+    .fh-btn-solid:active,
+    .fh-btn-outline:active {
+        transform: translateY(1px) scale(0.985);
+    }
+}
+
+.fh-arrow {
+    transition: transform 150ms ease;
+}
+
+.fh-btn-solid:hover .fh-arrow,
+.fh-service-row:hover .fh-arrow {
+    transform: translateX(3px);
+}
+
+/* Understated drawn underline on nav links */
+.fh-link {
+    position: relative;
+}
+
+.fh-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 1.5px;
+    background-color: #775537;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 160ms ease;
+}
+
+.fh-link:hover::after,
+.fh-link[aria-current="page"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.fh-quick-link {
+    color: #50453c;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: #d6cbc0;
+    text-underline-offset: 4px;
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+
+.fh-quick-link:hover {
+    color: #5d3e22;
+    text-decoration-color: #775537;
+}
+
+/* Interactive simulator distance buttons */
+.calc-dist-btn {
+    color: #50453c;
+    background-color: transparent;
+}
+
+.calc-dist-btn.is-active {
+    background-color: #ffffff;
+    color: #5d3e22;
+    box-shadow: 0 1px 3px rgba(93, 62, 34, 0.1);
+}
+
+/* Legacy font & tactile utilities kept for internal app pages (auth, customer, teknisi) */
 .font-recoleta {
     font-family: 'Recoleta', 'Fraunces', Georgia, serif;
     letter-spacing: -0.02em;
@@ -78,63 +238,6 @@
     letter-spacing: 0.04em;
 }
 
-.hero-banner-overlay {
-    background: linear-gradient(
-        rgba(249, 249, 249, 0.22) 0%,
-        rgba(249, 249, 249, 0.42) 50%,
-        rgba(249, 249, 249, 0.65) 100%
-    );
-    backdrop-filter: blur(0.5px);
-}
-
-.hero-headline-shadow {
-    text-shadow:
-        rgba(255, 255, 255, 0.9) 0px 1px 3px,
-        rgba(255, 255, 255, 0.6) 0px 2px 8px;
-}
-
-@keyframes heroShimmerSweep {
-    0% {
-        transform: translateX(-120%) skewX(-20deg);
-    }
-    45%,
-    100% {
-        transform: translateX(220%) skewX(-20deg);
-    }
-}
-
-.hero-shimmer-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 55%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.45) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    animation: heroShimmerSweep 5.5s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.service-card-item {
-    transition:
-        opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 0.28s ease;
-}
-
-.service-card-item.filter-hidden {
-    opacity: 0;
-    transform: scale(0.94);
-    pointer-events: none;
-    display: none;
-}
-
-/* Shared FixHome Tactile Neumorphic Design Utilities */
 @layer components {
     .neu-card {
         @apply bg-surface rounded-[26px];
