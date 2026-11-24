@@ -29,7 +29,12 @@ if [ -n "${DATABASE_URL:-}" ] || [ -n "${POSTGRES_URL:-}" ] || [ "${DB_CONNECTIO
             $db->statement("CREATE SCHEMA IF NOT EXISTS \"{$schemaName}\"");
             $db->statement("SET search_path TO \"{$schemaName}\"");
 
-            $hasTables = $schema->hasTable("users") && $schema->hasTable("bookings") && $schema->hasTable("permissions");
+            $hasTables = $schema->hasTable("users")
+                && $schema->hasTable("bookings")
+                && $schema->hasTable("permissions")
+                && $schema->hasTable("ulasans")
+                && $schema->hasColumn("teknisi", "status_verifikasi")
+                && $schema->hasColumn("transaksis", "biaya_jarak");
             if (!$hasTables) {
                 fwrite(STDERR, "[fixhome] Running Neon Postgres migrations in schema {$schemaName}...\n");
                 Illuminate\Support\Facades\Artisan::call("migrate", ["--force" => true]);
