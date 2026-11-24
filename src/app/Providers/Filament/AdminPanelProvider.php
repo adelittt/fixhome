@@ -2,8 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\FilamentAuthenticate;
 use Filament\Enums\ThemeMode;
-use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -14,11 +14,13 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\MaxWidth;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
@@ -31,14 +33,31 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->spa()
-            ->login()
+            ->brandName('FixHome Plus')
+            ->brandLogo(fn () => view('filament.brand-logo'))
+            ->brandLogoHeight('2.75rem')
+            ->favicon(asset('images/fixhome-logo.jpg'))
             ->passwordReset()
             ->profile(\App\Filament\Pages\Auth\EditProfile::class, isSimple: false)
             ->defaultThemeMode(ThemeMode::Light)
-            ->font('Montserrat')
+            ->darkMode(false)
+            ->font('Plus Jakarta Sans')
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::hex('#775537'),
+                'gray' => Color::Stone,
+                'info' => Color::hex('#4c6264'),
+                'success' => Color::hex('#4c6264'),
+                'warning' => Color::hex('#bfa96a'),
+                'danger' => Color::hex('#ba1a1a'),
             ])
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn (): HtmlString => new HtmlString(
+                    '<link rel="preconnect" href="https://fonts.googleapis.com" />'
+                    . '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />'
+                    . '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />'
+                ),
+            )
             ->maxContentWidth(MaxWidth::SevenExtraLarge)
             ->sidebarCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
@@ -53,16 +72,20 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('Administration'),
+                    ->label('Operasional')
+                    ->icon('heroicon-o-briefcase'),
+                NavigationGroup::make()
+                    ->label('Keuangan')
+                    ->icon('heroicon-o-calculator'),
+                NavigationGroup::make()
+                    ->label('Administration')
+                    ->icon('heroicon-o-cog-6-tooth'),
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->label(fn () => auth()->user()->name)
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle'),
-                // 'profile' => \Filament\Navigation\MenuItem::make()
-                //     ->label(fn () => auth()->user()->name)
-                //     ->icon('heroicon-m-user-circle'),
             ])
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
@@ -79,20 +102,7 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 2,
                         'lg' => 3,
                     ]),
-                \Hasnayeen\Themes\ThemesPlugin::make(),
-                \Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin::make()->color('#29b'),
-                \DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin::make()
-                    ->showEmptyPanelOnMobile(false)
-                    ->formPanelPosition('right')
-                    ->formPanelWidth('40%')
-                    ->emptyPanelBackgroundImageOpacity('70%')
-                    ->emptyPanelBackgroundImageUrl('https://picsum.photos/seed/picsum/1260/750.webp/?blur=1'),
-                \Awcodes\LightSwitch\LightSwitchPlugin::make()
-                    ->position(\Awcodes\LightSwitch\Enums\Alignment::BottomCenter)
-                    ->enabledOn([
-                        'auth.login',
-                        'auth.password',
-                    ]),
+                \Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin::make()->color('#775537'),
                 \Awcodes\Overlook\OverlookPlugin::make()
                     ->includes([
                         \App\Filament\Admin\Resources\UserResource::class,
@@ -120,10 +130,9 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                FilamentAuthenticate::class,
             ]);
     }
 }

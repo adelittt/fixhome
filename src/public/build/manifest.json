@@ -1,18 +1,35 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DN1ZmMYs.css",
+    "file": "assets/app-Ds8GUus2.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-CLHBxoRM.css",
+    "file": "assets/theme-VaIEBz8N.css",
     "src": "resources/css/filament/admin/theme.css",
     "isEntry": true
   },
+  "resources/css/landing.css": {
+    "file": "assets/landing-CtqtwSVJ.css",
+    "src": "resources/css/landing.css",
+    "isEntry": true
+  },
   "resources/js/app.js": {
-    "file": "assets/app-eMHK6VFw.js",
+    "file": "assets/app-Bwn9szyo.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/demo.tsx": {
+    "file": "assets/demo-BblF1qBh.js",
+    "name": "demo",
+    "src": "resources/js/demo.tsx",
+    "isEntry": true
+  },
+  "resources/js/landing.js": {
+    "file": "assets/landing-qkxlc46K.js",
+    "name": "landing",
+    "src": "resources/js/landing.js",
     "isEntry": true
   }
 }

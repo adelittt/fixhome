@@ -9,12 +9,14 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory,HasRoles, Notifiable;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +28,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'name',
         'email',
         'password',
+        'role',
+        'no_telepon',
     ];
 
     /**
@@ -64,6 +68,36 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        return $this->isAdmin();
+    }
+
+    public function customer(): HasOne
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+    public function teknisi(): HasOne
+    {
+        return $this->hasOne(Teknisi::class);
+    }
+
+    public function chatMessages(): HasMany
+    {
+        return $this->hasMany(ChatMessage::class, 'sender_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin' || $this->hasRole('super_admin') || $this->hasRole('admin');
+    }
+
+    public function isTeknisi(): bool
+    {
+        return $this->role === 'teknisi' || $this->hasRole('teknisi');
+    }
+
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer' || $this->hasRole('customer');
     }
 }

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumentasi Sistem FixHome</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 1.8cm 1.5cm;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+      color: #1e293b;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #0f172a;
+      text-align: center;
+      font-size: 22pt;
+      margin-bottom: 4px;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 10px;
+    }
+    .sub-header {
+      text-align: center;
+      color: #64748b;
+      font-size: 11pt;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #0369a1;
+      font-size: 14pt;
+      margin-top: 25px;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 5px;
+      page-break-after: avoid;
+    }
+    p, li {
+      font-size: 10pt;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 9.5pt;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    .diagram-box {
+      margin: 20px 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    .diagram-box svg {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      background: #ffffff;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .btn-print {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #0284c7;
+      color: #fff;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .btn-print:hover {
+      background-color: #0369a1;
+    }
+    @media print {
+      .btn-print { display: none; }
+      body { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-print" onclick="window.print()">Simpan / Cetak PDF</button>
+
+  <h1>DOKUMENTASI PERANCANGAN SISTEM FIXHOME</h1>
+  <div class="sub-header">Spesifikasi Kebutuhan, Analisis Use Case, dan Diagram Pemodelan Perangkat Lunak</div>
+
+  <h2>1. Identifikasi Aktor</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 5%;">No</th>
+        <th style="width: 20%;">Aktor</th>
+        <th style="width: 15%;">Tipe</th>
+        <th>Deskripsi Peran</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Customer</strong></td>
+        <td>Primary Actor</td>
+        <td>Pengguna yang memesan jasa perbaikan rumah. Wajib mengisi alamat saat pertama kali login.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Teknisi</strong></td>
+        <td>Primary Actor</td>
+        <td>Penyedia jasa yang menerima order, chat dengan customer, dan mengatur status Ready/Not Ready.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Admin</strong></td>
+        <td>Primary Actor</td>
+        <td>Mengelola pendaftaran teknisi, memantau transaksi komisi, dan menghapus teknisi nonaktif ≥ 5 bulan.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Payment Gateway</strong></td>
+        <td>External System</td>
+        <td>Memproses pembayaran order customer secara otomatis.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Maps API</strong></td>
+        <td>External System</td>
+        <td>Menyediakan pemetaan geolokasi, pencarian radius terdekat, dan pelacakan perjalanan teknisi.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong>Sistem Notifikasi</strong></td>
+        <td>External System</td>
+        <td>Mengirim email, push notification, dan reminder inaktif berkala ke teknisi.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>2. Aturan Bisnis Khusus (Business Rules)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 15%;">Kode</th>
+        <th>Deskripsi Aturan Bisnis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>BR-01</strong></td><td>Customer wajib mengisi alamat lengkap saat pertama kali login ke sistem.</td></tr>
+      <tr><td><strong>BR-02</strong></td><td>Sistem menyaring dan mengurutkan teknisi terdekat berdasarkan koordinat customer.</td></tr>
+      <tr><td><strong>BR-03</strong></td><td>Fitur chat hanya aktif setelah transaksi pembayaran berhasil diverifikasi.</td></tr>
+      <tr><td><strong>BR-04</strong></td><td>Dana transaksi diteruskan 95% ke teknisi dan sistem memotong 5% sebagai komisi admin.</td></tr>
+      <tr><td><strong>BR-05</strong></td><td>Setelah pembayaran, teknisi mengaktifkan GPS dan langsung meluncur ke rumah customer.</td></tr>
+      <tr><td><strong>BR-06</strong></td><td>Customer dapat melacak koordinat teknisi secara real-time via antarmuka peta.</td></tr>
+      <tr><td><strong>BR-07</strong></td><td>Teknisi berhak mengatur status ketersediaan kerja (Ready atau Not Ready / Off).</td></tr>
+      <tr><td><strong>BR-08</strong></td><td>Teknisi berstatus Off otomatis dikecualikan dari hasil pencarian dan pelacakan GPS mati.</td></tr>
+      <tr><td><strong>BR-09</strong></td><td>Admin memiliki hak untuk menghapus akun teknisi yang berstatus Off berturut-turut selama ≥ 5 bulan.</td></tr>
+      <tr><td><strong>BR-10</strong></td><td>Sistem mengirimkan reminder berkala sebelum batas 5 bulan tercapai (hari ke-30, 60, 90, 120, 150).</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <h2>3. Visualisasi Use Case Diagram</h2>
+  <div class="diagram-box">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="100%">
+      <rect x="230" y="40" width="640" height="740" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+      <text x="250" y="70" font-size="13" font-weight="bold" fill="#334155">Sistem FixHome (Boundary)</text>
+      
+      <!-- Actors -->
+      <text x="80" y="240" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">Customer</text>
+      <circle cx="80" cy="180" r="15" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+      <line x1="80" y1="195" x2="80" y2="225" stroke="#0284c7" stroke-width="2"/>
+
+      <text x="80" y="580" font-size="12" font-weight="bold" fill="#059669" text-anchor="middle">Teknisi</text>
+      <circle cx="80" cy="520" r="15" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+      <line x1="80" y1="535" x2="80" y2="565" stroke="#059669" stroke-width="2"/>
+
+      <text x="1000" y="240" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">Admin</text>
+      <circle cx="1000" cy="180" r="15" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+      <line x1="1000" y1="195" x2="1000" y2="225" stroke="#dc2626" stroke-width="2"/>
+
+      <!-- External -->
+      <rect x="940" y="440" width="130" height="45" rx="6" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+      <text x="1005" y="468" font-size="11" text-anchor="middle" font-weight="bold">Payment Gateway</text>
+
+      <rect x="940" y="540" width="130" height="45" rx="6" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+      <text x="1005" y="568" font-size="11" text-anchor="middle" font-weight="bold">Maps API</text>
+
+      <!-- Use Cases -->
+      <g transform="translate(470, 90)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#eff6ff" stroke="#3b82f6"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10" font-weight="bold">UC-01: Login</text>
+      </g>
+      <g transform="translate(280, 160)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#e0f2fe" stroke="#0284c7"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10">UC-03: Isi Alamat Awal</text>
+      </g>
+      <g transform="translate(280, 230)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#e0f2fe" stroke="#0284c7"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10">UC-05: Cari Teknisi</text>
+      </g>
+      <g transform="translate(280, 300)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#e0f2fe" stroke="#0284c7"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10">UC-07: Booking Teknisi</text>
+      </g>
+      <g transform="translate(470, 370)">
+        <ellipse cx="90" cy="22" rx="90" ry="22" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+        <text x="90" y="26" text-anchor="middle" font-size="10" font-weight="bold">UC-09: Bayar Order</text>
+      </g>
+      <g transform="translate(280, 450)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#e0f2fe" stroke="#0284c7"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10">UC-10: Chat Teknisi</text>
+      </g>
+      <g transform="translate(280, 520)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#e0f2fe" stroke="#0284c7"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10">UC-11: Lacak Posisi</text>
+      </g>
+      <g transform="translate(620, 480)">
+        <ellipse cx="85" cy="20" rx="85" ry="20" fill="#ecfdf5" stroke="#059669"/>
+        <text x="85" y="24" text-anchor="middle" font-size="10">UC-19: Aktifkan GPS</text>
+      </g>
+      <g transform="translate(620, 550)">
+        <ellipse cx="85" cy="20" rx="85" ry="20" fill="#ecfdf5" stroke="#059669"/>
+        <text x="85" y="24" text-anchor="middle" font-size="10">UC-15: Atur Ready/Off</text>
+      </g>
+      <g transform="translate(670, 160)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#fef2f2" stroke="#dc2626"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10">UC-22: Daftarkan Teknisi</text>
+      </g>
+      <g transform="translate(670, 230)">
+        <ellipse cx="80" cy="20" rx="80" ry="20" fill="#fef2f2" stroke="#dc2626"/>
+        <text x="80" y="24" text-anchor="middle" font-size="10">UC-24: Lihat Komisi 5%</text>
+      </g>
+      <g transform="translate(620, 680)">
+        <ellipse cx="90" cy="22" rx="90" ry="22" fill="#fef2f2" stroke="#dc2626"/>
+        <text x="90" y="26" text-anchor="middle" font-size="10" font-weight="bold">UC-25: Hapus Teknisi Off</text>
+      </g>
+
+      <!-- Connections -->
+      <line x1="120" y1="200" x2="280" y2="180" stroke="#94a3b8"/>
+      <line x1="120" y1="200" x2="280" y2="250" stroke="#94a3b8"/>
+      <line x1="120" y1="200" x2="280" y2="320" stroke="#94a3b8"/>
+      <line x1="120" y1="210" x2="470" y2="390" stroke="#94a3b8"/>
+      <line x1="120" y1="220" x2="280" y2="470" stroke="#94a3b8"/>
+      <line x1="120" y1="230" x2="280" y2="540" stroke="#94a3b8"/>
+      
+      <line x1="120" y1="550" x2="620" y2="500" stroke="#94a3b8"/>
+      <line x1="120" y1="550" x2="620" y2="570" stroke="#94a3b8"/>
+
+      <line x1="960" y1="200" x2="830" y2="180" stroke="#94a3b8"/>
+      <line x1="960" y1="200" x2="830" y2="250" stroke="#94a3b8"/>
+      <line x1="960" y1="220" x2="780" y2="685" stroke="#94a3b8"/>
+
+      <line x1="650" y1="392" x2="940" y2="460" stroke="#94a3b8"/>
+      <line x1="440" y1="540" x2="940" y2="560" stroke="#94a3b8"/>
+    </svg>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>4. Business Process Model (BPMN)</h2>
+  <div class="diagram-box">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="100%">
+      <!-- Pool -->
+      <rect x="20" y="20" width="960" height="580" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" rx="6"/>
+      <!-- Lanes -->
+      <rect x="20" y="20" width="40" height="150" fill="#0284c7"/><text x="45" y="95" fill="#fff" transform="rotate(-90 45 95)" text-anchor="middle" font-size="11" font-weight="bold">CUSTOMER</text>
+      <rect x="20" y="170" width="40" height="150" fill="#2563eb"/><text x="45" y="245" fill="#fff" transform="rotate(-90 45 245)" text-anchor="middle" font-size="10" font-weight="bold">SISTEM &amp; GATEWAY</text>
+      <rect x="20" y="320" width="40" height="150" fill="#059669"/><text x="45" y="395" fill="#fff" transform="rotate(-90 45 395)" text-anchor="middle" font-size="11" font-weight="bold">TEKNISI</text>
+      <rect x="20" y="470" width="40" height="130" fill="#dc2626"/><text x="45" y="535" fill="#fff" transform="rotate(-90 45 535)" text-anchor="middle" font-size="11" font-weight="bold">ADMIN</text>
+      
+      <!-- Nodes -->
+      <circle cx="100" cy="95" r="14" fill="#ecfdf5" stroke="#10b981" stroke-width="3"/>
+      <rect x="140" y="70" width="110" height="50" rx="6" fill="#f8fafc" stroke="#0284c7"/><text x="195" y="92" font-size="9" text-anchor="middle">Input Alamat &amp;</text><text x="195" y="105" font-size="9" text-anchor="middle">Pilih Jadwal</text>
+      <rect x="290" y="70" width="110" height="50" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/><text x="345" y="92" font-size="9" font-weight="bold" text-anchor="middle">Bayar Tagihan</text><text x="345" y="105" font-size="9" text-anchor="middle">(Full Payment)</text>
+      <rect x="290" y="220" width="110" height="50" rx="6" fill="#eff6ff" stroke="#2563eb"/><text x="345" y="242" font-size="9" text-anchor="middle">Split Saldo:</text><text x="345" y="255" font-size="9" font-weight="bold" text-anchor="middle">95% Tek, 5% Adm</text>
+      <rect x="440" y="220" width="110" height="50" rx="6" fill="#eff6ff" stroke="#2563eb"/><text x="495" y="242" font-size="9" text-anchor="middle">Buka Kunci Fitur</text><text x="495" y="255" font-size="9" text-anchor="middle">Chat &amp; GPS Tracking</text>
+      <rect x="440" y="370" width="110" height="50" rx="6" fill="#f8fafc" stroke="#059669"/><text x="495" y="392" font-size="9" text-anchor="middle">Aktifkan GPS &amp;</text><text x="495" y="405" font-size="9" text-anchor="middle">Menuju Customer</text>
+      <rect x="590" y="70" width="110" height="50" rx="6" fill="#f8fafc" stroke="#0284c7"/><text x="645" y="92" font-size="9" text-anchor="middle">Lacak Posisi</text><text x="645" y="105" font-size="9" text-anchor="middle">secara Real-Time</text>
+      <rect x="590" y="370" width="110" height="50" rx="6" fill="#f8fafc" stroke="#059669"/><text x="645" y="392" font-size="9" text-anchor="middle">Kerjakan Perbaikan</text><text x="645" y="405" font-size="9" text-anchor="middle">&amp; Set Selesai</text>
+      <rect x="740" y="70" width="110" height="50" rx="6" fill="#f8fafc" stroke="#0284c7"/><text x="795" y="92" font-size="9" text-anchor="middle">Konfirmasi Selesai</text><text x="795" y="105" font-size="9" text-anchor="middle">&amp; Beri Ulasan</text>
+      <rect x="290" y="510" width="110" height="50" rx="6" fill="#fef2f2" stroke="#dc2626"/><text x="345" y="532" font-size="9" text-anchor="middle">Terima 5% Komisi</text><text x="345" y="545" font-size="9" text-anchor="middle">ke Rekening Kas</text>
+      <circle cx="910" cy="95" r="14" fill="#fef2f2" stroke="#ef4444" stroke-width="3"/>
+
+      <!-- Arrows -->
+      <line x1="114" y1="95" x2="140" y2="95" stroke="#475569" stroke-width="1.5"/>
+      <line x1="250" y1="95" x2="290" y2="95" stroke="#475569" stroke-width="1.5"/>
+      <line x1="345" y1="120" x2="345" y2="220" stroke="#475569" stroke-width="1.5"/>
+      <line x1="345" y1="270" x2="345" y2="510" stroke="#475569" stroke-width="1.5"/>
+      <line x1="400" y1="245" x2="440" y2="245" stroke="#475569" stroke-width="1.5"/>
+      <line x1="495" y1="270" x2="495" y2="370" stroke="#475569" stroke-width="1.5"/>
+      <path d="M 495 370 L 495 150 L 645 150 L 645 120" fill="none" stroke="#475569" stroke-width="1.5"/>
+      <line x1="550" y1="395" x2="590" y2="395" stroke="#475569" stroke-width="1.5"/>
+      <path d="M 700" y1="395" L 795 395 L 795 120" fill="none" stroke="#475569" stroke-width="1.5"/>
+      <line x1="850" y1="95" x2="896" y2="95" stroke="#475569" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>5. Entity Relationship Diagram (ERD)</h2>
+  <div class="diagram-box">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="100%" style="font-family:monospace;">
+      <!-- USERS -->
+      <g transform="translate(390, 20)">
+        <rect width="220" height="120" fill="#fff" stroke="#1e293b" rx="4"/>
+        <rect width="220" height="24" fill="#1e293b"/>
+        <text x="110" y="16" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">USERS</text>
+        <text x="10" y="42" font-size="10" fill="#0284c7">PK  id : bigint</text>
+        <text x="10" y="60" font-size="10">    email : varchar</text>
+        <text x="10" y="78" font-size="10">    role : varchar</text>
+        <text x="10" y="96" font-size="10">    no_telepon : varchar</text>
+      </g>
+
+      <!-- CUSTOMER -->
+      <g transform="translate(60, 180)">
+        <rect width="220" height="130" fill="#fff" stroke="#0284c7" rx="4"/>
+        <rect width="220" height="24" fill="#0284c7"/>
+        <text x="110" y="16" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">CUSTOMER</text>
+        <text x="10" y="42" font-size="10" fill="#0284c7">PK  id : bigint</text>
+        <text x="10" y="60" font-size="10" fill="#d97706">FK  user_id : bigint</text>
+        <text x="10" y="78" font-size="10">    nama_lengkap : varchar</text>
+        <text x="10" y="96" font-size="10">    alamat_lengkap : text</text>
+        <text x="10" y="114" font-size="10">    lat, lng : decimal</text>
+      </g>
+
+      <!-- TEKNISI -->
+      <g transform="translate(720, 180)">
+        <rect width="220" height="130" fill="#fff" stroke="#059669" rx="4"/>
+        <rect width="220" height="24" fill="#059669"/>
+        <text x="110" y="16" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">TEKNISI</text>
+        <text x="10" y="42" font-size="10" fill="#0284c7">PK  id : bigint</text>
+        <text x="10" y="60" font-size="10" fill="#d97706">FK  user_id : bigint</text>
+        <text x="10" y="78" font-size="10">    nama_lengkap : varchar</text>
+        <text x="10" y="96" font-size="10">    status_kesiapan : varchar</text>
+        <text x="10" y="114" font-size="10">    off_start_date : datetime</text>
+      </g>
+
+      <!-- BOOKING -->
+      <g transform="translate(390, 310)">
+        <rect width="220" height="150" fill="#fff" stroke="#2563eb" rx="4"/>
+        <rect width="220" height="24" fill="#2563eb"/>
+        <text x="110" y="16" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">BOOKING</text>
+        <text x="10" y="42" font-size="10" fill="#0284c7">PK  id : bigint</text>
+        <text x="10" y="60" font-size="10" fill="#d97706">FK  customer_id : bigint</text>
+        <text x="10" y="78" font-size="10" fill="#d97706">FK  teknisi_id : bigint</text>
+        <text x="10" y="96" font-size="10">    jadwal : datetime</text>
+        <text x="10" y="114" font-size="10">    status_order : varchar</text>
+        <text x="10" y="132" font-size="10">    total_biaya : decimal</text>
+      </g>
+
+      <!-- TRANSAKSI -->
+      <g transform="translate(60, 480)">
+        <rect width="230" height="140" fill="#fff" stroke="#d97706" rx="4"/>
+        <rect width="230" height="24" fill="#d97706"/>
+        <text x="115" y="16" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">TRANSAKSI</text>
+        <text x="10" y="42" font-size="10" fill="#0284c7">PK  id : bigint</text>
+        <text x="10" y="60" font-size="10" fill="#d97706">FK  booking_id : bigint</text>
+        <text x="10" y="78" font-size="10">    gross_amount : decimal</text>
+        <text x="10" y="96" font-size="10" fill="#16a34a">    komisi_admin : 5%</text>
+        <text x="10" y="114" font-size="10" fill="#16a34a">    dana_teknisi : 95%</text>
+      </g>
+
+      <!-- PELACAKAN -->
+      <g transform="translate(720, 490)">
+        <rect width="220" height="110" fill="#fff" stroke="#64748b" rx="4"/>
+        <rect width="220" height="24" fill="#64748b"/>
+        <text x="110" y="16" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">PELACAKAN_LOKASI</text>
+        <text x="10" y="42" font-size="10" fill="#0284c7">PK  id : bigint</text>
+        <text x="10" y="60" font-size="10" fill="#d97706">FK  booking_id : bigint</text>
+        <text x="10" y="78" font-size="10">    current_lat : decimal</text>
+        <text x="10" y="96" font-size="10">    current_lng : decimal</text>
+      </g>
+
+      <!-- Lines -->
+      <line x1="390" y1="80" x2="170" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="610" y1="80" x2="830" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="170" y1="310" x2="390" y2="380" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="830" y1="310" x2="610" y2="380" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="390" y1="430" x2="290" y2="530" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="610" y1="430" x2="720" y2="530" stroke="#94a3b8" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>6. Flowchart Operasional</h2>
+  <div class="diagram-box">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 780" width="80%">
+      <rect x="250" y="20" width="150" height="36" rx="18" fill="#0284c7"/><text x="325" y="43" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">Mulai (Customer Login)</text>
+      <polygon points="325,80 415,115 325,150 235,115" fill="#fef3c7" stroke="#d97706"/><text x="325" y="118" font-size="9" font-weight="bold" text-anchor="middle">Alamat Ada?</text>
+      <rect x="470" y="95" width="130" height="40" rx="4" fill="#f8fafc" stroke="#64748b"/><text x="535" y="118" font-size="9" text-anchor="middle">Isi Alamat Awal (BR-01)</text>
+      <rect x="240" y="180" width="170" height="40" rx="4" fill="#eff6ff" stroke="#2563eb"/><text x="325" y="205" font-size="9" text-anchor="middle">Filter Teknisi Ready Terdekat</text>
+      <rect x="240" y="250" width="170" height="40" rx="4" fill="#fff" stroke="#64748b"/><text x="325" y="275" font-size="9" text-anchor="middle">Pilih Teknisi &amp; Jadwal</text>
+      <rect x="240" y="320" width="170" height="40" rx="4" fill="#fef3c7" stroke="#d97706"/><text x="325" y="345" font-size="9" font-weight="bold" text-anchor="middle">Bayar Tagihan Order</text>
+      <polygon points="325,390 415,425 325,460 235,425" fill="#fef3c7" stroke="#d97706"/><text x="325" y="428" font-size="9" font-weight="bold" text-anchor="middle">Bayar Sukses?</text>
+      <rect x="470" y="405" width="120" height="40" rx="4" fill="#fef2f2" stroke="#dc2626"/><text x="530" y="428" font-size="9" fill="#b91c1c" text-anchor="middle">Order Gagal/Batal</text>
+      <rect x="230" y="490" width="190" height="45" rx="4" fill="#ecfdf5" stroke="#059669"/><text x="325" y="510" font-size="9" font-weight="bold" fill="#047857" text-anchor="middle">Split Saldo Otomatis</text><text x="325" y="525" font-size="8.5" fill="#065f46" text-anchor="middle">95% Teknisi, 5% Komisi Admin</text>
+      <rect x="230" y="565" width="190" height="40" rx="4" fill="#fff" stroke="#2563eb"/><text x="325" y="590" font-size="9" text-anchor="middle">Buka Fitur Chat &amp; Tracking GPS</text>
+      <rect x="230" y="635" width="190" height="40" rx="4" fill="#fff" stroke="#64748b"/><text x="325" y="660" font-size="9" text-anchor="middle">Teknisi Servis &amp; Konfirmasi Selesai</text>
+      <rect x="250" y="705" width="150" height="36" rx="18" fill="#10b981"/><text x="325" y="728" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">Selesai (Rating / Komplain)</text>
+
+      <!-- Connections -->
+      <line x1="325" y1="56" x2="325" y2="80" stroke="#475569"/>
+      <line x1="415" y1="115" x2="470" y2="115" stroke="#475569"/>
+      <path d="M 535 135 L 535 160 L 325 160 L 325 180" fill="none" stroke="#475569"/>
+      <line x1="325" y1="150" x2="325" y2="180" stroke="#475569"/>
+      <line x1="325" y1="220" x2="325" y2="250" stroke="#475569"/>
+      <line x1="325" y1="290" x2="325" y2="320" stroke="#475569"/>
+      <line x1="325" y1="360" x2="325" y2="390" stroke="#475569"/>
+      <line x1="415" y1="425" x2="470" y2="425" stroke="#475569"/>
+      <line x1="325" y1="460" x2="325" y2="490" stroke="#475569"/>
+      <line x1="325" y1="535" x2="325" y2="565" stroke="#475569"/>
+      <line x1="325" y1="605" x2="325" y2="635" stroke="#475569"/>
+      <line x1="325" y1="675" x2="325" y2="705" stroke="#475569"/>
+    </svg>
+  </div>
+
+  <h2>7. Activity Diagram: Kebijakan Status Off 5 Bulan</h2>
+  <div class="diagram-box">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 340" width="90%">
+      <rect x="20" y="20" width="710" height="300" fill="#ffffff" stroke="#cbd5e1" rx="6"/>
+      <rect x="20" y="20" width="230" height="30" fill="#059669"/><text x="135" y="40" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">TEKNISI</text>
+      <rect x="250" y="20" width="250" height="30" fill="#2563eb"/><text x="375" y="40" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">SISTEM FIXHOME</text>
+      <rect x="500" y="20" width="230" height="30" fill="#dc2626"/><text x="615" y="40" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">ADMIN</text>
+      
+      <line x1="250" y1="20" x2="250" y2="320" stroke="#cbd5e1"/>
+      <line x1="500" y1="20" x2="500" y2="320" stroke="#cbd5e1"/>
+
+      <circle cx="135" cy="80" r="10" fill="#0f172a"/>
+      <rect x="65" y="110" width="140" height="35" rx="4" fill="#f8fafc" stroke="#059669"/><text x="135" y="132" font-size="9">Set Status Off (BR-07)</text>
+      <rect x="300" y="110" width="150" height="35" rx="4" fill="#eff6ff" stroke="#2563eb"/><text x="375" y="132" font-size="9">Hitung Hari Inaktif Otomatis</text>
+      <rect x="300" y="180" width="150" height="40" rx="4" fill="#eff6ff" stroke="#2563eb"/><text x="375" y="198" font-size="8.5">Kirim Notif Reminder</text><text x="375" y="210" font-size="8.5">(Hari 30, 60, 90, 120, 150)</text>
+      <rect x="545" y="180" width="140" height="35" rx="4" fill="#fef2f2" stroke="#dc2626"/><text x="615" y="202" font-size="9" font-weight="bold" fill="#b91c1c">Hapus Akun (≥ 5 Bln)</text>
+
+      <!-- Lines -->
+      <line x1="135" y1="90" x2="135" y2="110" stroke="#475569"/>
+      <line x1="205" y1="127" x2="300" y2="127" stroke="#475569"/>
+      <line x1="375" y1="145" x2="375" y2="180" stroke="#475569"/>
+      <line x1="300" y1="200" x2="205" y2="200" stroke="#475569"/>
+      <path d="M 135 180 L 135 160 L 300 160" fill="none" stroke="#16a34a"/>
+      <line x1="450" y1="197" x2="545" y2="197" stroke="#dc2626"/>
+    </svg>
+  </div>
+
+</body>
+</html>

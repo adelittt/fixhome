@@ -5,6 +5,223 @@
 [x-cloak] {
     display: none !important;
 }
+
 .grid-image .filepond--item {
     width: calc(33.3% - 0.5em);
+}
+
+/* ==========================================================================
+   FixHome Plus — Warm Tactile Neumorphic Admin Theme
+   ========================================================================== */
+
+:root {
+    --fh-surface: #f9f9f9;
+    --fh-surface-low: #f3f3f3;
+    --fh-primary: #5d3e22;
+    --fh-primary-container: #775537;
+    --fh-secondary: #4c6264;
+    --fh-secondary-container: #cce4e6;
+    --fh-tertiary: #6e5d25;
+    --fh-tertiary-fixed: #fae19c;
+    --fh-on-surface: #1a1c1c;
+    --fh-on-surface-variant: #50453c;
+    --fh-outline-variant: #d3c4b9;
+}
+
+/* Base Canvas */
+body.fi-body {
+    background-color: var(--fh-surface) !important;
+    color: var(--fh-on-surface);
+    background-image:
+        radial-gradient(circle at 8% 0%, rgba(204, 228, 230, 0.32) 0%, transparent 34%),
+        radial-gradient(circle at 92% 4%, rgba(250, 225, 156, 0.24) 0%, transparent 32%);
+    background-attachment: fixed;
+}
+
+/* Topbar (Frosted Glass matching Landing Header) */
+.fi-topbar > nav {
+    background-color: rgba(249, 249, 249, 0.88) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(93, 62, 34, 0.05) !important;
+    border-bottom: 1px solid rgba(211, 196, 185, 0.35);
+}
+
+/* Sidebar Surface */
+.fi-sidebar {
+    background-color: var(--fh-surface) !important;
+    box-shadow: 6px 0 20px rgba(93, 62, 34, 0.05);
+    border-right: 1px solid rgba(211, 196, 185, 0.35);
+}
+
+.fi-sidebar-header {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid rgba(211, 196, 185, 0.3);
+}
+
+/* Sidebar Group Labels */
+.fi-sidebar-group-label {
+    color: var(--fh-secondary) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em;
+}
+
+/* Sidebar Navigation Items */
+.fi-sidebar-item-button {
+    border-radius: 9999px !important;
+    padding-left: 0.9rem !important;
+    padding-right: 0.9rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-sidebar-item-button:hover {
+    background-color: var(--fh-surface) !important;
+    box-shadow: -3px -3px 8px #ffffff, 3px 3px 8px #d2d2d2;
+}
+
+.fi-sidebar-item-label {
+    color: var(--fh-on-surface-variant) !important;
+    font-weight: 600 !important;
+}
+
+.fi-sidebar-item-button:hover .fi-sidebar-item-label,
+.fi-sidebar-item-button:hover .fi-sidebar-item-icon {
+    color: var(--fh-primary) !important;
+}
+
+/* Active Sidebar Item (Warm Espresso Tactile Pill) */
+.fi-sidebar-item-active > .fi-sidebar-item-button {
+    background-color: var(--fh-primary-container) !important;
+    box-shadow: 0 8px 18px rgba(119, 85, 55, 0.28), -4px -4px 10px #ffffff !important;
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-button .fi-sidebar-item-label,
+.fi-sidebar-item-active > .fi-sidebar-item-button .fi-sidebar-item-icon {
+    color: #ffffff !important;
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-button .fi-badge {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: #fae19c !important;
+    box-shadow: none !important;
+}
+
+/* Headings in Fraunces Serif (matching font-recoleta) */
+.fi-header-heading {
+    font-family: 'Fraunces', Georgia, serif !important;
+    color: var(--fh-primary) !important;
+    letter-spacing: -0.02em !important;
+    font-weight: 700 !important;
+}
+
+.fi-section-header-heading,
+.fi-ta-header-heading {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    color: var(--fh-primary) !important;
+    letter-spacing: -0.01em !important;
+}
+
+/* Tactile Neumorphic Cards, Tables, Stats, Overlook Widgets */
+.fi-section,
+.fi-ta-ctn,
+.fi-wi-stats-overview-stat,
+.overlook-card,
+.fi-wi-chart > .fi-section {
+    background-color: var(--fh-surface) !important;
+    border-radius: 24px !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    box-shadow: -8px -8px 18px #ffffff, 8px 8px 18px #d2d2d2 !important;
+}
+
+.overlook-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.overlook-card:hover {
+    transform: translateY(-2px);
+    box-shadow: -10px -10px 22px #ffffff, 10px 10px 22px #c8c8c8 !important;
+}
+
+.overlook-name {
+    color: var(--fh-on-surface-variant) !important;
+    font-weight: 600 !important;
+}
+
+.overlook-count {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    color: var(--fh-primary) !important;
+}
+
+.overlook-icon {
+    color: var(--fh-secondary-container) !important;
+}
+
+/* Table Header & Rows */
+.fi-ta-header-ctn {
+    border-bottom: 1px solid rgba(211, 196, 185, 0.4) !important;
+}
+
+.fi-ta-table thead tr {
+    background-color: var(--fh-surface-low) !important;
+}
+
+.fi-ta-header-cell-label {
+    color: var(--fh-primary) !important;
+    font-weight: 700 !important;
+}
+
+.fi-ta-row:hover {
+    background-color: rgba(204, 228, 230, 0.22) !important;
+}
+
+/* Inset Inputs & Global Search */
+.fi-input-wrp {
+    background-color: var(--fh-surface) !important;
+    border-radius: 16px !important;
+    border-color: transparent !important;
+    box-shadow: inset 3px 3px 6px #d6d6d6, inset -3px -3px 6px #ffffff !important;
+}
+
+.fi-input-wrp:focus-within {
+    box-shadow: inset 3px 3px 6px #d6d6d6, inset -3px -3px 6px #ffffff, 0 0 0 2px rgba(119, 85, 55, 0.25) !important;
+}
+
+/* Primary Buttons (Pill Espresso CTA) */
+.fi-btn-color-primary {
+    border-radius: 9999px !important;
+    background-color: var(--fh-primary-container) !important;
+    box-shadow: 0 6px 14px rgba(119, 85, 55, 0.28), -3px -3px 8px #ffffff !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-btn-color-primary:hover {
+    background-color: var(--fh-primary) !important;
+    transform: translateY(-1px);
+}
+
+/* Secondary / Gray Buttons */
+.fi-btn-color-gray {
+    border-radius: 9999px !important;
+    background-color: var(--fh-surface) !important;
+    color: var(--fh-primary) !important;
+    box-shadow: -3px -3px 8px #ffffff, 3px 3px 8px #d2d2d2 !important;
+}
+
+/* Badges */
+.fi-badge {
+    border-radius: 9999px !important;
+    font-weight: 700 !important;
+}
+
+/* Dropdowns & Modals */
+.fi-dropdown-panel,
+.fi-modal-window {
+    background-color: var(--fh-surface) !important;
+    border-radius: 24px !important;
+    box-shadow: -8px -8px 20px rgba(255, 255, 255, 0.9), 10px 10px 26px rgba(93, 62, 34, 0.16) !important;
+}
+
+/* Pagination */
+.fi-pagination-item-button {
+    border-radius: 9999px !important;
 }

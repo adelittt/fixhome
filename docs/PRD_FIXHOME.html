@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Requirement Document - FixHome Platform</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 15mm 20mm 15mm;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10pt;
+      line-height: 1.5;
+      color: #1e293b;
+      margin: 0;
+      padding: 20px;
+    }
+    .btn-print {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 11pt;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+    }
+    .btn-print:hover {
+      background-color: #0369a1;
+    }
+    @media print {
+      .btn-print {
+        display: none;
+      }
+      body {
+        padding: 0;
+      }
+    }
+    h1 {
+      font-size: 20pt;
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .sub-title {
+      text-align: center;
+      font-size: 10.5pt;
+      color: #64748b;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 12px;
+    }
+    h2 {
+      font-size: 12pt;
+      color: #0369a1;
+      border-bottom: 1.5px solid #cbd5e1;
+      padding-bottom: 4px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      page-break-after: avoid;
+    }
+    h3 {
+      font-size: 10.5pt;
+      color: #0f172a;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      page-break-after: avoid;
+    }
+    p, ul, ol {
+      margin-top: 4px;
+      margin-bottom: 8px;
+      text-align: justify;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 14px;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 7px 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 8pt;
+      font-weight: bold;
+    }
+    .badge-primary { background-color: #e0f2fe; color: #0369a1; }
+    .badge-ext { background-color: #f1f5f9; color: #475569; }
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="btn-print" onclick="window.print()">Simpan / Cetak ke PDF</button>
+
+  <h1>PRODUCT REQUIREMENT DOCUMENT</h1>
+  <div class="sub-title">SISTEM PLATFORM FIXHOME &bull; VERSI 1.0 (REVISI)</div>
+
+  <h2>1. Ringkasan Proyek & Sasaran</h2>
+  <table style="margin-bottom: 12px;">
+    <tr>
+      <td style="width: 25%; font-weight: bold;">Nama Produk</td>
+      <td style="width: 75%;">FixHome Platform</td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Versi / Tanggal Rilis</td>
+      <td>Versi 1.0 (Revisi) / Q4 2026</td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">Fokus Bisnis</td>
+      <td>Marketplace Jasa Perbaikan Rumah Berbasis Lokasi (Radius) &amp; Transaksi Finansial Otomatis</td>
+    </tr>
+  </table>
+  <p>
+    FixHome adalah platform digital berbasis titik lokasi yang menghubungkan pemilik rumah (<em>Customer</em>) secara instan dengan teknisi servis dan perbaikan rumah (<em>Teknisi</em>). Sistem ini menyelesaikan problem ketidakpastian jarak, tarif, dan monitoring kehadiran teknisi lapangan melalui skema bagi hasil transparan: <strong>95% dana langsung untuk teknisi</strong> dan <strong>5% komisi platform/admin</strong>.
+  </p>
+
+  <h2>2. Karakteristik & Peran Pengguna (User Persona)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Peran / Aktor</th>
+        <th style="width: 18%;">Tipe</th>
+        <th>Deskripsi &amp; Batasan Wewenang</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Customer</strong></td>
+        <td><span class="badge badge-primary">Primary Actor</span></td>
+        <td>Pemilik rumah pemesan jasa. Wajib mengisi titik koordinat alamat rumah saat pertama login sebagai dasar filter teknisi terdekat.</td>
+      </tr>
+      <tr>
+        <td><strong>Teknisi</strong></td>
+        <td><span class="badge badge-primary">Primary Actor</span></td>
+        <td>Mitra kerja lapangan. Berhak mengatur status <em>Ready/Off</em>, membagikan posisi navigasi, dan menerima hak komisi 95%.</td>
+      </tr>
+      <tr>
+        <td><strong>Admin</strong></td>
+        <td><span class="badge badge-primary">Primary Actor</span></td>
+        <td>Pengelola akun teknisi baru, pemantau transaksi berjalan, pemantau komisi 5%, dan eksekutor pembersihan akun teknisi tidak aktif (&ge; 5 bulan).</td>
+      </tr>
+      <tr>
+        <td><strong>Payment Gateway</strong></td>
+        <td><span class="badge badge-ext">External System</span></td>
+        <td>Memproses pembayaran tagihan dari pelanggan dan memfasilitasi pembagian dana secara otomatis.</td>
+      </tr>
+      <tr>
+        <td><strong>Maps API</strong></td>
+        <td><span class="badge badge-ext">External System</span></td>
+        <td>Menyediakan peta digital, validasi titik koordinat alamat, dan rute pelacakan perjalanan teknisi.</td>
+      </tr>
+      <tr>
+        <td><strong>Sistem Notifikasi</strong></td>
+        <td><span class="badge badge-ext">External System</span></td>
+        <td>Mengirim email, push notification, serta peringatan (*reminder*) status inaktif teknisi secara terprogram.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Aturan Bisnis Inti (Business Rules)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 15%;">Kode</th>
+        <th>Klausul Kebijakan Bisnis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>BR-01</strong></td><td>Customer wajib melengkapi alamat utama beserta penandaan peta pada saat pertama kali login.</td></tr>
+      <tr><td><strong>BR-02</strong></td><td>Pencarian dan penataan teknisi difilter otomatis berdasarkan jarak terdekat dari alamat pelanggan dan status <em>Ready</em>.</td></tr>
+      <tr><td><strong>BR-03</strong></td><td>Kanal komunikasi <em>Chat</em> baru terbuka dan dapat digunakan hanya setelah pembayaran terverifikasi lunas.</td></tr>
+      <tr><td><strong>BR-04</strong></td><td>Pembayaran order otomatis dibagi: 95% disalurkan ke teknisi dan 5% dipotong untuk komisi platform (admin).</td></tr>
+      <tr><td><strong>BR-05</strong></td><td>Setelah pembayaran terverifikasi, teknisi dapat memulai obrolan chat dan menuju lokasi alamat customer.</td></tr>
+      <tr><td><strong>BR-06</strong></td><td>Customer dapat melacak pergerakan teknisi di peta secara <em>real-time</em> selama teknisi dalam perjalanan.</td></tr>
+      <tr><td><strong>BR-07</strong></td><td>Teknisi dapat menentukan status ketersediaan secara mandiri: <em>Ready</em> atau <em>Not Ready (Off)</em>.</td></tr>
+      <tr><td><strong>BR-08</strong></td><td>Teknisi berstatus <em>Off</em> tidak menerima notifikasi order dan koordinat posisinya tidak dapat dilacak.</td></tr>
+      <tr><td><strong>BR-09</strong></td><td>Admin berhak menghapus akun teknisi yang berstatus <em>Off</em> berturut-turut selama &ge; 5 bulan (150 hari).</td></tr>
+      <tr><td><strong>BR-10</strong></td><td>Sistem mengirim peringatan berkala ke teknisi sebelum batas 5 bulan tercapai (hari ke-30, 60, 90, 120, dan 150).</td></tr>
+      <tr><td><strong>BR-11</strong></td><td>Wewenang operasional admin dibatasi hanya untuk pendaftaran teknisi, monitoring transaksi, dan penghapusan teknisi pasif.</td></tr>
+      <tr><td><strong>BR-12</strong></td><td>Kalkulasi komisi 5% untuk admin dihitung dan dicatat otomatis oleh sistem di setiap pembayaran.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <h2>4. Spesifikasi Fungsional Produk</h2>
+
+  <h3>4.1 Modul Registrasi &amp; Akses Pengguna</h3>
+  <ul>
+    <li><strong>UC-01 &amp; UC-02 (Login/Logout):</strong> Autentikasi berbasis peran (Role-Based Access Control) untuk Customer, Teknisi, dan Admin.</li>
+    <li><strong>UC-03 (Isi Alamat Awal):</strong> Modal wajib saat Customer pertama kali masuk untuk memilih lokasi via pin point Maps API.</li>
+    <li><strong>UC-04 (Kelola Profil):</strong> Pembaruan informasi profil pengguna, nomor kontak darurat, dan kata sandi.</li>
+  </ul>
+
+  <h3>4.2 Modul Penelusuran &amp; Pemesanan Layanan</h3>
+  <ul>
+    <li><strong>UC-05 &amp; UC-29 (Filter &amp; Tampilkan Teknisi):</strong> Sistem menghitung radius terdekat dan menyajikan daftar teknisi berstatus <em>Ready</em>.</li>
+    <li><strong>UC-06 (Detail Teknisi):</strong> Menampilkan portofolio pengerjaan, tarif dasar, rating bintang, dan perkiraan jarak tempuh.</li>
+    <li><strong>UC-07 &amp; UC-08 (Booking &amp; Pemilihan Jadwal):</strong> Formulir pemesanan rincian kerusakan, catatan perbaikan, serta penentuan hari dan jam pengerjaan.</li>
+  </ul>
+
+  <h3>4.3 Modul Transaksi &amp; Pembayaran</h3>
+  <ul>
+    <li><strong>UC-09 &amp; UC-28 (Pembayaran &amp; Split Dana):</strong> Integrasi gerbang pembayaran virtual account, e-wallet, atau kartu dengan pembagian otomatis (95% saldo teknisi, 5% kas admin).</li>
+    <li><strong>UC-20 &amp; UC-24 (Monitoring Finansial):</strong> Menu rekapitulasi pendapatan teknisi dan laporan akumulasi komisi 5% bagi admin.</li>
+  </ul>
+
+  <h3>4.4 Modul Lapangan, Pelacakan &amp; Komunikasi</h3>
+  <ul>
+    <li><strong>UC-10 &amp; UC-17 (Chat Dua Arah):</strong> Fitur pesan instan khusus untuk koordinasi lanjutan pasca-pembayaran.</li>
+    <li><strong>UC-11 &amp; UC-19 (Pelacakan GPS):</strong> Penyiaran titik lokasi teknisi secara periodik ke perangkat customer menggunakan integrasi Maps API.</li>
+    <li><strong>UC-16 &amp; UC-18 (Manajemen Pekerjaan Teknisi):</strong> Penerimaan pesanan, konfirmasi keberangkatan, hingga pembaruan status perbaikan selesai.</li>
+  </ul>
+
+  <h3>4.5 Modul Penjaminan Kualitas &amp; Tata Kelola Mitra</h3>
+  <ul>
+    <li><strong>UC-12, UC-13, &amp; UC-14 (Penyelesaian &amp; Umpan Balik):</strong> Konfirmasi penerimaan hasil servis, pemberian ulasan &amp; rating bintang, serta sarana komplain pelanggan.</li>
+    <li><strong>UC-15, UC-21, UC-25, &amp; UC-30 (Otomatisasi Status Teknisi):</strong> Pengaturan kesiapan kerja teknisi, kalkulasi masa tidak aktif otomatis, pengiriman reminder bertahap, dan antrean hapus akun &ge; 5 bulan.</li>
+    <li><strong>UC-22 (Pendaftaran Mitra Admin):</strong> Input verifikasi dokumen, keahlian, dan identitas teknisi resmi oleh admin.</li>
+  </ul>
+
+  <h2>5. Persyaratan Kualitas Sistem (Non-Fungsional)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 28%;">Parameter Kualitas</th>
+        <th>Standar &amp; Ketentuan Teknis</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Kinerja &amp; Kecepatan</strong></td>
+        <td>Waktu respons pencarian teknisi terdekat &lt; 2 detik; interval transmisi koordinat GPS berada pada rentang 5–10 detik.</td>
+      </tr>
+      <tr>
+        <td><strong>Keamanan Data</strong></td>
+        <td>Enkripsi data kata sandi (bcrypt/Argon2), komunikasi berbasis HTTPS/TLS 1.3, dan penerapan token otentikasi JWT.</td>
+      </tr>
+      <tr>
+        <td><strong>Integritas Transaksi</strong></td>
+        <td>Penerapan prinsip ACID database untuk menjamin perhitungan komisi 5% dan dana 95% tidak mengalami selisih balance.</td>
+      </tr>
+      <tr>
+        <td><strong>Ketersediaan (Uptime)</strong></td>
+        <td>Target keandalan sistem online 99,5% per bulan dengan mekanisme backup berkala harian.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6. Metrik Keberhasilan (Key Performance Indicators)</h2>
+  <ul>
+    <li><strong>Conversion Rate:</strong> &ge; 35% pencarian teknisi berlanjut hingga transaksi terbayar lunas.</li>
+    <li><strong>Punctuality:</strong> Tingkat deviasi keterlambatan teknisi tiba di lokasi pelanggan &lt; 15 menit dari estimasi peta.</li>
+    <li><strong>Partner Retention:</strong> Rasio teknisi yang terhapus karena pasif (&ge; 5 bulan) &lt; 8% dari total mitra aktif.</li>
+    <li><strong>Customer Rating:</strong> Rata-rata kepuasan pengerjaan servis berada pada skor &ge; 4,6 dari skala 5,0.</li>
+  </ul>
+
+</body>
+</html>
