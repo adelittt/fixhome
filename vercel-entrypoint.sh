@@ -36,7 +36,9 @@ if [ -n "${DATABASE_URL:-}" ] || [ -n "${POSTGRES_URL:-}" ] || [ "${DB_CONNECTIO
             }
             $needsSeed = !$db->table("users")->where("email", "customer@fixhome.com")->exists()
                 || !$db->table("users")->where("email", "admin@fixhome.com")->exists()
-                || !$db->table("permissions")->where("name", "view_any_booking")->exists();
+                || !$db->table("permissions")->where("name", "view_any_booking")->exists()
+                || $db->table("teknisi")->count() < 6
+                || !$db->table("transaksis")->where("kode_transaksi", "TRX-FIXHOME002")->exists();
             if ($needsSeed) {
                 fwrite(STDERR, "[fixhome] Seeding Neon Postgres FixHome data in schema {$schemaName}...\n");
                 Illuminate\Support\Facades\Artisan::call("db:seed", ["--class" => "Database\\Seeders\\FixHomeSeeder", "--force" => true]);
