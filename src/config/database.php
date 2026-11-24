@@ -95,7 +95,7 @@ return [
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
-            'search_path' => 'public',
+            'search_path' => env('DB_SCHEMA', 'fixhome'),
             'sslmode' => env('DB_SSLMODE', (env('DATABASE_URL') || env('POSTGRES_URL') || env('PGHOST')) ? 'require' : 'prefer'),
         ],
 
