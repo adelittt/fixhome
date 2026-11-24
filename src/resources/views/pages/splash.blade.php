@@ -86,7 +86,7 @@
         $featuredTechnicians = collect();
     }
 @endphp
-<body class="fh-plus bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col overscroll-none">
+<body class="fh-plus bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col overscroll-none" id="top">
 
     <div class="flex-1 flex flex-col pb-16 sm:pb-0">
         <!-- HEADER NAVIGATION (FixHome Plus Stitch Minimalist Nav) -->
@@ -99,7 +99,8 @@
 
                 <!-- Center Navigation Links -->
                 <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-space-lg">
-                    <a class="font-body-md text-body-md text-primary-container font-semibold transition-colors py-space-xs px-space-sm" href="#layanan-populer">Layanan</a>
+                    <a class="font-body-md text-body-md text-primary-container font-semibold transition-colors py-space-xs px-space-sm" href="#top">Beranda</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#layanan-populer">Layanan</a>
                     <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#katalog-teknisi">Teknisi</a>
                     <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#cara-kerja">Cara Kerja</a>
                     @guest
@@ -155,6 +156,7 @@
 
             <!-- Mobile Dropdown Menu -->
             <div class="hidden sm:hidden bg-surface border-t border-outline-variant/40 -mx-gutter px-4 pt-3 pb-4 space-y-2" id="mobile-menu">
+                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#top">Beranda</a>
                 <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#layanan-populer">Layanan Perbaikan</a>
                 <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#katalog-teknisi">Daftar Teknisi</a>
                 <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#cara-kerja">Cara Kerja</a>
@@ -194,9 +196,9 @@
 
                             <!-- Tactile Neumorphic Search Bar Console -->
                             <form action="{{ route('customer.technicians') }}" class="stitch-surface-card mt-space-sm p-space-md lg:p-space-lg rounded-[28px] bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col gap-space-md" method="GET">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md">
+                                <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-stretch">
                                     <!-- Inset Field 1: Category Picker -->
-                                    <div class="stitch-surface-inset md:col-span-5 relative flex items-center px-space-md py-space-sm rounded-full bg-surface shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF]">
+                                    <div class="stitch-surface-inset md:col-span-7 relative flex items-center px-space-md py-space-sm rounded-full bg-surface shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF]">
                                         <span class="material-symbols-outlined text-primary text-[20px] mr-space-xs shrink-0">home_repair_service</span>
                                         <select
                                             aria-label="Pilih Kategori Jasa"
@@ -213,33 +215,21 @@
                                         <span class="material-symbols-outlined absolute right-4 text-on-surface-variant text-[18px] pointer-events-none">expand_more</span>
                                     </div>
 
-                                    <!-- Inset Field 2: Search Input -->
-                                    <div class="stitch-surface-inset md:col-span-7 flex items-center px-space-md py-space-sm rounded-full bg-surface shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF]">
-                                        <span class="material-symbols-outlined text-primary text-[20px] mr-space-xs shrink-0">location_on</span>
-                                        <input
-                                            aria-label="Cari teknisi"
-                                            class="w-full bg-transparent border-0 focus:ring-0 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none py-0.5"
-                                            name="search"
-                                            placeholder="Cari nama teknisi atau keahlian"
-                                            type="text"
-                                        />
-                                    </div>
-                                </div>
-
-                                <!-- Bottom Row: CTA Button & Quick Trust Signals -->
-                                <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs">
-                                    <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs text-on-surface-variant font-label-md text-label-md">
-                                        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> Estimasi Biaya Jelas</span>
-                                        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">verified_user</span> Garansi 14 Hari</span>
-                                        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">group</span> 1.200+ Teknisi Siap</span>
-                                    </div>
+                                    <!-- Primary CTA: Cari Teknisi -->
                                     <button
-                                        class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-xl py-space-sm rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:shadow-[0_4px_12px_rgba(119,85,55,0.38)] active:shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35)] transition-all shrink-0"
+                                        class="md:col-span-5 w-full inline-flex items-center justify-center gap-space-xs px-space-xl py-space-sm rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:shadow-[0_4px_12px_rgba(119,85,55,0.38)] active:shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35)] transition-all"
                                         type="submit"
                                     >
                                         <span class="material-symbols-outlined text-[20px]">search</span>
                                         <span>Cari Teknisi</span>
                                     </button>
+                                </div>
+
+                                <!-- Bottom Row: Quick Trust Signals -->
+                                <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs pt-space-xs text-on-surface-variant font-label-md text-label-md">
+                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> Estimasi Biaya Jelas</span>
+                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">verified_user</span> Garansi 14 Hari</span>
+                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">group</span> 1.200+ Teknisi Siap</span>
                                 </div>
                             </form>
                         </div>
