@@ -84,22 +84,42 @@
                                 </span>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-                                <div class="p-4 rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
-                                    <span class="font-bold text-xs text-primary bg-secondary-container px-2.5 py-0.5 rounded-full inline-block mb-2">Virtual Account</span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5" id="midtrans-channel-grid">
+                                <label class="midtrans-channel-card relative flex flex-col p-4 rounded-[20px] cursor-pointer transition-all bg-primary-container/10 ring-2 ring-primary-container shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_rgba(119,85,55,0.08)]" data-channel="all">
+                                    <input type="radio" name="midtrans_channel" value="all" checked class="sr-only">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-xs text-on-primary bg-primary-container px-2.5 py-0.5 rounded-full">Semua Metode</span>
+                                        <div class="w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center channel-check">
+                                            <span class="material-symbols-outlined text-[13px]">check</span>
+                                        </div>
+                                    </div>
+                                    <div class="font-bold text-primary text-xs font-butler">Semua Kanal Midtrans</div>
+                                    <p class="text-[11px] text-on-surface-variant mt-0.5">VA, QRIS, E-Wallet &amp; Kartu (Tenggat {{ $midtransExpiryHours ?? 2 }} jam)</p>
+                                </label>
+
+                                <label class="midtrans-channel-card relative flex flex-col p-4 rounded-[20px] cursor-pointer transition-all bg-surface border border-[#EAE2DA]/80 shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_rgba(119,85,55,0.08)] hover:-translate-y-0.5" data-channel="va">
+                                    <input type="radio" name="midtrans_channel" value="va" class="sr-only">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-xs text-primary bg-secondary-container px-2.5 py-0.5 rounded-full">Virtual Account</span>
+                                        <div class="w-5 h-5 rounded-full border-2 border-outline-variant text-transparent flex items-center justify-center channel-check">
+                                            <span class="material-symbols-outlined text-[13px]">check</span>
+                                        </div>
+                                    </div>
                                     <div class="font-bold text-primary text-xs font-butler">BCA, BNI, BRI, Mandiri</div>
                                     <p class="text-[11px] text-on-surface-variant mt-0.5">Verifikasi otomatis dari bank</p>
-                                </div>
-                                <div class="p-4 rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
-                                    <span class="font-bold text-xs text-on-tertiary-fixed bg-tertiary-fixed px-2.5 py-0.5 rounded-full inline-block mb-2">QRIS &amp; E-Wallet</span>
+                                </label>
+
+                                <label class="midtrans-channel-card relative flex flex-col p-4 rounded-[20px] cursor-pointer transition-all bg-surface border border-[#EAE2DA]/80 shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_rgba(119,85,55,0.08)] hover:-translate-y-0.5" data-channel="qris">
+                                    <input type="radio" name="midtrans_channel" value="qris" class="sr-only">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-bold text-xs text-on-tertiary-fixed bg-tertiary-fixed px-2.5 py-0.5 rounded-full">QRIS &amp; E-Wallet</span>
+                                        <div class="w-5 h-5 rounded-full border-2 border-outline-variant text-transparent flex items-center justify-center channel-check">
+                                            <span class="material-symbols-outlined text-[13px]">check</span>
+                                        </div>
+                                    </div>
                                     <div class="font-bold text-primary text-xs font-butler">QRIS, GoPay, ShopeePay</div>
                                     <p class="text-[11px] text-on-surface-variant mt-0.5">Scan QR atau bayar instan</p>
-                                </div>
-                                <div class="p-4 rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
-                                    <span class="font-bold text-xs text-on-primary bg-primary-container px-2.5 py-0.5 rounded-full inline-block mb-2">Tenggat {{ $midtransExpiryHours ?? 2 }} Jam</span>
-                                    <div class="font-bold text-primary text-xs font-butler">Batas Waktu Jelas</div>
-                                    <p class="text-[11px] text-on-surface-variant mt-0.5">Berlaku {{ $midtransExpiryHours ?? 2 }} jam sejak klik bayar</p>
-                                </div>
+                                </label>
                             </div>
 
                             <div id="midtrans-error-box" class="hidden p-3.5 rounded-2xl bg-red-100 text-red-800 text-xs font-semibold"></div>
@@ -363,14 +383,37 @@
     </div>
 
     @push('scripts')
-    @if (!empty($midtransEnabled) && !empty($midtransClientKey))
+    @if (!empty($midtransEnabled) && !empty($midtransClientKeyValid))
         <script src="{{ $midtransSnapJsUrl }}" data-client-key="{{ $midtransClientKey }}"></script>
     @endif
     <script>
         const midtransSnapUrl = @json(route('booking.midtrans-snap', $booking->id));
         const midtransStatusUrl = @json(route('booking.midtrans-status', $booking->id));
-        const hasMidtransClientKey = @json(!empty($midtransClientKey));
+        const hasMidtransClientKey = @json(!empty($midtransClientKeyValid));
         const csrfToken = @json(csrf_token());
+        let selectedMidtransChannel = 'all';
+
+        document.querySelectorAll('.midtrans-channel-card').forEach(card => {
+            card.addEventListener('click', () => {
+                selectedMidtransChannel = card.getAttribute('data-channel') || 'all';
+                document.querySelectorAll('.midtrans-channel-card').forEach(c => {
+                    c.classList.remove('bg-primary-container/10', 'ring-2', 'ring-primary-container');
+                    c.classList.add('bg-surface', 'border', 'border-[#EAE2DA]/80');
+                    const chk = c.querySelector('.channel-check');
+                    if (chk) {
+                        chk.classList.remove('bg-primary-container', 'text-on-primary');
+                        chk.classList.add('border-2', 'border-outline-variant', 'text-transparent');
+                    }
+                });
+                card.classList.remove('bg-surface', 'border', 'border-[#EAE2DA]/80');
+                card.classList.add('bg-primary-container/10', 'ring-2', 'ring-primary-container');
+                const activeChk = card.querySelector('.channel-check');
+                if (activeChk) {
+                    activeChk.classList.remove('border-2', 'border-outline-variant', 'text-transparent');
+                    activeChk.classList.add('bg-primary-container', 'text-on-primary');
+                }
+            });
+        });
 
         async function startMidtransPayment() {
             const btn = document.getElementById('btn-midtrans-pay');
@@ -393,7 +436,7 @@
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': csrfToken,
                     },
-                    body: JSON.stringify({}),
+                    body: JSON.stringify({ channel: selectedMidtransChannel }),
                 });
 
                 const data = await res.json();
@@ -412,27 +455,41 @@
                 }
 
                 if (hasMidtransClientKey && window.snap && data.token) {
-                    window.snap.pay(data.token, {
-                        onSuccess: function () {
-                            window.location.href = midtransStatusUrl;
-                        },
-                        onPending: function () {
-                            window.location.href = midtransStatusUrl;
-                        },
-                        onError: function () {
-                            if (errBox) {
-                                errBox.textContent = 'Terjadi kesalahan pada pembayaran Midtrans. Silakan coba lagi.';
-                                errBox.classList.remove('hidden');
-                            }
-                            if (btn) btn.disabled = false;
-                            if (label) label.textContent = 'Bayar via Midtrans';
-                        },
-                        onClose: function () {
-                            if (btn) btn.disabled = false;
-                            if (label) label.textContent = 'Bayar via Midtrans';
-                        },
-                    });
-                } else if (data.redirect_url) {
+                    try {
+                        window.snap.pay(data.token, {
+                            onSuccess: function () {
+                                window.location.href = midtransStatusUrl;
+                            },
+                            onPending: function () {
+                                window.location.href = midtransStatusUrl;
+                            },
+                            onError: function () {
+                                if (data.redirect_url) {
+                                    window.location.href = data.redirect_url;
+                                    return;
+                                }
+                                if (errBox) {
+                                    errBox.textContent = 'Terjadi kesalahan pada pembayaran Midtrans. Silakan coba lagi.';
+                                    errBox.classList.remove('hidden');
+                                }
+                                if (btn) btn.disabled = false;
+                                if (label) label.textContent = 'Bayar via Midtrans';
+                            },
+                            onClose: function () {
+                                if (btn) btn.disabled = false;
+                                if (label) label.textContent = 'Bayar via Midtrans';
+                            },
+                        });
+                        return;
+                    } catch (snapErr) {
+                        if (data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                            return;
+                        }
+                    }
+                }
+
+                if (data.redirect_url) {
                     window.location.href = data.redirect_url;
                 } else {
                     throw new Error('Token pembayaran Midtrans tidak diterima.');

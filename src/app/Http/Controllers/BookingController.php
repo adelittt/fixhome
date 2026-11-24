@@ -116,6 +116,11 @@ class BookingController extends Controller
         $midtransSnapJsUrl = $midtransIsProduction
             ? 'https://app.midtrans.com/snap/snap.js'
             : 'https://app.sandbox.midtrans.com/snap/snap.js';
+        $midtransClientKeyValid = $midtransClientKey !== '' && (
+            $midtransIsProduction
+                ? !str_starts_with($midtransClientKey, 'SB-')
+                : str_starts_with($midtransClientKey, 'SB-')
+        );
         $midtransExpiryHours = (int) config('services.midtrans.expiry_hours', 2);
 
         return view('pages.customer.payment', compact(
@@ -123,6 +128,7 @@ class BookingController extends Controller
             'split',
             'midtransEnabled',
             'midtransClientKey',
+            'midtransClientKeyValid',
             'midtransSnapJsUrl',
             'midtransIsProduction',
             'midtransExpiryHours'
@@ -199,6 +205,13 @@ class BookingController extends Controller
                 'finish' => route('booking.midtrans-status', $booking->id),
             ],
         ];
+
+        $channel = (string) $request->input('channel', 'all');
+        if ($channel === 'va') {
+            $payload['enabled_payments'] = ['bca_va', 'bni_va', 'bri_va', 'echannel', 'permata_va', 'other_va'];
+        } elseif ($channel === 'qris') {
+            $payload['enabled_payments'] = ['other_qris', 'gopay', 'shopeepay'];
+        }
 
         $response = Http::withBasicAuth($serverKey, '')
             ->acceptJson()
