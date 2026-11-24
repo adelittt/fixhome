@@ -124,6 +124,21 @@
 
                             <div id="midtrans-error-box" class="hidden p-3.5 rounded-2xl bg-red-100 text-red-800 text-xs font-semibold"></div>
 
+                            <!-- Inline Embedded Midtrans Checkout (muncul langsung di bawah 3 pilihan tanpa pindah halaman) -->
+                            <div id="midtrans-embed-wrapper" class="hidden pt-4 border-t border-outline-variant/40 space-y-3">
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+                                        <span class="text-xs font-bold text-primary">Checkout Midtrans Aktif (Tenggat {{ $midtransExpiryHours ?? 2 }} Jam)</span>
+                                    </div>
+                                    <a id="midtrans-open-tab" href="#" target="_blank" rel="noopener noreferrer" class="text-[11px] font-semibold text-primary-container hover:underline inline-flex items-center gap-1">
+                                        <span>Buka di Tab Baru</span>
+                                        <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+                                    </a>
+                                </div>
+                                <div id="snap-embed-container" class="w-full min-h-[620px] rounded-[22px] overflow-hidden bg-white border border-[#EAE2DA] shadow-[inset_2px_2px_6px_rgba(119,85,55,0.06)]"></div>
+                            </div>
+
                             @if (empty($midtransIsProduction))
                                 <div class="p-4 neu-inset text-xs text-on-surface-variant leading-relaxed">
                                     <span class="font-bold text-primary block mb-1">Mode Uji Coba (Sandbox):</span>
@@ -454,38 +469,60 @@
                     checkBtn.classList.add('inline-flex');
                 }
 
-                if (hasMidtransClientKey && window.snap && data.token) {
-                    try {
-                        window.snap.pay(data.token, {
-                            onSuccess: function () {
-                                window.location.href = midtransStatusUrl;
-                            },
-                            onPending: function () {
-                                window.location.href = midtransStatusUrl;
-                            },
-                            onError: function () {
-                                if (data.redirect_url) {
-                                    window.location.href = data.redirect_url;
-                                    return;
-                                }
-                                if (errBox) {
-                                    errBox.textContent = 'Terjadi kesalahan pada pembayaran Midtrans. Silakan coba lagi.';
-                                    errBox.classList.remove('hidden');
-                                }
-                                if (btn) btn.disabled = false;
-                                if (label) label.textContent = 'Bayar via Midtrans';
-                            },
-                            onClose: function () {
-                                if (btn) btn.disabled = false;
-                                if (label) label.textContent = 'Bayar via Midtrans';
-                            },
-                        });
-                        return;
-                    } catch (snapErr) {
-                        if (data.redirect_url) {
-                            window.location.href = data.redirect_url;
-                            return;
+                const embedWrapper = document.getElementById('midtrans-embed-wrapper');
+                const embedContainer = document.getElementById('snap-embed-container');
+                const openTabLink = document.getElementById('midtrans-open-tab');
+
+                if (embedWrapper && embedContainer) {
+                    embedWrapper.classList.remove('hidden');
+                    embedContainer.innerHTML = '';
+                    if (openTabLink && data.redirect_url) {
+                        openTabLink.href = data.redirect_url;
+                    }
+
+                    let embedded = false;
+                    if (hasMidtransClientKey && window.snap && typeof window.snap.embed === 'function' && data.token) {
+                        try {
+                            window.snap.embed(data.token, {
+                                embedId: 'snap-embed-container',
+                                onSuccess: function () {
+                                    window.location.href = midtransStatusUrl;
+                                },
+                                onPending: function () {
+                                    window.location.href = midtransStatusUrl;
+                                },
+                                onError: function () {
+                                    if (errBox) {
+                                        errBox.textContent = 'Terjadi kesalahan pada pembayaran Midtrans. Silakan coba lagi.';
+                                        errBox.classList.remove('hidden');
+                                    }
+                                },
+                                onClose: function () {
+                                    if (btn) btn.disabled = false;
+                                    if (label) label.textContent = 'Bayar via Midtrans';
+                                },
+                            });
+                            embedded = true;
+                        } catch (snapErr) {
+                            embedded = false;
                         }
+                    }
+
+                    if (!embedded && data.redirect_url) {
+                        const iframe = document.createElement('iframe');
+                        iframe.src = data.redirect_url;
+                        iframe.title = 'Midtrans Snap Checkout';
+                        iframe.className = 'w-full h-[640px] border-0 bg-white block';
+                        iframe.setAttribute('allow', 'payment');
+                        embedContainer.appendChild(iframe);
+                        embedded = true;
+                    }
+
+                    if (embedded) {
+                        embedWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (btn) btn.disabled = false;
+                        if (label) label.textContent = 'Muat Ulang Metode Bayar';
+                        return;
                     }
                 }
 
