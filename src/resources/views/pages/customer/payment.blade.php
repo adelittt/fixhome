@@ -71,80 +71,47 @@
                         </div>
                     </div>
 
-                    <!-- Payment Method Selector -->
+                    <!-- Payment Method Selector (QRIS Midtrans Langsung) -->
                     @if (!empty($midtransEnabled))
-                        <div class="neu-card p-6 space-y-5">
+                        <div class="neu-card p-6 space-y-4">
                             <div class="flex flex-wrap items-center justify-between gap-2">
                                 <div>
-                                    <h3 class="font-headline-sm text-primary font-bold font-recoleta">Pembayaran Aman via Midtrans</h3>
-                                    <p class="text-xs text-on-surface-variant mt-0.5">Pilih metode pembayaran langsung di halaman checkout Midtrans Snap.</p>
+                                    <h3 class="font-headline-sm text-primary font-bold font-recoleta">Pembayaran QRIS via Midtrans</h3>
+                                    <p class="text-xs text-on-surface-variant mt-0.5">Scan kode QRIS di bawah menggunakan aplikasi e-wallet atau mobile banking apa saja. Berlaku {{ $midtransExpiryHours ?? 2 }} jam.</p>
                                 </div>
                                 <span class="px-3 py-1 rounded-full {{ !empty($midtransIsProduction) ? 'bg-secondary-container text-primary' : 'bg-tertiary-fixed text-on-tertiary-fixed' }} text-[11px] font-bold">
-                                    {{ !empty($midtransIsProduction) ? 'Midtrans Live' : 'Midtrans Sandbox' }}
+                                    {{ !empty($midtransIsProduction) ? 'QRIS Live' : 'QRIS Sandbox' }}
                                 </span>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5" id="midtrans-channel-grid">
-                                <label class="midtrans-channel-card relative flex flex-col p-4 rounded-[20px] cursor-pointer transition-all bg-primary-container/10 ring-2 ring-primary-container shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_rgba(119,85,55,0.08)]" data-channel="all">
-                                    <input type="radio" name="midtrans_channel" value="all" checked class="sr-only">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="font-bold text-xs text-on-primary bg-primary-container px-2.5 py-0.5 rounded-full">Semua Metode</span>
-                                        <div class="w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center channel-check">
-                                            <span class="material-symbols-outlined text-[13px]">check</span>
-                                        </div>
-                                    </div>
-                                    <div class="font-bold text-primary text-xs font-butler">Semua Kanal Midtrans</div>
-                                    <p class="text-[11px] text-on-surface-variant mt-0.5">VA, QRIS, E-Wallet &amp; Kartu (Tenggat {{ $midtransExpiryHours ?? 2 }} jam)</p>
-                                </label>
-
-                                <label class="midtrans-channel-card relative flex flex-col p-4 rounded-[20px] cursor-pointer transition-all bg-surface border border-[#EAE2DA]/80 shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_rgba(119,85,55,0.08)] hover:-translate-y-0.5" data-channel="va">
-                                    <input type="radio" name="midtrans_channel" value="va" class="sr-only">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="font-bold text-xs text-primary bg-secondary-container px-2.5 py-0.5 rounded-full">Virtual Account</span>
-                                        <div class="w-5 h-5 rounded-full border-2 border-outline-variant text-transparent flex items-center justify-center channel-check">
-                                            <span class="material-symbols-outlined text-[13px]">check</span>
-                                        </div>
-                                    </div>
-                                    <div class="font-bold text-primary text-xs font-butler">BCA, BNI, BRI, Mandiri</div>
-                                    <p class="text-[11px] text-on-surface-variant mt-0.5">Verifikasi otomatis dari bank</p>
-                                </label>
-
-                                <label class="midtrans-channel-card relative flex flex-col p-4 rounded-[20px] cursor-pointer transition-all bg-surface border border-[#EAE2DA]/80 shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_rgba(119,85,55,0.08)] hover:-translate-y-0.5" data-channel="qris">
-                                    <input type="radio" name="midtrans_channel" value="qris" class="sr-only">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="font-bold text-xs text-on-tertiary-fixed bg-tertiary-fixed px-2.5 py-0.5 rounded-full">QRIS &amp; E-Wallet</span>
-                                        <div class="w-5 h-5 rounded-full border-2 border-outline-variant text-transparent flex items-center justify-center channel-check">
-                                            <span class="material-symbols-outlined text-[13px]">check</span>
-                                        </div>
-                                    </div>
-                                    <div class="font-bold text-primary text-xs font-butler">QRIS, GoPay, ShopeePay</div>
-                                    <p class="text-[11px] text-on-surface-variant mt-0.5">Scan QR atau bayar instan</p>
-                                </label>
                             </div>
 
                             <div id="midtrans-error-box" class="hidden p-3.5 rounded-2xl bg-red-100 text-red-800 text-xs font-semibold"></div>
 
-                            <!-- Inline Embedded Midtrans Checkout (muncul langsung di bawah 3 pilihan tanpa pindah halaman) -->
-                            <div id="midtrans-embed-wrapper" class="hidden pt-4 border-t border-outline-variant/40 space-y-3">
+                            <!-- Inline Embedded Midtrans QRIS (otomatis langsung muncul saat halaman dibuka) -->
+                            <div id="midtrans-embed-wrapper" class="space-y-3">
                                 <div class="flex flex-wrap items-center justify-between gap-2">
                                     <div class="flex items-center gap-2">
                                         <span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
-                                        <span class="text-xs font-bold text-primary">Checkout Midtrans Aktif (Tenggat {{ $midtransExpiryHours ?? 2 }} Jam)</span>
+                                        <span id="midtrans-status-label" class="text-xs font-bold text-primary">Memuat kode QRIS Midtrans...</span>
                                     </div>
-                                    <a id="midtrans-open-tab" href="#" target="_blank" rel="noopener noreferrer" class="text-[11px] font-semibold text-primary-container hover:underline inline-flex items-center gap-1">
+                                    <a id="midtrans-open-tab" href="#" target="_blank" rel="noopener noreferrer" class="hidden text-[11px] font-semibold text-primary-container hover:underline inline-flex items-center gap-1">
                                         <span>Buka di Tab Baru</span>
                                         <span class="material-symbols-outlined text-[14px]">open_in_new</span>
                                     </a>
                                 </div>
-                                <div id="snap-embed-container" class="w-full min-h-[620px] rounded-[22px] overflow-hidden bg-white border border-[#EAE2DA] shadow-[inset_2px_2px_6px_rgba(119,85,55,0.06)]"></div>
+                                <div id="snap-embed-container" class="w-full min-h-[620px] rounded-[22px] overflow-hidden bg-white border border-[#EAE2DA] shadow-[inset_2px_2px_6px_rgba(119,85,55,0.06)] flex items-center justify-center">
+                                    <div class="text-center p-8 space-y-3">
+                                        <div class="w-10 h-10 mx-auto border-4 border-secondary-container border-t-primary-container rounded-full animate-spin"></div>
+                                        <p class="text-xs font-semibold text-on-surface-variant">Menyiapkan QRIS Midtrans untuk tagihan Rp {{ number_format($booking->total_biaya, 0, ',', '.') }}...</p>
+                                    </div>
+                                </div>
                             </div>
 
                             @if (empty($midtransIsProduction))
                                 <div class="p-4 neu-inset text-xs text-on-surface-variant leading-relaxed">
-                                    <span class="font-bold text-primary block mb-1">Mode Uji Coba (Sandbox):</span>
-                                    Setelah memilih Virtual Account / QRIS di halaman Midtrans, Anda dapat menyimulasikan pembayaran lunas di
-                                    <a href="https://simulator.sandbox.midtrans.com/" target="_blank" rel="noopener noreferrer" class="font-bold text-primary underline">Midtrans Payment Simulator</a>,
-                                    lalu klik tombol <strong>Cek Status Pembayaran</strong>.
+                                    <span class="font-bold text-primary block mb-1">Mode Uji Coba (QRIS Sandbox):</span>
+                                    Klik kanan kode QR di atas (atau klik <strong>Download QRIS</strong>), lalu simulasikan bayar lunas di
+                                    <a href="https://simulator.sandbox.midtrans.com/qris/index" target="_blank" rel="noopener noreferrer" class="font-bold text-primary underline">Midtrans QRIS Simulator</a>.
+                                    Setelah itu klik <strong>Cek Status Pembayaran</strong> di sebelah kanan.
                                 </div>
                             @endif
                         </div>
@@ -336,15 +303,15 @@
 
                         @if (!empty($midtransEnabled))
                             <div class="space-y-2.5">
-                                <button type="button" id="btn-midtrans-pay" onclick="startMidtransPayment()" class="w-full neu-btn-primary py-3.5 px-6 text-label-lg gap-2">
-                                    <span class="material-symbols-outlined text-[20px]">payments</span>
-                                    <span id="btn-midtrans-label">Bayar via Midtrans</span>
-                                </button>
-
-                                <a href="{{ route('booking.midtrans-status', $booking->id) }}" id="btn-check-status" class="w-full neu-btn-secondary py-2.5 px-5 text-xs text-primary gap-1.5 {{ $booking->transaksi ? 'inline-flex' : 'hidden' }} items-center justify-center">
-                                    <span class="material-symbols-outlined text-[16px]">refresh</span>
+                                <a href="{{ route('booking.midtrans-status', $booking->id) }}" id="btn-check-status" class="w-full neu-btn-primary py-3.5 px-6 text-label-lg gap-2">
+                                    <span class="material-symbols-outlined text-[20px]">verified</span>
                                     <span>Cek Status Pembayaran</span>
                                 </a>
+
+                                <button type="button" id="btn-midtrans-pay" onclick="startMidtransPayment(true)" class="w-full neu-btn-secondary py-2.5 px-5 text-xs text-primary gap-1.5">
+                                    <span class="material-symbols-outlined text-[16px]">qr_code_2</span>
+                                    <span id="btn-midtrans-label">Muat Ulang QRIS</span>
+                                </button>
                             </div>
                         @else
                             <button type="button" id="btn-pay-now" onclick="triggerInteractivePayment()" class="w-full neu-btn-primary py-3.5 px-6 text-label-lg gap-2">
@@ -402,46 +369,27 @@
         <script src="{{ $midtransSnapJsUrl }}" data-client-key="{{ $midtransClientKey }}"></script>
     @endif
     <script>
+        const midtransEnabled = @json(!empty($midtransEnabled));
         const midtransSnapUrl = @json(route('booking.midtrans-snap', $booking->id));
         const midtransStatusUrl = @json(route('booking.midtrans-status', $booking->id));
         const hasMidtransClientKey = @json(!empty($midtransClientKeyValid));
         const csrfToken = @json(csrf_token());
-        let selectedMidtransChannel = 'all';
 
-        document.querySelectorAll('.midtrans-channel-card').forEach(card => {
-            card.addEventListener('click', () => {
-                selectedMidtransChannel = card.getAttribute('data-channel') || 'all';
-                document.querySelectorAll('.midtrans-channel-card').forEach(c => {
-                    c.classList.remove('bg-primary-container/10', 'ring-2', 'ring-primary-container');
-                    c.classList.add('bg-surface', 'border', 'border-[#EAE2DA]/80');
-                    const chk = c.querySelector('.channel-check');
-                    if (chk) {
-                        chk.classList.remove('bg-primary-container', 'text-on-primary');
-                        chk.classList.add('border-2', 'border-outline-variant', 'text-transparent');
-                    }
-                });
-                card.classList.remove('bg-surface', 'border', 'border-[#EAE2DA]/80');
-                card.classList.add('bg-primary-container/10', 'ring-2', 'ring-primary-container');
-                const activeChk = card.querySelector('.channel-check');
-                if (activeChk) {
-                    activeChk.classList.remove('border-2', 'border-outline-variant', 'text-transparent');
-                    activeChk.classList.add('bg-primary-container', 'text-on-primary');
-                }
-            });
-        });
-
-        async function startMidtransPayment() {
+        async function startMidtransPayment(forceNew = false) {
             const btn = document.getElementById('btn-midtrans-pay');
             const label = document.getElementById('btn-midtrans-label');
+            const statusLabel = document.getElementById('midtrans-status-label');
             const errBox = document.getElementById('midtrans-error-box');
-            const checkBtn = document.getElementById('btn-check-status');
+            const embedContainer = document.getElementById('snap-embed-container');
+            const openTabLink = document.getElementById('midtrans-open-tab');
 
             if (errBox) {
                 errBox.classList.add('hidden');
                 errBox.textContent = '';
             }
             if (btn) btn.disabled = true;
-            if (label) label.textContent = 'Menghubungkan ke Midtrans...';
+            if (label) label.textContent = 'Memuat QRIS...';
+            if (statusLabel) statusLabel.textContent = 'Memuat kode QRIS Midtrans...';
 
             try {
                 const res = await fetch(midtransSnapUrl, {
@@ -451,12 +399,12 @@
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': csrfToken,
                     },
-                    body: JSON.stringify({ channel: selectedMidtransChannel }),
+                    body: JSON.stringify({ force_new: !!forceNew }),
                 });
 
                 const data = await res.json();
                 if (!res.ok) {
-                    throw new Error(data.message || 'Gagal memulai pembayaran Midtrans.');
+                    throw new Error(data.message || 'Gagal memuat QRIS Midtrans.');
                 }
 
                 if (data.already_paid && data.redirect_url) {
@@ -464,20 +412,12 @@
                     return;
                 }
 
-                if (checkBtn) {
-                    checkBtn.classList.remove('hidden');
-                    checkBtn.classList.add('inline-flex');
-                }
-
-                const embedWrapper = document.getElementById('midtrans-embed-wrapper');
-                const embedContainer = document.getElementById('snap-embed-container');
-                const openTabLink = document.getElementById('midtrans-open-tab');
-
-                if (embedWrapper && embedContainer) {
-                    embedWrapper.classList.remove('hidden');
+                if (embedContainer) {
                     embedContainer.innerHTML = '';
+                    embedContainer.classList.remove('flex', 'items-center', 'justify-center');
                     if (openTabLink && data.redirect_url) {
                         openTabLink.href = data.redirect_url;
+                        openTabLink.classList.remove('hidden');
                     }
 
                     let embedded = false;
@@ -493,13 +433,9 @@
                                 },
                                 onError: function () {
                                     if (errBox) {
-                                        errBox.textContent = 'Terjadi kesalahan pada pembayaran Midtrans. Silakan coba lagi.';
+                                        errBox.textContent = 'Terjadi kesalahan pada QRIS Midtrans. Klik Muat Ulang QRIS.';
                                         errBox.classList.remove('hidden');
                                     }
-                                },
-                                onClose: function () {
-                                    if (btn) btn.disabled = false;
-                                    if (label) label.textContent = 'Bayar via Midtrans';
                                 },
                             });
                             embedded = true;
@@ -511,7 +447,7 @@
                     if (!embedded && data.redirect_url) {
                         const iframe = document.createElement('iframe');
                         iframe.src = data.redirect_url;
-                        iframe.title = 'Midtrans Snap Checkout';
+                        iframe.title = 'QRIS Midtrans Checkout';
                         iframe.className = 'w-full h-[640px] border-0 bg-white block';
                         iframe.setAttribute('allow', 'payment');
                         embedContainer.appendChild(iframe);
@@ -519,26 +455,27 @@
                     }
 
                     if (embedded) {
-                        embedWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (statusLabel) statusLabel.textContent = 'QRIS Siap Dipindai (Tenggat {{ $midtransExpiryHours ?? 2 }} Jam)';
                         if (btn) btn.disabled = false;
-                        if (label) label.textContent = 'Muat Ulang Metode Bayar';
+                        if (label) label.textContent = 'Muat Ulang QRIS';
                         return;
                     }
                 }
 
-                if (data.redirect_url) {
-                    window.location.href = data.redirect_url;
-                } else {
-                    throw new Error('Token pembayaran Midtrans tidak diterima.');
-                }
+                throw new Error('Kode QRIS Midtrans tidak diterima.');
             } catch (err) {
                 if (errBox) {
                     errBox.textContent = err.message || 'Gagal menghubungi Midtrans.';
                     errBox.classList.remove('hidden');
                 }
+                if (statusLabel) statusLabel.textContent = 'Gagal memuat QRIS';
                 if (btn) btn.disabled = false;
-                if (label) label.textContent = 'Bayar via Midtrans';
+                if (label) label.textContent = 'Coba Muat Ulang QRIS';
             }
+        }
+
+        if (midtransEnabled) {
+            document.addEventListener('DOMContentLoaded', () => startMidtransPayment(false));
         }
 
         const methodCards = document.querySelectorAll('.payment-method-card');

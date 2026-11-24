@@ -156,6 +156,33 @@ class BookingController extends Controller
         }
 
         $isProduction = (bool) config('services.midtrans.is_production');
+        $expiryHours = max(2, (int) config('services.midtrans.expiry_hours', 2));
+
+        // Reuse existing active QRIS Snap token if not expired & not forced to regenerate
+        $forceNew = (bool) $request->boolean('force_new', false);
+        $existing = $booking->transaksi;
+        if (
+            !$forceNew
+            && $existing
+            && $existing->status_pembayaran === 'unpaid'
+            && is_string($existing->payment_gateway_ref)
+            && str_starts_with($existing->payment_gateway_ref, 'SNAP:')
+            && $existing->updated_at
+            && $existing->updated_at->gt(now()->subHours($expiryHours)->addMinutes(5))
+        ) {
+            $existingToken = substr($existing->payment_gateway_ref, 5);
+            $snapBase = $isProduction
+                ? 'https://app.midtrans.com/snap/v4/redirection/'
+                : 'https://app.sandbox.midtrans.com/snap/v4/redirection/';
+
+            return response()->json([
+                'token' => $existingToken,
+                'redirect_url' => $snapBase . $existingToken,
+                'order_id' => $existing->kode_transaksi,
+                'expiry_hours' => $expiryHours,
+            ]);
+        }
+
         $snapApiUrl = $isProduction
             ? 'https://app.midtrans.com/snap/v1/transactions'
             : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
@@ -166,7 +193,6 @@ class BookingController extends Controller
         $split = Transaksi::calculateSplit((float) $grossAmount);
 
         $orderId = 'FH-' . $booking->id . '-' . time();
-        $expiryHours = max(2, (int) config('services.midtrans.expiry_hours', 2));
 
         $items = [
             [
@@ -197,6 +223,7 @@ class BookingController extends Controller
                 'email' => $user->email,
                 'phone' => $user->no_telepon ?? '081234567890',
             ],
+            'enabled_payments' => ['other_qris'],
             'expiry' => [
                 'unit' => 'hours',
                 'duration' => $expiryHours,
@@ -205,13 +232,6 @@ class BookingController extends Controller
                 'finish' => route('booking.midtrans-status', $booking->id),
             ],
         ];
-
-        $channel = (string) $request->input('channel', 'all');
-        if ($channel === 'va') {
-            $payload['enabled_payments'] = ['bca_va', 'bni_va', 'bri_va', 'echannel', 'permata_va', 'other_va'];
-        } elseif ($channel === 'qris') {
-            $payload['enabled_payments'] = ['other_qris', 'gopay', 'shopeepay'];
-        }
 
         $response = Http::withBasicAuth($serverKey, '')
             ->acceptJson()
@@ -251,7 +271,7 @@ class BookingController extends Controller
                 'dana_teknisi' => $split['dana_teknisi'],
                 'biaya_jarak' => $biayaJarak,
                 'status_pembayaran' => 'unpaid',
-                'payment_method' => 'Midtrans Snap',
+                'payment_method' => 'Midtrans QRIS',
                 'payment_gateway_ref' => 'SNAP:' . $token,
                 'paid_at' => null,
             ]
