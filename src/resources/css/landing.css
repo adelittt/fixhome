@@ -208,3 +208,427 @@
         box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.35), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
     }
 }
+
+
+/* --------------------------------------------------------------------------
+   FixHome landing page refresh
+   Keep the existing brand palette; simplify the visual language.
+   -------------------------------------------------------------------------- */
+
+:root {
+    --fh-ink: #1a1c1c;
+    --fh-muted: #665d55;
+    --fh-line: #e5ddd5;
+    --fh-paper: #ffffff;
+    --fh-radius: 18px;
+}
+
+html {
+    scroll-padding-top: 88px;
+}
+
+body {
+    color: var(--fh-ink);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #f9f9f9;
+    letter-spacing: -0.01em;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+::selection {
+    color: #ffffff;
+    background: #775537;
+}
+
+/* Remove the heavy neumorphic treatment used throughout the first version. */
+[class*="shadow-"],
+.neu-card,
+.neu-card-sm,
+.neu-card-lg,
+.neu-inset,
+.neu-inset-sm,
+.neu-btn-primary,
+.neu-btn-secondary,
+.neu-pill {
+    box-shadow: none !important;
+}
+
+.font-recoleta,
+.font-butler,
+.font-lucy-rose {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    letter-spacing: -0.035em;
+}
+
+header {
+    background: rgba(249, 249, 249, 0.96) !important;
+    border-bottom: 1px solid var(--fh-line) !important;
+    backdrop-filter: blur(14px);
+}
+
+header > div {
+    min-height: 72px;
+    height: 72px;
+}
+
+header img {
+    border-radius: 10px !important;
+}
+
+header nav {
+    gap: 1.5rem !important;
+}
+
+header nav a {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    transition: color 160ms ease;
+}
+
+header nav a:hover {
+    color: #775537 !important;
+}
+
+header a[href*="login"],
+header a[href*="register"],
+header a[href*="admin"],
+header a[href*="dashboard"] {
+    min-height: 42px;
+    border-radius: 9px !important;
+    font-size: 13px !important;
+    padding: 10px 17px !important;
+}
+
+/* Hero: let the photography do the work, with a calm readable overlay. */
+#beranda {
+    padding-top: 28px !important;
+    padding-bottom: 48px !important;
+}
+
+#beranda > div {
+    min-height: 490px !important;
+    border: 1px solid rgba(119, 85, 55, 0.12);
+    border-radius: 22px !important;
+    box-shadow: none !important;
+    justify-content: flex-start !important;
+    padding: clamp(32px, 6vw, 76px) !important;
+}
+
+#beranda > div > div:first-child > img {
+    opacity: 0.55 !important;
+    filter: saturate(0.82);
+}
+
+#beranda > div > div:first-child > div:not(.hero-shimmer-overlay) {
+    background: linear-gradient(90deg, rgba(249,249,249,.94) 0%, rgba(249,249,249,.82) 54%, rgba(249,249,249,.35) 100%) !important;
+    backdrop-filter: none !important;
+}
+
+.hero-shimmer-overlay {
+    display: none !important;
+}
+
+#beranda .hero-headline-shadow {
+    max-width: 720px;
+    color: #5d3e22 !important;
+    font-size: clamp(34px, 4.4vw, 56px) !important;
+    line-height: 1.12 !important;
+    font-weight: 750 !important;
+    text-shadow: none !important;
+    text-align: left !important;
+}
+
+#beranda .relative.z-10 {
+    align-items: flex-start !important;
+    max-width: 700px !important;
+    margin-left: 0 !important;
+    text-align: left !important;
+    gap: 22px !important;
+}
+
+#beranda .relative.z-10 > div:first-child {
+    align-items: flex-start !important;
+    gap: 16px !important;
+}
+
+#beranda .relative.z-10 p {
+    max-width: 560px !important;
+    color: #50453c !important;
+    font-size: 16px !important;
+    line-height: 1.75 !important;
+    text-align: left !important;
+    font-weight: 400 !important;
+}
+
+#hero-search-form {
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    margin-top: 4px !important;
+}
+
+#hero-search-form > div {
+    background: #ffffff !important;
+    color: #50453c !important;
+    border: 1px solid #ddd2c8;
+    border-radius: 9px !important;
+    box-shadow: none !important;
+    min-height: 48px;
+}
+
+#hero-search-form select {
+    color: #50453c !important;
+    font-weight: 500 !important;
+}
+
+#hero-search-form button {
+    min-height: 48px;
+    border-radius: 9px !important;
+    box-shadow: none !important;
+    font-weight: 650 !important;
+}
+
+/* Consistent section rhythm and restrained headings. */
+#layanan,
+#cara-kerja,
+#keunggulan,
+#jadi-mitra {
+    padding-top: 54px !important;
+    padding-bottom: 54px !important;
+    scroll-margin-top: 84px;
+}
+
+#layanan h2,
+#cara-kerja h2,
+#keunggulan h2,
+#jadi-mitra h2 {
+    color: #5d3e22;
+    font-size: clamp(25px, 3vw, 34px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.045em !important;
+    font-weight: 750 !important;
+}
+
+#layanan h2 + p,
+#cara-kerja h2 + p,
+#keunggulan h2 + p,
+#jadi-mitra h2 + p {
+    max-width: 650px;
+    margin-top: 10px !important;
+    color: #665d55 !important;
+    line-height: 1.7 !important;
+}
+
+/* Cards should read as useful content, not floating UI ornaments. */
+#service-cards-container > .service-card-item,
+#cara-kerja .rounded-\[20px\],
+#keunggulan .rounded-\[20px\],
+#jadi-mitra .rounded-\[20px\] {
+    background: #ffffff !important;
+    border: 1px solid var(--fh-line);
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+#service-cards-container > .service-card-item {
+    min-height: 245px;
+    padding: 24px !important;
+}
+
+#service-cards-container > .service-card-item:hover {
+    border-color: #bfa58e;
+    transform: translateY(-3px);
+}
+
+#service-cards-container h3 {
+    color: #3f3024 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.025em !important;
+}
+
+#service-cards-container p {
+    color: #665d55 !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+}
+
+#service-cards-container .w-14.h-14 {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 11px !important;
+    box-shadow: none !important;
+}
+
+#service-cards-container .w-10.h-10 {
+    width: 36px !important;
+    height: 36px !important;
+    border: 1px solid var(--fh-line);
+    border-radius: 9px !important;
+    box-shadow: none !important;
+}
+
+#service-cards-container .rounded-full {
+    border-radius: 7px !important;
+    box-shadow: none !important;
+}
+
+#service-prev-btn,
+#service-next-btn {
+    width: 38px !important;
+    height: 38px !important;
+    border: 1px solid var(--fh-line);
+    border-radius: 9px !important;
+    box-shadow: none !important;
+}
+
+/* Buttons use the existing espresso brand color, with simple geometry. */
+a[class*="bg-primary-container"],
+button[class*="bg-primary-container"] {
+    border-radius: 9px !important;
+    box-shadow: none !important;
+    transition: background 160ms ease, transform 160ms ease, opacity 160ms ease;
+}
+
+a[class*="bg-primary-container"]:hover,
+button[class*="bg-primary-container"]:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+a[class*="bg-surface"][class*="rounded-full"],
+button[class*="bg-surface"][class*="rounded-full"] {
+    border-radius: 9px !important;
+}
+
+/* Keep the partnership callout prominent without making it look like a widget. */
+#jadi-mitra > div > div:last-child {
+    background: #ffffff !important;
+    border: 1px solid var(--fh-line);
+    border-radius: 16px !important;
+    box-shadow: none !important;
+    padding: clamp(24px, 4vw, 42px) !important;
+}
+
+/* Footer retains the deep brown brand color, with clearer spacing. */
+footer {
+    margin-top: 48px !important;
+    padding-top: 48px !important;
+    padding-bottom: 28px !important;
+    background: #775537 !important;
+}
+
+footer h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    letter-spacing: 0 !important;
+    font-weight: 700 !important;
+}
+
+footer a {
+    width: fit-content;
+    line-height: 1.8 !important;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Keyboard focus and reduced-motion support. */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible {
+    outline: 3px solid rgba(119, 85, 55, 0.35);
+    outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+    header > div {
+        height: 64px;
+        min-height: 64px;
+    }
+
+    #beranda {
+        padding-top: 18px !important;
+        padding-bottom: 30px !important;
+    }
+
+    #beranda > div {
+        min-height: 500px !important;
+        align-items: flex-end !important;
+        border-radius: 16px !important;
+        padding: 26px 20px !important;
+    }
+
+    #beranda > div > div:first-child > div:not(.hero-shimmer-overlay) {
+        background: linear-gradient(0deg, rgba(249,249,249,.97) 0%, rgba(249,249,249,.90) 56%, rgba(249,249,249,.38) 100%) !important;
+    }
+
+    #beranda .relative.z-10,
+    #beranda .relative.z-10 > div:first-child {
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+
+    #beranda .hero-headline-shadow {
+        font-size: clamp(32px, 9vw, 42px) !important;
+        line-height: 1.13 !important;
+    }
+
+    #beranda .relative.z-10 p {
+        font-size: 14px !important;
+    }
+
+    #hero-search-form {
+        width: 100% !important;
+        align-items: stretch !important;
+    }
+
+    #hero-search-form > div,
+    #hero-search-form button {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    #layanan,
+    #cara-kerja,
+    #keunggulan,
+    #jadi-mitra {
+        padding-top: 38px !important;
+        padding-bottom: 38px !important;
+    }
+
+    #service-cards-container {
+        gap: 12px !important;
+    }
+
+    #service-cards-container > .service-card-item {
+        min-height: 0;
+        padding: 20px !important;
+    }
+
+    footer {
+        margin-top: 28px !important;
+        padding-top: 36px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
