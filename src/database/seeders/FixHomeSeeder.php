@@ -7,15 +7,36 @@ use App\Models\Teknisi;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class FixHomeSeeder extends Seeder
 {
     public function run(): void
     {
-        Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $superAdminRole = Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'teknisi', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'web']);
+
+        // Seed seluruh permission Filament Shield agar menu & widget Admin Panel selalu muncul
+        $resourceEntities = ['activity', 'booking', 'role', 'teknisi', 'transaksi', 'user'];
+        $resourceActions = ['view', 'view_any', 'create', 'update', 'delete', 'delete_any'];
+        $permissions = [
+            'widget_LatestAccessLogs',
+            'widget_OverlookWidget',
+        ];
+        foreach ($resourceEntities as $entity) {
+            foreach ($resourceActions as $action) {
+                $permissions[] = "{$action}_{$entity}";
+            }
+        }
+        foreach ($permissions as $permissionName) {
+            Permission::firstOrCreate(['name' => $permissionName, 'guard_name' => 'web']);
+        }
+        $superAdminRole->syncPermissions(Permission::where('guard_name', 'web')->get());
 
         // 1. Akun Admin
         $adminUser = User::firstOrCreate(
