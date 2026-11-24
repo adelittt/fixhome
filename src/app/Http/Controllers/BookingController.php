@@ -169,8 +169,21 @@ class BookingController extends Controller
             && $existing->updated_at
             && $existing->updated_at->gt(now()->subHours($expiryHours)->addMinutes(5))
         ) {
-            if (str_starts_with($existing->payment_gateway_ref, 'GOPAYQR:')) {
-                $qrUrl = substr($existing->payment_gateway_ref, 8);
+            if (str_starts_with($existing->payment_gateway_ref, 'DEEPLINK:')) {
+                $deeplink = substr($existing->payment_gateway_ref, 9);
+                $qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=' . rawurlencode($deeplink);
+
+                return response()->json([
+                    'mode' => 'core_qris',
+                    'qr_url' => $qrUrl,
+                    'deeplink_url' => $deeplink,
+                    'order_id' => $existing->kode_transaksi,
+                    'expiry_hours' => $expiryHours,
+                ]);
+            }
+
+            if (str_starts_with($existing->payment_gateway_ref, 'QRIMG:')) {
+                $qrUrl = substr($existing->payment_gateway_ref, 6);
 
                 return response()->json([
                     'mode' => 'core_qris',
@@ -230,10 +243,6 @@ class BookingController extends Controller
                 ],
                 'item_details' => $items,
                 'customer_details' => $customerDetails,
-                'gopay' => [
-                    'enable_callback' => true,
-                    'callback_url' => route('booking.midtrans-status', $booking->id),
-                ],
                 'custom_expiry' => [
                     'expiry_duration' => $expiryHours * 60,
                     'unit' => 'minute',
@@ -255,9 +264,13 @@ class BookingController extends Controller
                 }
             }
 
-            $finalQrUrl = (!$isProduction && $deeplinkUrl !== '')
+            $useDeeplinkQr = !$isProduction && $deeplinkUrl !== '';
+            $finalQrUrl = $useDeeplinkQr
                 ? 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=' . rawurlencode($deeplinkUrl)
                 : $qrImageUrl;
+            $storedRef = $useDeeplinkQr
+                ? 'DEEPLINK:' . Str::limit($deeplinkUrl, 240, '')
+                : 'QRIMG:' . Str::limit($qrImageUrl, 240, '');
 
             if ($finalQrUrl !== '') {
                 Transaksi::updateOrCreate(
@@ -270,7 +283,7 @@ class BookingController extends Controller
                         'biaya_jarak' => $biayaJarak,
                         'status_pembayaran' => 'unpaid',
                         'payment_method' => 'Midtrans GoPay QRIS',
-                        'payment_gateway_ref' => 'GOPAYQR:' . $finalQrUrl,
+                        'payment_gateway_ref' => $storedRef,
                         'paid_at' => null,
                     ]
                 );
