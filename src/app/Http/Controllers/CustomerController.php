@@ -219,15 +219,16 @@ class CustomerController extends Controller
         $search = $request->query('search');
 
         $query = Teknisi::ready()->with('user');
+        $likeOperator = $query->getConnection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';
 
         if ($category) {
-            $query->where('keahlian', 'like', "%{$category}%");
+            $query->where('keahlian', $likeOperator, "%{$category}%");
         }
 
         if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_lengkap', 'like', "%{$search}%")
-                  ->orWhere('keahlian', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search, $likeOperator) {
+                $q->where('nama_lengkap', $likeOperator, "%{$search}%")
+                  ->orWhere('keahlian', $likeOperator, "%{$search}%");
             });
         }
 

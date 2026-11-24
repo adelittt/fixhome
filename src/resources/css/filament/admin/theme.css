@@ -53,6 +53,58 @@ body.fi-body {
     border-right: 1px solid rgba(211, 196, 185, 0.35);
 }
 
+/* Resizable Sidebar Handle (Desktop) */
+.fh-sidebar-resizer {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    bottom: 0;
+    width: 10px;
+    z-index: 40;
+    cursor: col-resize;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+}
+
+.fh-sidebar-resizer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 4px;
+    width: 2px;
+    background-color: transparent;
+    transition: background-color 0.18s ease;
+}
+
+.fh-sidebar-resizer-grip {
+    width: 4px;
+    height: 36px;
+    border-radius: 9999px;
+    background-color: rgba(119, 85, 55, 0.28);
+    opacity: 0;
+    transition: opacity 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.fh-sidebar-resizer:hover::before,
+.fh-sidebar-resizer.is-dragging::before {
+    background-color: rgba(119, 85, 55, 0.45);
+}
+
+.fh-sidebar-resizer:hover .fh-sidebar-resizer-grip,
+.fh-sidebar-resizer.is-dragging .fh-sidebar-resizer-grip {
+    opacity: 1;
+    background-color: var(--fh-primary-container);
+    transform: scaleY(1.1);
+}
+
+body.fh-sidebar-resizing {
+    cursor: col-resize !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
 .fi-sidebar-header {
     background-color: transparent !important;
     box-shadow: none !important;
