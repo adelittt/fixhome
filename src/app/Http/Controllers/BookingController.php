@@ -213,7 +213,14 @@ class BookingController extends Controller
             ]);
 
             $errorMessages = $response->json('error_messages');
-            $msg = is_array($errorMessages) ? implode(', ', $errorMessages) : 'Gagal membuat transaksi Midtrans.';
+            $statusMessage = $response->json('status_message') ?? $response->json('message');
+            if (is_array($errorMessages) && count($errorMessages) > 0) {
+                $msg = implode(', ', $errorMessages);
+            } elseif (is_string($statusMessage) && $statusMessage !== '') {
+                $msg = 'Midtrans (' . $response->status() . '): ' . $statusMessage;
+            } else {
+                $msg = 'Gagal membuat transaksi Midtrans (HTTP ' . $response->status() . ').';
+            }
 
             return response()->json(['message' => $msg], 502);
         }

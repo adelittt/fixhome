@@ -36,8 +36,8 @@ return [
     ],
 
     'midtrans' => [
-        'server_key' => env('MIDTRANS_SERVER_KEY'),
-        'client_key' => env('MIDTRANS_CLIENT_KEY'),
+        'server_key' => trim((string) env('MIDTRANS_SERVER_KEY', '')),
+        'client_key' => trim((string) env('MIDTRANS_CLIENT_KEY', '')),
         'is_production' => filter_var(env('MIDTRANS_IS_PRODUCTION', false), FILTER_VALIDATE_BOOLEAN),
         'expiry_hours' => max(2, (int) env('MIDTRANS_EXPIRY_HOURS', 2)),
     ],
