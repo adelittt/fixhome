@@ -237,7 +237,7 @@ class BookingController extends Controller
                 'komisi_admin' => $split['komisi_admin'],
                 'dana_teknisi' => $split['dana_teknisi'],
                 'biaya_jarak' => $biayaJarak,
-                'status_pembayaran' => 'pending',
+                'status_pembayaran' => 'unpaid',
                 'payment_method' => 'Midtrans Snap',
                 'payment_gateway_ref' => 'SNAP:' . $token,
                 'paid_at' => null,
@@ -377,7 +377,7 @@ class BookingController extends Controller
                 'komisi_admin' => $split['komisi_admin'],
                 'dana_teknisi' => $split['dana_teknisi'],
                 'biaya_jarak' => $booking->biaya_jarak,
-                'status_pembayaran' => 'pending',
+                'status_pembayaran' => 'unpaid',
                 'payment_method' => $validated['payment_method'],
                 'payment_gateway_ref' => 'PG-SIM-' . time(),
             ]
