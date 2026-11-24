@@ -158,7 +158,7 @@ class BookingController extends Controller
         $isProduction = (bool) config('services.midtrans.is_production');
         $expiryHours = max(2, (int) config('services.midtrans.expiry_hours', 2));
 
-        // Reuse existing active QRIS Core API or Snap token if not expired & not forced to regenerate
+        // Reuse existing active GoPay/QRIS Core API token if not expired & not forced to regenerate
         $forceNew = (bool) $request->boolean('force_new', false);
         $existing = $booking->transaksi;
         if (
@@ -169,27 +169,12 @@ class BookingController extends Controller
             && $existing->updated_at
             && $existing->updated_at->gt(now()->subHours($expiryHours)->addMinutes(5))
         ) {
-            if (str_starts_with($existing->payment_gateway_ref, 'QRIS:')) {
-                $qrUrl = substr($existing->payment_gateway_ref, 5);
+            if (str_starts_with($existing->payment_gateway_ref, 'GOPAYQR:')) {
+                $qrUrl = substr($existing->payment_gateway_ref, 8);
 
                 return response()->json([
                     'mode' => 'core_qris',
                     'qr_url' => $qrUrl,
-                    'order_id' => $existing->kode_transaksi,
-                    'expiry_hours' => $expiryHours,
-                ]);
-            }
-
-            if (str_starts_with($existing->payment_gateway_ref, 'SNAP:')) {
-                $existingToken = substr($existing->payment_gateway_ref, 5);
-                $snapBase = $isProduction
-                    ? 'https://app.midtrans.com/snap/v4/redirection/'
-                    : 'https://app.sandbox.midtrans.com/snap/v4/redirection/';
-
-                return response()->json([
-                    'mode' => 'snap',
-                    'token' => $existingToken,
-                    'redirect_url' => $snapBase . $existingToken,
                     'order_id' => $existing->kode_transaksi,
                     'expiry_hours' => $expiryHours,
                 ]);
@@ -227,7 +212,9 @@ class BookingController extends Controller
             'phone' => $user->no_telepon ?? '081234567890',
         ];
 
-        // 1. Try Midtrans Core API QRIS first for pure clean QR image (no iframe chrome)
+        // 1. Try Midtrans Core API GoPay/QRIS first:
+        //    - In Sandbox: encode Midtrans `deeplink-redirect` as QR so scanning with phone camera opens Midtrans Simulator directly!
+        //    - In Production: use Midtrans `generate-qr-code` directly.
         $coreApiUrl = $isProduction
             ? 'https://api.midtrans.com/v2/charge'
             : 'https://api.sandbox.midtrans.com/v2/charge';
@@ -236,15 +223,16 @@ class BookingController extends Controller
             ->acceptJson()
             ->timeout(20)
             ->post($coreApiUrl, [
-                'payment_type' => 'qris',
+                'payment_type' => 'gopay',
                 'transaction_details' => [
                     'order_id' => $orderId,
                     'gross_amount' => $grossAmount,
                 ],
                 'item_details' => $items,
                 'customer_details' => $customerDetails,
-                'qris' => [
-                    'acquirer' => 'gopay',
+                'gopay' => [
+                    'enable_callback' => true,
+                    'callback_url' => route('booking.midtrans-status', $booking->id),
                 ],
                 'custom_expiry' => [
                     'expiry_duration' => $expiryHours * 60,
@@ -254,15 +242,24 @@ class BookingController extends Controller
 
         if ($coreResponse->successful()) {
             $coreData = $coreResponse->json();
-            $qrUrl = '';
+            $qrImageUrl = '';
+            $deeplinkUrl = '';
             foreach ((array) ($coreData['actions'] ?? []) as $action) {
-                if (($action['name'] ?? '') === 'generate-qr-code' && !empty($action['url'])) {
-                    $qrUrl = (string) $action['url'];
-                    break;
+                $name = (string) ($action['name'] ?? '');
+                $url = (string) ($action['url'] ?? '');
+                if ($name === 'generate-qr-code' && $url !== '') {
+                    $qrImageUrl = $url;
+                }
+                if ($name === 'deeplink-redirect' && $url !== '') {
+                    $deeplinkUrl = $url;
                 }
             }
 
-            if ($qrUrl !== '') {
+            $finalQrUrl = (!$isProduction && $deeplinkUrl !== '')
+                ? 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=6&data=' . rawurlencode($deeplinkUrl)
+                : $qrImageUrl;
+
+            if ($finalQrUrl !== '') {
                 Transaksi::updateOrCreate(
                     ['booking_id' => $booking->id],
                     [
@@ -272,15 +269,16 @@ class BookingController extends Controller
                         'dana_teknisi' => $split['dana_teknisi'],
                         'biaya_jarak' => $biayaJarak,
                         'status_pembayaran' => 'unpaid',
-                        'payment_method' => 'Midtrans QRIS',
-                        'payment_gateway_ref' => 'QRIS:' . $qrUrl,
+                        'payment_method' => 'Midtrans GoPay QRIS',
+                        'payment_gateway_ref' => 'GOPAYQR:' . $finalQrUrl,
                         'paid_at' => null,
                     ]
                 );
 
                 return response()->json([
                     'mode' => 'core_qris',
-                    'qr_url' => $qrUrl,
+                    'qr_url' => $finalQrUrl,
+                    'deeplink_url' => $deeplinkUrl,
                     'order_id' => $orderId,
                     'expiry_hours' => $expiryHours,
                 ]);
