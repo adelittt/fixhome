@@ -1,4 +1,4 @@
-<x-layouts.app title="Pelacakan & Chat - FixHome Plus">
+<x-layouts.app title="Pelacakan & Chat - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-10">
 
         <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg flex-1 flex flex-col space-y-5">
@@ -756,7 +756,7 @@
                 attribution: '&copy; OpenStreetMap'
             }).addTo(map);
 
-            // Custom Customer House Pin (FixHome Plus theme)
+            // Custom Customer House Pin (FixHome theme)
             const homeIcon = L.divIcon({
                 className: 'custom-home-pin',
                 html: '<div style="background-color:#4c6264; color:white; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border:3px solid #ffffff; box-shadow:0 6px 14px rgba(76,98,100,0.4); font-size:17px;">🏠</div>',

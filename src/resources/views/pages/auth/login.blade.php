@@ -1,4 +1,4 @@
-<x-layouts.app title="Masuk - FixHome Plus">
+<x-layouts.app title="Masuk - FixHome">
     <div class="w-full flex-1 flex items-center justify-center py-space-xl px-gutter lg:px-margin">
         <div class="w-full max-w-md lg:max-w-4xl neu-card-lg overflow-hidden lg:grid lg:grid-cols-12">
 
@@ -9,12 +9,12 @@
 
                 <div class="relative z-10 space-y-5">
                     <a href="{{ route('splash') }}" class="inline-flex items-center gap-3">
-                        <img alt="FixHome Plus Logo" class="h-10 w-10 rounded-xl object-contain bg-surface p-1 shadow-md" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                        <span class="font-headline-sm text-headline-sm text-tertiary-fixed font-recoleta">FixHome Plus</span>
+                        <img alt="FixHome Logo" class="h-10 w-10 rounded-xl object-contain bg-surface p-1 shadow-md" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                        <span class="font-headline-sm text-headline-sm text-tertiary-fixed font-recoleta">FixHome</span>
                     </a>
 
                     <h2 class="font-headline-md text-headline-md text-on-primary font-bold font-recoleta leading-snug pt-2">
-                        Satu Pintu Masuk untuk Seluruh Ekosistem FixHome Plus.
+                        Satu Pintu Masuk untuk Seluruh Ekosistem FixHome.
                     </h2>
                     <p class="font-body-md text-body-md text-inverse-on-surface/80 leading-relaxed">
                         Masuk menggunakan akun Customer, Mitra Teknisi, maupun Administrator. Sistem otomatis mengarahkan Anda ke halaman yang sesuai dengan hak akses akun.
@@ -51,8 +51,8 @@
                             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                         </a>
                         <div class="flex items-center gap-2">
-                            <img alt="FixHome Plus Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                            <span class="font-headline-sm text-primary-container font-recoleta">FixHome Plus</span>
+                            <img alt="FixHome Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                            <span class="font-headline-sm text-primary-container font-recoleta">FixHome</span>
                         </div>
                         <div class="w-9"></div>
                     </div>

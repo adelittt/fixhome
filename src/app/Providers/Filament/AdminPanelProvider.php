@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->spa()
-            ->brandName('FixHome Plus')
+            ->brandName('FixHome')
             ->brandLogo(fn () => view('filament.brand-logo'))
             ->brandLogoHeight('2.75rem')
             ->favicon(asset('images/fixhome-logo.jpg'))

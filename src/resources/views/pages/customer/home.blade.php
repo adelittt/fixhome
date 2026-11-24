@@ -1,4 +1,4 @@
-<x-layouts.app title="Beranda - FixHome Plus">
+<x-layouts.app title="Beranda - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
         <div class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-xl">
@@ -6,7 +6,7 @@
             <!-- Mobile Only Header Bar -->
             <div class="lg:hidden neu-card-sm px-5 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <img alt="FixHome Plus Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                    <img alt="FixHome Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
                     <div>
                         <span class="text-[11px] font-label-sm font-semibold text-on-surface-variant block">Selamat Datang</span>
                         <h2 class="font-title-sm text-primary font-bold font-recoleta leading-tight">Halo, {{ Str::words($customer->nama_lengkap ?? Auth::user()->name, 2, '') }}</h2>
@@ -43,7 +43,7 @@
             <!-- Hero Banner Section (Harmonized with Landing Page) -->
             <div class="relative overflow-hidden neu-card-lg p-6 sm:p-10 min-h-[260px] flex items-center">
                 <div class="absolute inset-0 w-full h-full pointer-events-none">
-                    <img alt="FixHome Plus Banner" class="w-full h-full object-cover" src="{{ asset('images/fixhome-hero-banner.jpg') }}" />
+                    <img alt="FixHome Banner" class="w-full h-full object-cover" src="{{ asset('images/fixhome-hero-banner.jpg') }}" />
                     <div class="absolute inset-0 hero-banner-overlay"></div>
                     <div aria-hidden="true" class="hero-shimmer-overlay pointer-events-none"></div>
                 </div>

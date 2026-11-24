@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>{{ $title ?? 'FixHome Plus' }} — Solusi Perbaikan Rumah Bergaransi</title>
+    <title>{{ $title ?? 'FixHome' }} — Solusi Perbaikan Rumah Bergaransi</title>
 
-    <!-- Google Fonts matching FixHome Plus Landing Page -->
+    <!-- Google Fonts matching FixHome Landing Page -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
 
-    <!-- Compiled FixHome Plus Tailwind CSS (No CDN) -->
+    <!-- Compiled FixHome Tailwind CSS (No CDN) -->
     @vite(['resources/css/landing.css'])
 
     <!-- Leaflet CSS & JS for Interactive Map (Pinned with SRI) -->
@@ -32,9 +32,9 @@
 
             <!-- Brand Logo -->
             <a href="{{ Auth::check() ? (Auth::user()->isAdmin() ? url('/admin') : (Auth::user()->isTeknisi() ? route('teknisi.dashboard') : route('customer.home'))) : route('splash') }}" class="flex items-center gap-space-md group">
-                <img alt="FixHome Plus Logo" class="h-9 w-9 rounded-lg object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                <img alt="FixHome Logo" class="h-9 w-9 rounded-lg object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="{{ asset('images/fixhome-logo.jpg') }}" />
                 <div>
-                    <span class="font-headline-sm text-headline-sm text-primary-container tracking-tight font-recoleta block leading-none">FixHome Plus</span>
+                    <span class="font-headline-sm text-headline-sm text-primary-container tracking-tight font-recoleta block leading-none">FixHome</span>
                     <span class="text-[10px] text-on-surface-variant font-label-sm tracking-wide block mt-0.5">Solusi Perbaikan Rumah</span>
                 </div>
             </a>
@@ -152,8 +152,8 @@
             <div class="grid grid-cols-4 gap-gutter mb-space-xl">
                 <div class="flex flex-col gap-space-sm">
                     <div class="flex items-center gap-2.5 mb-space-xs">
-                        <img alt="FixHome Plus Logo" class="h-8 w-8 rounded-lg object-contain bg-surface p-0.5" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                        <span class="font-title-md text-title-md text-tertiary-fixed font-semibold font-recoleta">FixHome Plus</span>
+                        <img alt="FixHome Logo" class="h-8 w-8 rounded-lg object-contain bg-surface p-0.5" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                        <span class="font-title-md text-title-md text-tertiary-fixed font-semibold font-recoleta">FixHome</span>
                     </div>
                     <p class="font-body-sm text-body-sm text-inverse-on-surface/80 leading-relaxed">
                         Platform booking jasa perbaikan rumah berbasis radius geospasial terdekat dengan skema bagi hasil transparan: 95% teknisi &amp; 5% operasional platform.
@@ -196,7 +196,7 @@
             </div>
 
             <div class="pt-space-lg flex items-center justify-between text-inverse-on-surface/75 border-t border-inverse-on-surface/15">
-                <p class="font-body-sm text-body-sm">&copy; 2025 FixHome Plus Indonesia. Layanan Booking Jasa Perbaikan Rumah Bergaransi.</p>
+                <p class="font-body-sm text-body-sm">&copy; 2025 FixHome Indonesia. Layanan Booking Jasa Perbaikan Rumah Bergaransi.</p>
                 <div class="flex items-center gap-space-sm font-label-sm text-label-sm text-tertiary-fixed">
                     <span class="material-symbols-outlined text-[16px]">verified</span>
                     <span>Garansi Resmi &amp; Teknisi Terverifikasi</span>

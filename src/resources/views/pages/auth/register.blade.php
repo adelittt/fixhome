@@ -1,4 +1,4 @@
-<x-layouts.app title="Daftar Akun - FixHome Plus">
+<x-layouts.app title="Daftar Akun - FixHome">
     <div class="w-full flex-1 flex items-center justify-center py-space-xl px-gutter lg:px-margin">
         <div class="w-full max-w-md lg:max-w-4xl neu-card-lg overflow-hidden lg:grid lg:grid-cols-12">
 
@@ -9,8 +9,8 @@
 
                 <div class="relative z-10 space-y-5">
                     <a href="{{ route('splash') }}" class="inline-flex items-center gap-3">
-                        <img alt="FixHome Plus Logo" class="h-10 w-10 rounded-xl object-contain bg-surface p-1 shadow-md" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                        <span class="font-headline-sm text-headline-sm text-tertiary-fixed font-recoleta">FixHome Plus</span>
+                        <img alt="FixHome Logo" class="h-10 w-10 rounded-xl object-contain bg-surface p-1 shadow-md" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                        <span class="font-headline-sm text-headline-sm text-tertiary-fixed font-recoleta">FixHome</span>
                     </a>
 
                     <h2 class="font-headline-md text-headline-md text-on-primary font-bold font-recoleta leading-snug pt-2">
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="relative z-10 pt-5 mt-6 border-t border-inverse-on-surface/15 text-xs text-tertiary-fixed font-label-sm">
-                    FixHome Plus &bull; Layanan Perbaikan Rumah Bergaransi 14 Hari
+                    FixHome &bull; Layanan Perbaikan Rumah Bergaransi 14 Hari
                 </div>
             </div>
 
@@ -47,8 +47,8 @@
                             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                         </a>
                         <div class="flex items-center gap-2">
-                            <img alt="FixHome Plus Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
-                            <span class="font-headline-sm text-primary-container font-recoleta">FixHome Plus</span>
+                            <img alt="FixHome Logo" class="h-8 w-8 rounded-lg object-contain mix-blend-multiply" src="{{ asset('images/fixhome-logo.jpg') }}" />
+                            <span class="font-headline-sm text-primary-container font-recoleta">FixHome</span>
                         </div>
                         <div class="w-9"></div>
                     </div>
@@ -59,7 +59,7 @@
                             <span>Registrasi Akun Baru</span>
                         </div>
                         <h1 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">Buat Akun Baru</h1>
-                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Lengkapi data diri Anda untuk mulai menggunakan FixHome Plus</p>
+                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Lengkapi data diri Anda untuk mulai menggunakan FixHome</p>
                     </div>
 
                     <form action="{{ route('register') }}" method="POST" class="space-y-3.5">

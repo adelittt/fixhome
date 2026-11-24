@@ -1,4 +1,4 @@
-<x-layouts.app title="Rincian Pembayaran - FixHome Plus">
+<x-layouts.app title="Rincian Pembayaran - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
         <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
@@ -126,7 +126,7 @@
                                     <ol class="list-decimal list-inside space-y-1 pl-1 leading-relaxed">
                                         <li>Buka aplikasi m-BCA dan pilih menu <strong class="text-primary">m-Transfer &gt; BCA Virtual Account</strong>.</li>
                                         <li>Masukkan nomor Virtual Account di atas dan klik <strong class="text-primary">Send</strong>.</li>
-                                        <li>Periksa nama penerima <strong class="text-primary">FixHome Plus: {{ $booking->teknisi->nama_lengkap }}</strong> dan nominal total.</li>
+                                        <li>Periksa nama penerima <strong class="text-primary">FixHome: {{ $booking->teknisi->nama_lengkap }}</strong> dan nominal total.</li>
                                         <li>Masukkan PIN m-BCA Anda untuk menyelesaikan pembayaran.</li>
                                     </ol>
                                 </div>
@@ -152,7 +152,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h4 class="font-title-sm font-bold text-primary font-butler">PT SOLUSI FIXHOME PLUS INDONESIA</h4>
+                                        <h4 class="font-title-sm font-bold text-primary font-butler">PT SOLUSI FIXHOME INDONESIA</h4>
                                         <p class="text-xs text-on-surface-variant">Scan kode QR di atas menggunakan aplikasi e-wallet apa saja (GoPay, OVO, Dana, BCA, Livin)</p>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@
                     <div class="p-4 rounded-[22px] bg-secondary-container/60 text-xs text-on-secondary-fixed leading-relaxed flex items-start gap-3 shadow-[inset_2px_2px_5px_#B2CED0,inset_-2px_-2px_5px_#E6FAFC]">
                         <span class="material-symbols-outlined text-primary text-[22px] shrink-0 mt-0.5">info</span>
                         <span>
-                            <strong>Aturan Bisnis FixHome Plus (BR-03 &amp; BR-05):</strong> Kanal <strong>Chat dua arah</strong> dan fitur <strong>Pelacakan GPS</strong> posisi teknisi secara real-time akan langsung terbuka dan aktif segera setelah tagihan ini berhasil diverifikasi.
+                            <strong>Aturan Bisnis FixHome (BR-03 &amp; BR-05):</strong> Kanal <strong>Chat dua arah</strong> dan fitur <strong>Pelacakan GPS</strong> posisi teknisi secara real-time akan langsung terbuka dan aktif segera setelah tagihan ini berhasil diverifikasi.
                         </span>
                     </div>
 
@@ -266,7 +266,7 @@
 
                 <div>
                     <h3 id="modal-title" class="font-headline-sm text-primary font-bold font-recoleta">Memproses Pembayaran...</h3>
-                    <p id="modal-subtitle" class="text-xs text-on-surface-variant mt-1">Menghubungkan ke gateway pembayaran FixHome Plus</p>
+                    <p id="modal-subtitle" class="text-xs text-on-surface-variant mt-1">Menghubungkan ke gateway pembayaran FixHome</p>
                 </div>
 
                 <div class="neu-inset p-4 text-left space-y-2.5 text-xs text-on-surface-variant font-medium">

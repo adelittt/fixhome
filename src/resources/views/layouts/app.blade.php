@@ -1,3 +1,3 @@
-<x-layouts.app :title="$title ?? 'FixHome Plus'">
+<x-layouts.app :title="$title ?? 'FixHome'">
     {{ $slot }}
 </x-layouts.app>

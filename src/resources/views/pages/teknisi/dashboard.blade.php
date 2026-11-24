@@ -1,4 +1,4 @@
-<x-layouts.app title="Dashboard Mitra Teknisi - FixHome Plus">
+<x-layouts.app title="Dashboard Mitra Teknisi - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-14">
 
         <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-lg">
@@ -94,7 +94,7 @@
                         <span class="px-2.5 py-0.5 rounded-full neu-inset-sm text-[11px] font-semibold text-on-surface-variant">Batas: 150 Hari</span>
                     </div>
                     <p class="text-xs text-on-surface-variant leading-relaxed">
-                        Sistem FixHome Plus mengirim pengingat otomatis pada hari 30, 60, 90, 120, dan 150 (BR-10).
+                        Sistem FixHome mengirim pengingat otomatis pada hari 30, 60, 90, 120, dan 150 (BR-10).
                     </p>
                 </div>
 
@@ -198,7 +198,7 @@
                 </div>
 
                 <div class="space-y-3 text-xs text-on-surface-variant leading-relaxed">
-                    <p>Untuk memastikan ketersediaan teknisi berkualitas dan responsif, FixHome Plus memberlakukan sistem kontrol keaktifan:</p>
+                    <p>Untuk memastikan ketersediaan teknisi berkualitas dan responsif, FixHome memberlakukan sistem kontrol keaktifan:</p>
 
                     <div class="space-y-2.5 pt-1">
                         <div class="p-3.5 neu-inset flex items-center gap-3">

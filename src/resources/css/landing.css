@@ -134,7 +134,7 @@
     display: none;
 }
 
-/* Shared FixHome Plus Tactile Neumorphic Design Utilities */
+/* Shared FixHome Tactile Neumorphic Design Utilities */
 @layer components {
     .neu-card {
         @apply bg-surface rounded-[26px];

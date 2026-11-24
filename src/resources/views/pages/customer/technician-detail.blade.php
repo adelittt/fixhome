@@ -107,7 +107,7 @@
                     <div class="neu-card p-6 sm:p-8 space-y-3">
                         <h3 class="font-headline-sm text-primary font-bold font-recoleta">Tentang Teknisi</h3>
                         <p class="font-body-md text-on-surface-variant leading-relaxed">
-                            Mitra teknisi terverifikasi platform FixHome Plus dengan spesialisasi <strong class="text-primary">{{ $technician->keahlian }}</strong>. Menyediakan pemeriksaan komprehensif, pengerjaan rapi standar SNI, dan garansi kualitas hasil kerja resmi 14 hari. Peralatan servis lengkap dan siap dipanggil sesuai jadwal.
+                            Mitra teknisi terverifikasi platform FixHome dengan spesialisasi <strong class="text-primary">{{ $technician->keahlian }}</strong>. Menyediakan pemeriksaan komprehensif, pengerjaan rapi standar SNI, dan garansi kualitas hasil kerja resmi 14 hari. Peralatan servis lengkap dan siap dipanggil sesuai jadwal.
                         </p>
                         <div class="flex flex-wrap items-center gap-2 pt-2 text-xs">
                             <span class="neu-pill px-3.5 py-1.5 text-primary font-semibold">✓ Garansi Servis 14 Hari</span>
@@ -174,7 +174,7 @@
                         </div>
 
                         <div class="p-4 rounded-[18px] bg-secondary-container/60 text-xs text-on-secondary-fixed space-y-1.5 shadow-[inset_2px_2px_5px_#B2CED0,inset_-2px_-2px_5px_#E6FAFC]">
-                            <span class="font-bold block text-primary">Keuntungan Pesan di FixHome Plus:</span>
+                            <span class="font-bold block text-primary">Keuntungan Pesan di FixHome:</span>
                             <p class="text-[11px] leading-relaxed">
                                 &bull; Pelacakan GPS teknisi langsung (BR-05)<br>
                                 &bull; Chat langsung setelah pembayaran (BR-03)<br>

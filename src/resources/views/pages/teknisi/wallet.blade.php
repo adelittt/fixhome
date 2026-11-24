@@ -1,4 +1,4 @@
-<x-layouts.app title="Dompet Digital Mitra Teknisi - FixHome Plus">
+<x-layouts.app title="Dompet Digital Mitra Teknisi - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-16">
 
         <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-lg">
@@ -64,7 +64,7 @@
                         <span class="text-[11px] bg-surface/20 px-3 py-0.5 rounded-full font-bold shrink-0">Siap Cair</span>
                     </div>
                     <p class="text-[11px] text-inverse-on-surface/80 pt-2 border-t border-inverse-on-surface/15 leading-relaxed relative z-10">
-                        Dana murni hak teknisi setelah dipotong 5% komisi admin platform FixHome Plus.
+                        Dana murni hak teknisi setelah dipotong 5% komisi admin platform FixHome.
                     </p>
                 </div>
 

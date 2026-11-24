@@ -1,4 +1,4 @@
-<x-layouts.app title="Profil Pengguna - FixHome Plus">
+<x-layouts.app title="Profil Pengguna - FixHome">
     <div class="flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
         <!-- Mobile Header -->

@@ -1,4 +1,4 @@
-<x-layouts.app title="Daftar Teknisi - FixHome Plus">
+<x-layouts.app title="Daftar Teknisi - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
         <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">

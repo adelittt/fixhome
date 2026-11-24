@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="web_standard" name="shell-type" />
-    <title>FixHome Plus — Platform Booking Jasa Perbaikan Rumah #1 di Indonesia</title>
+    <title>FixHome — Platform Booking Jasa Perbaikan Rumah #1 di Indonesia</title>
 
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
@@ -369,11 +369,11 @@
                 <div class="text-center max-w-2xl mx-auto mb-space-xl">
                     <div class="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
                         <span class="material-symbols-outlined text-[16px]">verified</span>
-                        <span>Standar Integritas FixHome Plus</span>
+                        <span>Standar Integritas FixHome</span>
                     </div>
                     <h2 class="font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-bold font-recoleta">Transparan &amp; Tanpa Biaya Tersembunyi</h2>
                     <p class="font-body-md text-body-md text-on-surface-variant mt-2">
-                        Sistem penetapan harga dan komisi yang adil bagi pelanggan, teknisi, dan mitra toko.
+                        Sistem penetapan harga dan komisi yang adil bagi pelanggan dan mitra teknisi.
                     </p>
                 </div>
 
@@ -386,7 +386,7 @@
                         </div>
                         <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-space-xs font-butler">Verifikasi Ketat</h3>
                         <p class="font-body-md text-body-md text-on-surface-variant">
-                            Teknisi &amp; Mitra Toko wajib melewati verifikasi identitas (KTP, SKCK, dan uji keahlian lapangan langsung) oleh tim Admin FixHome Plus sebelum menerima pesanan.
+                            Mitra Teknisi wajib melewati verifikasi identitas (KTP, SKCK, dan uji keahlian lapangan langsung) oleh tim Admin FixHome sebelum menerima pesanan.
                         </p>
                     </div>
 
@@ -440,7 +440,7 @@
                 <div class="rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col md:flex-row items-center justify-between gap-space-lg">
                     <div class="max-w-xl text-center md:text-left">
                         <h3 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">Rumah Rusak atau Mau Bergabung Sebagai Teknisi?</h3>
-                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Dapatkan teknisi berpengalaman hari ini juga atau kembangkan karir pertukangan Anda bersama ekosistem FixHome Plus.</p>
+                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Dapatkan teknisi berpengalaman hari ini juga atau kembangkan karir pertukangan Anda bersama ekosistem FixHome.</p>
                     </div>
                     <div class="flex flex-col sm:flex-row items-center gap-space-md w-full md:w-auto">
                         <a class="w-full sm:w-auto text-center px-space-xl py-space-sm rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:opacity-95 active:shadow-[inset_3px_3px_6px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-0.5 active:scale-[0.98]" href="{{ $bookingCtaUrl }}">
@@ -491,7 +491,7 @@
             </div>
 
             <div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md text-inverse-on-surface/70 border-t border-inverse-on-surface/15">
-                <p class="font-body-sm text-body-sm text-center md:text-left">&copy; 2025 FixHome Plus Indonesia. Layanan Booking Jasa Perbaikan Rumah Bergaransi.</p>
+                <p class="font-body-sm text-body-sm text-center md:text-left">&copy; 2025 FixHome Indonesia. Layanan Booking Jasa Perbaikan Rumah Bergaransi.</p>
                 <div class="flex items-center gap-space-sm font-label-sm text-label-sm text-tertiary-fixed">
                     <span class="material-symbols-outlined text-[16px]">verified</span>
                     <span>Garansi Resmi &amp; Teknisi Terverifikasi</span>
