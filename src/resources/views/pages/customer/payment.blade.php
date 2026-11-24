@@ -86,7 +86,56 @@
 
                             <div id="midtrans-error-box" class="hidden p-3.5 rounded-2xl bg-red-100 text-red-800 text-xs font-semibold"></div>
 
-                            <!-- Inline Embedded Midtrans QRIS (otomatis langsung muncul saat halaman dibuka) -->
+                            <!-- Pure Clean QRIS View (Core API, seperti fotosphere.my.id — tanpa iframe abu-abu) -->
+                            <div id="midtrans-pure-qris" class="hidden grid grid-cols-1 md:grid-cols-12 gap-6 items-center pt-2">
+                                <div class="md:col-span-5 flex flex-col items-center text-center">
+                                    <div class="bg-white p-4 rounded-[22px] border border-[#EAE2DA] shadow-[0_10px_28px_rgba(93,62,34,0.08)]">
+                                        <img id="pure-qris-img" src="" alt="Kode QRIS FixHome" class="w-52 h-52 sm:w-56 sm:h-56 object-contain rounded-xl" />
+                                    </div>
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-outline mt-4">Total Pembayaran</span>
+                                    <span class="text-2xl font-extrabold text-primary font-butler mt-0.5">Rp {{ number_format($booking->total_biaya, 0, ',', '.') }}</span>
+                                    <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low text-[11px] font-semibold text-on-surface-variant">
+                                        <span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+                                        <span>Berlaku <span id="qris-card-timer" class="font-mono font-bold text-primary">{{ str_pad($midtransExpiryHours ?? 2, 2, '0', STR_PAD_LEFT) }}:00:00</span></span>
+                                    </div>
+                                    <a id="pure-qris-download" href="#" target="_blank" rel="noopener noreferrer" download="QRIS-FixHome.png" class="mt-3 text-xs font-semibold text-primary-container hover:underline inline-flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[15px]">download</span>
+                                        <span>Simpan Gambar QRIS</span>
+                                    </a>
+                                </div>
+
+                                <div class="md:col-span-7 space-y-4">
+                                    <div>
+                                        <h4 class="font-headline-sm text-primary font-bold font-recoleta">Cara Pembayaran</h4>
+                                        <p class="text-xs text-on-surface-variant mt-0.5">Scan QRIS di samping untuk langsung menyelesaikan pembayaran.</p>
+                                    </div>
+                                    <div class="space-y-3.5 text-xs">
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-7 h-7 rounded-lg bg-surface-container-low text-primary font-bold flex items-center justify-center shrink-0 text-[11px]">01</span>
+                                            <div>
+                                                <div class="font-bold text-primary">Buka Aplikasi Pembayaran</div>
+                                                <p class="text-on-surface-variant mt-0.5">Gunakan M-Banking atau E-Wallet yang mendukung pembayaran QRIS (GoPay, OVO, DANA, ShopeePay, BCA, Mandiri, BRI, dll).</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-7 h-7 rounded-lg bg-surface-container-low text-primary font-bold flex items-center justify-center shrink-0 text-[11px]">02</span>
+                                            <div>
+                                                <div class="font-bold text-primary">Scan Kode QRIS</div>
+                                                <p class="text-on-surface-variant mt-0.5">Nominal <strong>Rp {{ number_format($booking->total_biaya, 0, ',', '.') }}</strong> otomatis terisi, cukup konfirmasi pembayaran di HP Anda.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start gap-3">
+                                            <span class="w-7 h-7 rounded-lg bg-surface-container-low text-primary font-bold flex items-center justify-center shrink-0 text-[11px]">03</span>
+                                            <div>
+                                                <div class="font-bold text-primary">Otomatis Terverifikasi</div>
+                                                <p class="text-on-surface-variant mt-0.5">Halaman otomatis lanjut ke Pelacakan GPS &amp; Live Chat setelah pembayaran berhasil.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Inline Embedded Midtrans QRIS (loading / fallback Snap bila Core API belum diaktifkan) -->
                             <div id="midtrans-embed-wrapper" class="space-y-3">
                                 <div class="flex flex-wrap items-center justify-between gap-2">
                                     <div class="flex items-center gap-2">
@@ -412,6 +461,25 @@
                     return;
                 }
 
+                const pureQrisWrap = document.getElementById('midtrans-pure-qris');
+                const pureQrisImg = document.getElementById('pure-qris-img');
+                const pureQrisDownload = document.getElementById('pure-qris-download');
+                const embedWrapper = document.getElementById('midtrans-embed-wrapper');
+
+                if (data.mode === 'core_qris' && data.qr_url && pureQrisWrap && pureQrisImg) {
+                    pureQrisImg.src = data.qr_url;
+                    if (pureQrisDownload) pureQrisDownload.href = data.qr_url;
+                    pureQrisWrap.classList.remove('hidden');
+                    if (embedWrapper) embedWrapper.classList.add('hidden');
+                    if (btn) btn.disabled = false;
+                    if (label) label.textContent = 'Muat Ulang QRIS';
+                    startAutoPollStatus();
+                    return;
+                }
+
+                if (pureQrisWrap) pureQrisWrap.classList.add('hidden');
+                if (embedWrapper) embedWrapper.classList.remove('hidden');
+
                 if (embedContainer) {
                     embedContainer.innerHTML = '';
                     embedContainer.classList.remove('flex', 'items-center', 'justify-center');
@@ -458,6 +526,7 @@
                         if (statusLabel) statusLabel.textContent = 'QRIS Siap Dipindai (Tenggat {{ $midtransExpiryHours ?? 2 }} Jam)';
                         if (btn) btn.disabled = false;
                         if (label) label.textContent = 'Muat Ulang QRIS';
+                        startAutoPollStatus();
                         return;
                     }
                 }
@@ -472,6 +541,22 @@
                 if (btn) btn.disabled = false;
                 if (label) label.textContent = 'Coba Muat Ulang QRIS';
             }
+        }
+
+        let pollTimer = null;
+        function startAutoPollStatus() {
+            if (pollTimer) return;
+            pollTimer = setInterval(async () => {
+                try {
+                    const r = await fetch(midtransStatusUrl, { headers: { 'Accept': 'application/json' } });
+                    if (!r.ok) return;
+                    const s = await r.json();
+                    if (s.paid && s.redirect_url) {
+                        clearInterval(pollTimer);
+                        window.location.href = s.redirect_url;
+                    }
+                } catch (e) {}
+            }, 5000);
         }
 
         if (midtransEnabled) {
@@ -532,7 +617,10 @@
             const hrs = Math.floor(timeLeft / 3600);
             const mins = Math.floor((timeLeft % 3600) / 60);
             const secs = timeLeft % 60;
-            timerEl.textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            const formatted = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            if (timerEl) timerEl.textContent = formatted;
+            const cardTimerEl = document.getElementById('qris-card-timer');
+            if (cardTimerEl) cardTimerEl.textContent = formatted;
         }, 1000);
 
         function triggerInteractivePayment() {

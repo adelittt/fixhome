@@ -158,7 +158,7 @@ class BookingController extends Controller
         $isProduction = (bool) config('services.midtrans.is_production');
         $expiryHours = max(2, (int) config('services.midtrans.expiry_hours', 2));
 
-        // Reuse existing active QRIS Snap token if not expired & not forced to regenerate
+        // Reuse existing active QRIS Core API or Snap token if not expired & not forced to regenerate
         $forceNew = (bool) $request->boolean('force_new', false);
         $existing = $booking->transaksi;
         if (
@@ -166,26 +166,35 @@ class BookingController extends Controller
             && $existing
             && $existing->status_pembayaran === 'unpaid'
             && is_string($existing->payment_gateway_ref)
-            && str_starts_with($existing->payment_gateway_ref, 'SNAP:')
             && $existing->updated_at
             && $existing->updated_at->gt(now()->subHours($expiryHours)->addMinutes(5))
         ) {
-            $existingToken = substr($existing->payment_gateway_ref, 5);
-            $snapBase = $isProduction
-                ? 'https://app.midtrans.com/snap/v4/redirection/'
-                : 'https://app.sandbox.midtrans.com/snap/v4/redirection/';
+            if (str_starts_with($existing->payment_gateway_ref, 'QRIS:')) {
+                $qrUrl = substr($existing->payment_gateway_ref, 5);
 
-            return response()->json([
-                'token' => $existingToken,
-                'redirect_url' => $snapBase . $existingToken,
-                'order_id' => $existing->kode_transaksi,
-                'expiry_hours' => $expiryHours,
-            ]);
+                return response()->json([
+                    'mode' => 'core_qris',
+                    'qr_url' => $qrUrl,
+                    'order_id' => $existing->kode_transaksi,
+                    'expiry_hours' => $expiryHours,
+                ]);
+            }
+
+            if (str_starts_with($existing->payment_gateway_ref, 'SNAP:')) {
+                $existingToken = substr($existing->payment_gateway_ref, 5);
+                $snapBase = $isProduction
+                    ? 'https://app.midtrans.com/snap/v4/redirection/'
+                    : 'https://app.sandbox.midtrans.com/snap/v4/redirection/';
+
+                return response()->json([
+                    'mode' => 'snap',
+                    'token' => $existingToken,
+                    'redirect_url' => $snapBase . $existingToken,
+                    'order_id' => $existing->kode_transaksi,
+                    'expiry_hours' => $expiryHours,
+                ]);
+            }
         }
-
-        $snapApiUrl = $isProduction
-            ? 'https://app.midtrans.com/snap/v1/transactions'
-            : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
 
         $grossAmount = (int) round((float) $booking->total_biaya);
         $biayaJarak = (int) round((float) $booking->biaya_jarak);
@@ -212,17 +221,84 @@ class BookingController extends Controller
         }
 
         $user = Auth::user();
+        $customerDetails = [
+            'first_name' => $booking->customer->nama_lengkap ?? $user->name,
+            'email' => $user->email,
+            'phone' => $user->no_telepon ?? '081234567890',
+        ];
+
+        // 1. Try Midtrans Core API QRIS first for pure clean QR image (no iframe chrome)
+        $coreApiUrl = $isProduction
+            ? 'https://api.midtrans.com/v2/charge'
+            : 'https://api.sandbox.midtrans.com/v2/charge';
+
+        $coreResponse = Http::withBasicAuth($serverKey, '')
+            ->acceptJson()
+            ->timeout(20)
+            ->post($coreApiUrl, [
+                'payment_type' => 'qris',
+                'transaction_details' => [
+                    'order_id' => $orderId,
+                    'gross_amount' => $grossAmount,
+                ],
+                'item_details' => $items,
+                'customer_details' => $customerDetails,
+                'qris' => [
+                    'acquirer' => 'gopay',
+                ],
+                'custom_expiry' => [
+                    'expiry_duration' => $expiryHours * 60,
+                    'unit' => 'minute',
+                ],
+            ]);
+
+        if ($coreResponse->successful()) {
+            $coreData = $coreResponse->json();
+            $qrUrl = '';
+            foreach ((array) ($coreData['actions'] ?? []) as $action) {
+                if (($action['name'] ?? '') === 'generate-qr-code' && !empty($action['url'])) {
+                    $qrUrl = (string) $action['url'];
+                    break;
+                }
+            }
+
+            if ($qrUrl !== '') {
+                Transaksi::updateOrCreate(
+                    ['booking_id' => $booking->id],
+                    [
+                        'kode_transaksi' => $orderId,
+                        'gross_amount' => $grossAmount,
+                        'komisi_admin' => $split['komisi_admin'],
+                        'dana_teknisi' => $split['dana_teknisi'],
+                        'biaya_jarak' => $biayaJarak,
+                        'status_pembayaran' => 'unpaid',
+                        'payment_method' => 'Midtrans QRIS',
+                        'payment_gateway_ref' => 'QRIS:' . $qrUrl,
+                        'paid_at' => null,
+                    ]
+                );
+
+                return response()->json([
+                    'mode' => 'core_qris',
+                    'qr_url' => $qrUrl,
+                    'order_id' => $orderId,
+                    'expiry_hours' => $expiryHours,
+                ]);
+            }
+        }
+
+        // 2. Fallback to Midtrans Snap QRIS if Core API permission is not yet enabled on the Server Key
+        $snapApiUrl = $isProduction
+            ? 'https://app.midtrans.com/snap/v1/transactions'
+            : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+
         $payload = [
             'transaction_details' => [
                 'order_id' => $orderId,
                 'gross_amount' => $grossAmount,
             ],
             'item_details' => $items,
-            'customer_details' => [
-                'first_name' => $booking->customer->nama_lengkap ?? $user->name,
-                'email' => $user->email,
-                'phone' => $user->no_telepon ?? '081234567890',
-            ],
+            'customer_details' => $customerDetails,
             'enabled_payments' => ['other_qris'],
             'expiry' => [
                 'unit' => 'hours',
@@ -278,6 +354,7 @@ class BookingController extends Controller
         );
 
         return response()->json([
+            'mode' => 'snap',
             'token' => $token,
             'redirect_url' => $redirectUrl,
             'order_id' => $orderId,
@@ -300,6 +377,10 @@ class BookingController extends Controller
         }
 
         if ($transaksi->isPaid()) {
+            if ($request->wantsJson()) {
+                return response()->json(['paid' => true, 'redirect_url' => route('tracking.chat', $booking->id)]);
+            }
+
             return redirect()->route('tracking.chat', $booking->id)
                 ->with('success', 'Pembayaran sudah terverifikasi!');
         }
@@ -333,8 +414,16 @@ class BookingController extends Controller
         if ($trxStatus === 'settlement' || ($trxStatus === 'capture' && $fraudStatus === 'accept')) {
             $this->markBookingAsPaid($booking, $transaksi, $this->formatMidtransPaymentMethod($paymentType), $transactionId);
 
+            if ($request->wantsJson()) {
+                return response()->json(['paid' => true, 'redirect_url' => route('tracking.chat', $booking->id)]);
+            }
+
             return redirect()->route('tracking.chat', $booking->id)
                 ->with('success', 'Pembayaran Midtrans berhasil diverifikasi! Menunggu teknisi berangkat ke lokasi Anda.');
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json(['paid' => false, 'status' => $trxStatus ?: 'pending']);
         }
 
         if (in_array($trxStatus, ['expire', 'cancel', 'deny'], true)) {
