@@ -104,14 +104,57 @@
     outline-offset: 2px;
 }
 
-/* Gentle radial sky readability behind hero typography only (houses stay vivid) */
-.fh-hero-sky {
-    background: radial-gradient(
-        ellipse 68% 58% at 50% 28%,
-        rgba(249, 249, 249, 0.86) 0%,
-        rgba(249, 249, 249, 0.45) 56%,
-        rgba(249, 249, 249, 0.04) 100%
-    );
+/* ==========================================================================
+   FixHome Plus-style Tactile Landing (ported from fixhome-plus service-catalog)
+   ========================================================================== */
+.fh-plus {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.fh-plus .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    line-height: 1;
+    user-select: none;
+}
+
+.fh-plus a:focus-visible,
+.fh-plus button:focus-visible,
+.fh-plus select:focus-visible,
+.fh-plus input:focus-visible {
+    outline: 2px solid #775537;
+    outline-offset: 2px;
+}
+
+@keyframes heroShimmerSweep {
+    0% {
+        transform: translateX(-120%) skewX(-20deg);
+    }
+    45%, 100% {
+        transform: translateX(220%) skewX(-20deg);
+    }
+}
+
+.hero-shimmer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: heroShimmerSweep 5.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-shimmer-overlay {
+        animation: none;
+        display: none;
+    }
+}
+
+.service-card-item {
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
 }
 
 /* Crisp Editorial Buttons */
