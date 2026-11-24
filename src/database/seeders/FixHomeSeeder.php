@@ -43,7 +43,9 @@ class FixHomeSeeder extends Seeder
             }
         }
         DB::table('permissions')->insertOrIgnore($permissionRows);
-        $superAdminRole->syncPermissions(Permission::where('guard_name', 'web')->get());
+        if ($superAdminRole->permissions()->count() < count($permissionRows)) {
+            $superAdminRole->syncPermissions(Permission::where('guard_name', 'web')->get());
+        }
 
         // 1. Akun Admin
         $adminUser = User::firstOrCreate(
@@ -192,8 +194,10 @@ class FixHomeSeeder extends Seeder
             ],
         ];
 
+        $existingTeknisiUserIds = Teknisi::pluck('user_id')->flip()->all();
+
         foreach ($techniciansData as $data) {
-            $user = User::updateOrCreate(
+            $user = User::firstOrCreate(
                 ['email' => $data['email']],
                 [
                     'name' => $data['name'],
@@ -202,11 +206,13 @@ class FixHomeSeeder extends Seeder
                     'no_telepon' => $data['phone'],
                 ]
             );
-            $user->assignRole('teknisi');
+            if (!$user->hasRole('teknisi')) {
+                $user->assignRole('teknisi');
+            }
 
-            Teknisi::updateOrCreate(
-                ['user_id' => $user->id],
-                [
+            if (!isset($existingTeknisiUserIds[$user->id])) {
+                Teknisi::create([
+                    'user_id' => $user->id,
                     'nama_lengkap' => $data['name'],
                     'keahlian' => $data['keahlian'],
                     'tarif_dasar' => $data['tarif'],
@@ -218,8 +224,8 @@ class FixHomeSeeder extends Seeder
                     'no_ktp' => $data['no_ktp'],
                     'sertifikasi' => $data['sertifikasi'],
                     'status_verifikasi' => $data['status_verifikasi'],
-                ]
-            );
+                ]);
+            }
         }
 
         // 5. Data Transaksi & Booking Contoh (Mendukung Pembuktian KF-05 s/d KF-14)
