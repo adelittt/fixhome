@@ -11,9 +11,22 @@
 
                 <div class="neu-pill px-4 py-2 text-xs font-bold text-on-surface-variant">
                     <span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
-                    <span>Menunggu Pembayaran: <span id="payment-timer" class="font-mono text-primary font-extrabold">14:59</span></span>
+                    <span>Batas Pembayaran: <span id="payment-timer" class="font-mono text-primary font-extrabold">{{ str_pad($midtransExpiryHours ?? 2, 2, '0', STR_PAD_LEFT) }}:00:00</span></span>
                 </div>
             </div>
+
+            @if (session('info'))
+                <div class="mb-space-md p-4 rounded-2xl bg-secondary-container/70 text-primary text-xs font-semibold flex items-center gap-2.5">
+                    <span class="material-symbols-outlined text-[18px] shrink-0">schedule</span>
+                    <span>{{ session('info') }}</span>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="mb-space-md p-4 rounded-2xl bg-red-100 text-red-800 text-xs font-semibold flex items-center gap-2.5">
+                    <span class="material-symbols-outlined text-[18px] shrink-0">error</span>
+                    <span>{{ session('error') }}</span>
+                </div>
+            @endif
 
             <!-- 2-Column Checkout -->
             <form id="payment-form" action="{{ route('booking.process-payment', $booking->id) }}" method="POST" class="lg:grid lg:grid-cols-12 lg:gap-space-lg items-start">
@@ -59,7 +72,49 @@
                     </div>
 
                     <!-- Payment Method Selector -->
-                    <div class="neu-card p-6 space-y-5">
+                    @if (!empty($midtransEnabled))
+                        <div class="neu-card p-6 space-y-5">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div>
+                                    <h3 class="font-headline-sm text-primary font-bold font-recoleta">Pembayaran Aman via Midtrans</h3>
+                                    <p class="text-xs text-on-surface-variant mt-0.5">Pilih metode pembayaran langsung di halaman checkout Midtrans Snap.</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full {{ !empty($midtransIsProduction) ? 'bg-secondary-container text-primary' : 'bg-tertiary-fixed text-on-tertiary-fixed' }} text-[11px] font-bold">
+                                    {{ !empty($midtransIsProduction) ? 'Midtrans Live' : 'Midtrans Sandbox' }}
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                                <div class="p-4 rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
+                                    <span class="font-bold text-xs text-primary bg-secondary-container px-2.5 py-0.5 rounded-full inline-block mb-2">Virtual Account</span>
+                                    <div class="font-bold text-primary text-xs font-butler">BCA, BNI, BRI, Mandiri</div>
+                                    <p class="text-[11px] text-on-surface-variant mt-0.5">Verifikasi otomatis dari bank</p>
+                                </div>
+                                <div class="p-4 rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
+                                    <span class="font-bold text-xs text-on-tertiary-fixed bg-tertiary-fixed px-2.5 py-0.5 rounded-full inline-block mb-2">QRIS &amp; E-Wallet</span>
+                                    <div class="font-bold text-primary text-xs font-butler">QRIS, GoPay, ShopeePay</div>
+                                    <p class="text-[11px] text-on-surface-variant mt-0.5">Scan QR atau bayar instan</p>
+                                </div>
+                                <div class="p-4 rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
+                                    <span class="font-bold text-xs text-on-primary bg-primary-container px-2.5 py-0.5 rounded-full inline-block mb-2">Tenggat {{ $midtransExpiryHours ?? 2 }} Jam</span>
+                                    <div class="font-bold text-primary text-xs font-butler">Batas Waktu Jelas</div>
+                                    <p class="text-[11px] text-on-surface-variant mt-0.5">Berlaku {{ $midtransExpiryHours ?? 2 }} jam sejak klik bayar</p>
+                                </div>
+                            </div>
+
+                            <div id="midtrans-error-box" class="hidden p-3.5 rounded-2xl bg-red-100 text-red-800 text-xs font-semibold"></div>
+
+                            @if (empty($midtransIsProduction))
+                                <div class="p-4 neu-inset text-xs text-on-surface-variant leading-relaxed">
+                                    <span class="font-bold text-primary block mb-1">Mode Uji Coba (Sandbox):</span>
+                                    Setelah memilih Virtual Account / QRIS di halaman Midtrans, Anda dapat menyimulasikan pembayaran lunas di
+                                    <a href="https://simulator.sandbox.midtrans.com/" target="_blank" rel="noopener noreferrer" class="font-bold text-primary underline">Midtrans Payment Simulator</a>,
+                                    lalu klik tombol <strong>Cek Status Pembayaran</strong>.
+                                </div>
+                            @endif
+                        </div>
+                    @else
+                        <div class="neu-card p-6 space-y-5">
                         <div class="flex items-center justify-between">
                             <h3 class="font-headline-sm text-primary font-bold font-recoleta">Pilih Metode Pembayaran</h3>
                             <span class="text-xs text-outline">Verifikasi Otomatis 24/7</span>
@@ -181,7 +236,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
+                    @endif
 
                     <!-- Business Rules Notice -->
                     <div class="p-4 rounded-[22px] bg-secondary-container/60 text-xs text-on-secondary-fixed leading-relaxed flex items-start gap-3 shadow-[inset_2px_2px_5px_#B2CED0,inset_-2px_-2px_5px_#E6FAFC]">
@@ -243,10 +299,24 @@
                             💡 Pembayaran Anda dijamin dengan proteksi transaksi ACID (BR-04, BR-12). Dana diteruskan ke teknisi setelah pekerjaan selesai.
                         </div>
 
-                        <button type="button" id="btn-pay-now" onclick="triggerInteractivePayment()" class="w-full neu-btn-primary py-3.5 px-6 text-label-lg gap-2">
-                            <span class="material-symbols-outlined text-[20px]">verified</span>
-                            <span>Bayar Sekarang (Simulasi)</span>
-                        </button>
+                        @if (!empty($midtransEnabled))
+                            <div class="space-y-2.5">
+                                <button type="button" id="btn-midtrans-pay" onclick="startMidtransPayment()" class="w-full neu-btn-primary py-3.5 px-6 text-label-lg gap-2">
+                                    <span class="material-symbols-outlined text-[20px]">payments</span>
+                                    <span id="btn-midtrans-label">Bayar via Midtrans</span>
+                                </button>
+
+                                <a href="{{ route('booking.midtrans-status', $booking->id) }}" id="btn-check-status" class="w-full neu-btn-secondary py-2.5 px-5 text-xs text-primary gap-1.5 {{ $booking->transaksi ? 'inline-flex' : 'hidden' }} items-center justify-center">
+                                    <span class="material-symbols-outlined text-[16px]">refresh</span>
+                                    <span>Cek Status Pembayaran</span>
+                                </a>
+                            </div>
+                        @else
+                            <button type="button" id="btn-pay-now" onclick="triggerInteractivePayment()" class="w-full neu-btn-primary py-3.5 px-6 text-label-lg gap-2">
+                                <span class="material-symbols-outlined text-[20px]">verified</span>
+                                <span>Bayar Sekarang (Simulasi)</span>
+                            </button>
+                        @endif
                     </div>
                 </div>
 
@@ -293,7 +363,90 @@
     </div>
 
     @push('scripts')
+    @if (!empty($midtransEnabled) && !empty($midtransClientKey))
+        <script src="{{ $midtransSnapJsUrl }}" data-client-key="{{ $midtransClientKey }}"></script>
+    @endif
     <script>
+        const midtransSnapUrl = @json(route('booking.midtrans-snap', $booking->id));
+        const midtransStatusUrl = @json(route('booking.midtrans-status', $booking->id));
+        const hasMidtransClientKey = @json(!empty($midtransClientKey));
+        const csrfToken = @json(csrf_token());
+
+        async function startMidtransPayment() {
+            const btn = document.getElementById('btn-midtrans-pay');
+            const label = document.getElementById('btn-midtrans-label');
+            const errBox = document.getElementById('midtrans-error-box');
+            const checkBtn = document.getElementById('btn-check-status');
+
+            if (errBox) {
+                errBox.classList.add('hidden');
+                errBox.textContent = '';
+            }
+            if (btn) btn.disabled = true;
+            if (label) label.textContent = 'Menghubungkan ke Midtrans...';
+
+            try {
+                const res = await fetch(midtransSnapUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    body: JSON.stringify({}),
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.message || 'Gagal memulai pembayaran Midtrans.');
+                }
+
+                if (data.already_paid && data.redirect_url) {
+                    window.location.href = data.redirect_url;
+                    return;
+                }
+
+                if (checkBtn) {
+                    checkBtn.classList.remove('hidden');
+                    checkBtn.classList.add('inline-flex');
+                }
+
+                if (hasMidtransClientKey && window.snap && data.token) {
+                    window.snap.pay(data.token, {
+                        onSuccess: function () {
+                            window.location.href = midtransStatusUrl;
+                        },
+                        onPending: function () {
+                            window.location.href = midtransStatusUrl;
+                        },
+                        onError: function () {
+                            if (errBox) {
+                                errBox.textContent = 'Terjadi kesalahan pada pembayaran Midtrans. Silakan coba lagi.';
+                                errBox.classList.remove('hidden');
+                            }
+                            if (btn) btn.disabled = false;
+                            if (label) label.textContent = 'Bayar via Midtrans';
+                        },
+                        onClose: function () {
+                            if (btn) btn.disabled = false;
+                            if (label) label.textContent = 'Bayar via Midtrans';
+                        },
+                    });
+                } else if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    throw new Error('Token pembayaran Midtrans tidak diterima.');
+                }
+            } catch (err) {
+                if (errBox) {
+                    errBox.textContent = err.message || 'Gagal menghubungi Midtrans.';
+                    errBox.classList.remove('hidden');
+                }
+                if (btn) btn.disabled = false;
+                if (label) label.textContent = 'Bayar via Midtrans';
+            }
+        }
+
         const methodCards = document.querySelectorAll('.payment-method-card');
         const panels = document.querySelectorAll('.payment-panel');
 
@@ -340,14 +493,15 @@
             });
         }
 
-        let timeLeft = 15 * 60;
+        let timeLeft = {{ max(2, (int) ($midtransExpiryHours ?? 2)) }} * 60 * 60;
         const timerEl = document.getElementById('payment-timer');
         setInterval(() => {
             if (timeLeft <= 0) return;
             timeLeft--;
-            const mins = Math.floor(timeLeft / 60);
+            const hrs = Math.floor(timeLeft / 3600);
+            const mins = Math.floor((timeLeft % 3600) / 60);
             const secs = timeLeft % 60;
-            timerEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            timerEl.textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }, 1000);
 
         function triggerInteractivePayment() {

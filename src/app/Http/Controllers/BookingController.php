@@ -9,6 +9,9 @@ use App\Models\Teknisi;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
@@ -94,16 +97,254 @@ class BookingController extends Controller
 
     public function showPayment(int $bookingId)
     {
-        $booking = Booking::with(['customer', 'teknisi.user'])->findOrFail($bookingId);
+        $booking = Booking::with(['customer.user', 'teknisi.user', 'transaksi'])->findOrFail($bookingId);
 
         // Validasi kepemilikan booking
         if ($booking->customer_id !== Auth::user()->customer->id) {
             abort(403, 'Akses tidak diizinkan.');
         }
 
-        $split = Transaksi::calculateSplit((float) $booking->total_biaya);
+        if ($booking->status_order !== 'pending_payment' && $booking->transaksi?->isPaid()) {
+            return redirect()->route('tracking.chat', $booking->id);
+        }
 
-        return view('pages.customer.payment', compact('booking', 'split'));
+        $split = Transaksi::calculateSplit((float) $booking->total_biaya);
+        $midtransServerKey = (string) config('services.midtrans.server_key');
+        $midtransClientKey = (string) config('services.midtrans.client_key');
+        $midtransIsProduction = (bool) config('services.midtrans.is_production');
+        $midtransEnabled = $midtransServerKey !== '';
+        $midtransSnapJsUrl = $midtransIsProduction
+            ? 'https://app.midtrans.com/snap/snap.js'
+            : 'https://app.sandbox.midtrans.com/snap/snap.js';
+        $midtransExpiryHours = (int) config('services.midtrans.expiry_hours', 2);
+
+        return view('pages.customer.payment', compact(
+            'booking',
+            'split',
+            'midtransEnabled',
+            'midtransClientKey',
+            'midtransSnapJsUrl',
+            'midtransIsProduction',
+            'midtransExpiryHours'
+        ));
+    }
+
+    public function createMidtransSnap(int $bookingId, Request $request)
+    {
+        $booking = Booking::with(['customer.user', 'teknisi.user', 'transaksi'])->findOrFail($bookingId);
+
+        if ($booking->customer_id !== Auth::user()->customer->id) {
+            return response()->json(['message' => 'Akses tidak diizinkan.'], 403);
+        }
+
+        if ($booking->status_order !== 'pending_payment' && $booking->transaksi?->isPaid()) {
+            return response()->json([
+                'already_paid' => true,
+                'redirect_url' => route('tracking.chat', $booking->id),
+            ]);
+        }
+
+        $serverKey = (string) config('services.midtrans.server_key');
+        if ($serverKey === '') {
+            return response()->json(['message' => 'Midtrans Server Key belum dikonfigurasi.'], 500);
+        }
+
+        $isProduction = (bool) config('services.midtrans.is_production');
+        $snapApiUrl = $isProduction
+            ? 'https://app.midtrans.com/snap/v1/transactions'
+            : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+
+        $grossAmount = (int) round((float) $booking->total_biaya);
+        $biayaJarak = (int) round((float) $booking->biaya_jarak);
+        $biayaLayanan = max(0, $grossAmount - $biayaJarak);
+        $split = Transaksi::calculateSplit((float) $grossAmount);
+
+        $orderId = 'FH-' . $booking->id . '-' . time();
+        $expiryHours = max(2, (int) config('services.midtrans.expiry_hours', 2));
+
+        $items = [
+            [
+                'id' => 'SRV-' . $booking->id,
+                'price' => $biayaLayanan,
+                'quantity' => 1,
+                'name' => Str::limit('Jasa Perbaikan - ' . ($booking->teknisi->nama_lengkap ?? 'Teknisi FixHome'), 50, ''),
+            ],
+        ];
+        if ($biayaJarak > 0) {
+            $items[] = [
+                'id' => 'DIST-' . $booking->id,
+                'price' => $biayaJarak,
+                'quantity' => 1,
+                'name' => 'Biaya Jarak Operasional (>= 10 km)',
+            ];
+        }
+
+        $user = Auth::user();
+        $payload = [
+            'transaction_details' => [
+                'order_id' => $orderId,
+                'gross_amount' => $grossAmount,
+            ],
+            'item_details' => $items,
+            'customer_details' => [
+                'first_name' => $booking->customer->nama_lengkap ?? $user->name,
+                'email' => $user->email,
+                'phone' => $user->no_telepon ?? '081234567890',
+            ],
+            'expiry' => [
+                'unit' => 'hours',
+                'duration' => $expiryHours,
+            ],
+            'callbacks' => [
+                'finish' => route('booking.midtrans-status', $booking->id),
+            ],
+        ];
+
+        $response = Http::withBasicAuth($serverKey, '')
+            ->acceptJson()
+            ->timeout(20)
+            ->post($snapApiUrl, $payload);
+
+        if (!$response->successful()) {
+            Log::error('Midtrans Snap creation failed', [
+                'booking_id' => $booking->id,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            $errorMessages = $response->json('error_messages');
+            $msg = is_array($errorMessages) ? implode(', ', $errorMessages) : 'Gagal membuat transaksi Midtrans.';
+
+            return response()->json(['message' => $msg], 502);
+        }
+
+        $data = $response->json();
+        $token = (string) ($data['token'] ?? '');
+        $redirectUrl = (string) ($data['redirect_url'] ?? '');
+
+        Transaksi::updateOrCreate(
+            ['booking_id' => $booking->id],
+            [
+                'kode_transaksi' => $orderId,
+                'gross_amount' => $grossAmount,
+                'komisi_admin' => $split['komisi_admin'],
+                'dana_teknisi' => $split['dana_teknisi'],
+                'biaya_jarak' => $biayaJarak,
+                'status_pembayaran' => 'pending',
+                'payment_method' => 'Midtrans Snap',
+                'payment_gateway_ref' => 'SNAP:' . $token,
+                'paid_at' => null,
+            ]
+        );
+
+        return response()->json([
+            'token' => $token,
+            'redirect_url' => $redirectUrl,
+            'order_id' => $orderId,
+            'expiry_hours' => $expiryHours,
+        ]);
+    }
+
+    public function checkMidtransStatus(int $bookingId, Request $request)
+    {
+        $booking = Booking::with(['customer.user', 'teknisi', 'transaksi'])->findOrFail($bookingId);
+
+        if ($booking->customer_id !== Auth::user()->customer->id) {
+            abort(403, 'Akses tidak diizinkan.');
+        }
+
+        $transaksi = $booking->transaksi;
+        if (!$transaksi) {
+            return redirect()->route('booking.payment', $booking->id)
+                ->with('error', 'Belum ada tagihan Midtrans untuk pesanan ini. Klik Bayar via Midtrans terlebih dahulu.');
+        }
+
+        if ($transaksi->isPaid()) {
+            return redirect()->route('tracking.chat', $booking->id)
+                ->with('success', 'Pembayaran sudah terverifikasi!');
+        }
+
+        $serverKey = (string) config('services.midtrans.server_key');
+        if ($serverKey === '') {
+            return redirect()->route('booking.payment', $booking->id)
+                ->with('error', 'Midtrans Server Key belum dikonfigurasi.');
+        }
+
+        $isProduction = (bool) config('services.midtrans.is_production');
+        $statusUrl = ($isProduction ? 'https://api.midtrans.com' : 'https://api.sandbox.midtrans.com')
+            . '/v2/' . urlencode($transaksi->kode_transaksi) . '/status';
+
+        $response = Http::withBasicAuth($serverKey, '')
+            ->acceptJson()
+            ->timeout(15)
+            ->get($statusUrl);
+
+        if (!$response->successful()) {
+            return redirect()->route('booking.payment', $booking->id)
+                ->with('error', 'Status pembayaran belum tersedia di Midtrans. Jika baru saja memilih metode bayar, selesaikan pembayaran lalu cek kembali.');
+        }
+
+        $statusData = $response->json();
+        $trxStatus = (string) ($statusData['transaction_status'] ?? '');
+        $fraudStatus = (string) ($statusData['fraud_status'] ?? 'accept');
+        $paymentType = (string) ($statusData['payment_type'] ?? 'Midtrans Snap');
+        $transactionId = (string) ($statusData['transaction_id'] ?? $transaksi->kode_transaksi);
+
+        if ($trxStatus === 'settlement' || ($trxStatus === 'capture' && $fraudStatus === 'accept')) {
+            $this->markBookingAsPaid($booking, $transaksi, $this->formatMidtransPaymentMethod($paymentType), $transactionId);
+
+            return redirect()->route('tracking.chat', $booking->id)
+                ->with('success', 'Pembayaran Midtrans berhasil diverifikasi! Menunggu teknisi berangkat ke lokasi Anda.');
+        }
+
+        if (in_array($trxStatus, ['expire', 'cancel', 'deny'], true)) {
+            $transaksi->update(['status_pembayaran' => 'failed']);
+
+            return redirect()->route('booking.payment', $booking->id)
+                ->with('error', 'Tagihan sebelumnya sudah kedaluwarsa atau dibatalkan. Silakan klik Bayar via Midtrans untuk membuat tagihan baru.');
+        }
+
+        return redirect()->route('booking.payment', $booking->id)
+            ->with('info', 'Pembayaran masih berstatus menunggu (pending). Selesaikan pembayaran dalam batas waktu 2 jam lalu klik Cek Status Pembayaran.');
+    }
+
+    public function handleMidtransNotification(Request $request)
+    {
+        $serverKey = (string) config('services.midtrans.server_key');
+        if ($serverKey === '') {
+            return response()->json(['message' => 'Midtrans not configured'], 500);
+        }
+
+        $orderId = (string) $request->input('order_id', '');
+        $statusCode = (string) $request->input('status_code', '');
+        $grossAmount = (string) $request->input('gross_amount', '');
+        $signatureKey = (string) $request->input('signature_key', '');
+
+        $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
+        if (!hash_equals($expectedSignature, $signatureKey)) {
+            Log::warning('Midtrans webhook invalid signature', ['order_id' => $orderId]);
+            return response()->json(['message' => 'Invalid signature'], 403);
+        }
+
+        $transaksi = Transaksi::with(['booking.customer'])->where('kode_transaksi', $orderId)->first();
+        if (!$transaksi || !$transaksi->booking) {
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
+
+        $trxStatus = (string) $request->input('transaction_status', '');
+        $fraudStatus = (string) $request->input('fraud_status', 'accept');
+        $paymentType = (string) $request->input('payment_type', 'Midtrans Snap');
+        $transactionId = (string) $request->input('transaction_id', $orderId);
+
+        if ($trxStatus === 'settlement' || ($trxStatus === 'capture' && $fraudStatus === 'accept')) {
+            $this->markBookingAsPaid($transaksi->booking, $transaksi, $this->formatMidtransPaymentMethod($paymentType), $transactionId);
+        } elseif (in_array($trxStatus, ['expire', 'cancel', 'deny'], true)) {
+            if (!$transaksi->isPaid()) {
+                $transaksi->update(['status_pembayaran' => 'failed']);
+            }
+        }
+
+        return response()->json(['status' => 'ok']);
     }
 
     public function processPayment(int $bookingId, Request $request)
@@ -119,10 +360,8 @@ class BookingController extends Controller
         ]);
 
         $split = Transaksi::calculateSplit((float) $booking->total_biaya);
-
         $kodeTransaksi = 'TRX-' . strtoupper(Str::random(10));
 
-        // Buat record Transaksi dengan komisi 5% dan dana teknisi 95% (BR-04, BR-12, KF-10, KF-11)
         $transaksi = Transaksi::updateOrCreate(
             ['booking_id' => $booking->id],
             [
@@ -131,34 +370,76 @@ class BookingController extends Controller
                 'komisi_admin' => $split['komisi_admin'],
                 'dana_teknisi' => $split['dana_teknisi'],
                 'biaya_jarak' => $booking->biaya_jarak,
-                'status_pembayaran' => 'paid',
+                'status_pembayaran' => 'pending',
                 'payment_method' => $validated['payment_method'],
                 'payment_gateway_ref' => 'PG-SIM-' . time(),
-                'paid_at' => now(),
             ]
         );
 
-        // Update status order booking menjadi paid (menunggu teknisi klik berangkat OTW)
-        $booking->update([
-            'status_order' => 'paid',
-        ]);
-
-        // Kirim pesan otomatis dari customer bahwa pembayaran sudah lunas
-        ChatMessage::create([
-            'booking_id' => $booking->id,
-            'sender_id' => Auth::id(),
-            'pesan' => 'Halo pak, pembayaran sebesar Rp ' . number_format($booking->total_biaya, 0, ',', '.') . ' sudah lunas. Mohon konfirmasi saat berangkat ya!',
-        ]);
-
-        // Inisialisasi titik koordinat awal pelacakan GPS teknisi (BR-05, BR-06)
-        PelacakanLokasi::create([
-            'booking_id' => $booking->id,
-            'current_lat' => -6.2190,
-            'current_lng' => 106.8230,
-            'is_active' => true,
-        ]);
+        $this->markBookingAsPaid($booking, $transaksi, $validated['payment_method'], 'PG-SIM-' . time());
 
         return redirect()->route('tracking.chat', $booking->id)
             ->with('success', 'Pembayaran berhasil diverifikasi! Menunggu teknisi berangkat ke lokasi Anda.');
+    }
+
+    private function markBookingAsPaid(Booking $booking, Transaksi $transaksi, string $paymentMethod, string $gatewayRef): void
+    {
+        DB::transaction(function () use ($booking, $transaksi, $paymentMethod, $gatewayRef) {
+            $freshBooking = Booking::lockForUpdate()->with('customer')->find($booking->id);
+            $freshTransaksi = Transaksi::lockForUpdate()->find($transaksi->id);
+
+            if (!$freshBooking || !$freshTransaksi) {
+                return;
+            }
+
+            if ($freshTransaksi->isPaid() && $freshBooking->status_order !== 'pending_payment') {
+                return;
+            }
+
+            $freshTransaksi->update([
+                'status_pembayaran' => 'paid',
+                'payment_method' => $paymentMethod,
+                'payment_gateway_ref' => $gatewayRef,
+                'paid_at' => now(),
+            ]);
+
+            if ($freshBooking->status_order === 'pending_payment') {
+                $freshBooking->update([
+                    'status_order' => 'paid',
+                ]);
+            }
+
+            $senderId = $freshBooking->customer?->user_id ?? Auth::id();
+            if ($senderId && !ChatMessage::where('booking_id', $freshBooking->id)->exists()) {
+                ChatMessage::create([
+                    'booking_id' => $freshBooking->id,
+                    'sender_id' => $senderId,
+                    'pesan' => 'Halo pak, pembayaran sebesar Rp ' . number_format((float) $freshBooking->total_biaya, 0, ',', '.') . ' sudah lunas. Mohon konfirmasi saat berangkat ya!',
+                ]);
+            }
+
+            if (!PelacakanLokasi::where('booking_id', $freshBooking->id)->exists()) {
+                PelacakanLokasi::create([
+                    'booking_id' => $freshBooking->id,
+                    'current_lat' => -6.2190,
+                    'current_lng' => 106.8230,
+                    'is_active' => true,
+                ]);
+            }
+        });
+    }
+
+    private function formatMidtransPaymentMethod(string $paymentType): string
+    {
+        return match ($paymentType) {
+            'bank_transfer' => 'Midtrans Virtual Account',
+            'echannel' => 'Midtrans Mandiri Bill',
+            'qris' => 'Midtrans QRIS',
+            'gopay' => 'Midtrans GoPay',
+            'shopeepay' => 'Midtrans ShopeePay',
+            'credit_card' => 'Midtrans Kartu Kredit',
+            'cstore' => 'Midtrans Minimarket',
+            default => 'Midtrans (' . $paymentType . ')',
+        };
     }
 }
