@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Teknisi;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -17,25 +18,31 @@ class FixHomeSeeder extends Seeder
     {
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
+        $hashedPassword = Hash::make('password123');
+        $now = now();
+
         $superAdminRole = Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'teknisi', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'customer', 'guard_name' => 'web']);
 
-        // Seed seluruh permission Filament Shield agar menu & widget Admin Panel selalu muncul
+        // Seed seluruh permission Filament Shield dalam 1 batch query agar cepat di cloud Postgres (Neon)
         $resourceEntities = ['activity', 'booking', 'role', 'teknisi', 'transaksi', 'user'];
         $resourceActions = ['view', 'view_any', 'create', 'update', 'delete', 'delete_any'];
-        $permissions = [
-            'widget_LatestAccessLogs',
-            'widget_OverlookWidget',
+        $permissionRows = [
+            ['name' => 'widget_LatestAccessLogs', 'guard_name' => 'web', 'created_at' => $now, 'updated_at' => $now],
+            ['name' => 'widget_OverlookWidget', 'guard_name' => 'web', 'created_at' => $now, 'updated_at' => $now],
         ];
         foreach ($resourceEntities as $entity) {
             foreach ($resourceActions as $action) {
-                $permissions[] = "{$action}_{$entity}";
+                $permissionRows[] = [
+                    'name' => "{$action}_{$entity}",
+                    'guard_name' => 'web',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
             }
         }
-        foreach ($permissions as $permissionName) {
-            Permission::firstOrCreate(['name' => $permissionName, 'guard_name' => 'web']);
-        }
+        DB::table('permissions')->insertOrIgnore($permissionRows);
         $superAdminRole->syncPermissions(Permission::where('guard_name', 'web')->get());
 
         // 1. Akun Admin
@@ -43,7 +50,7 @@ class FixHomeSeeder extends Seeder
             ['email' => 'admin@fixhome.com'],
             [
                 'name' => 'Administrator FixHome',
-                'password' => Hash::make('password123'),
+                'password' => $hashedPassword,
                 'role' => 'admin',
                 'no_telepon' => '081100000001',
             ]
@@ -55,7 +62,7 @@ class FixHomeSeeder extends Seeder
             ['email' => 'customer@fixhome.com'],
             [
                 'name' => 'Aditya Pratama',
-                'password' => Hash::make('password123'),
+                'password' => $hashedPassword,
                 'role' => 'customer',
                 'no_telepon' => '081234567890',
             ]
@@ -78,7 +85,7 @@ class FixHomeSeeder extends Seeder
             ['email' => 'baru@fixhome.com'],
             [
                 'name' => 'Rina Lestari',
-                'password' => Hash::make('password123'),
+                'password' => $hashedPassword,
                 'role' => 'customer',
                 'no_telepon' => '081399887766',
             ]
@@ -190,7 +197,7 @@ class FixHomeSeeder extends Seeder
                 ['email' => $data['email']],
                 [
                     'name' => $data['name'],
-                    'password' => Hash::make('password123'),
+                    'password' => $hashedPassword,
                     'role' => 'teknisi',
                     'no_telepon' => $data['phone'],
                 ]

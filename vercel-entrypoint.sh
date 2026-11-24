@@ -21,26 +21,25 @@ if [ -n "${DATABASE_URL:-}" ] || [ -n "${POSTGRES_URL:-}" ] || [ "${DB_CONNECTIO
         $kernel->bootstrap();
 
         $db = Illuminate\Support\Facades\DB::connection("pgsql");
+        $schema = Illuminate\Support\Facades\Schema::connection("pgsql");
         $lockKey = 749201;
         try {
             $db->statement("SELECT pg_advisory_lock(?)", [$lockKey]);
-            $hasUsers = Illuminate\Support\Facades\Schema::connection("pgsql")->hasTable("users");
-            if (!$hasUsers) {
-                fwrite(STDERR, "[fixhome] Initializing Neon Postgres schema & seed data...\n");
+            $hasTables = $schema->hasTable("users") && $schema->hasTable("bookings") && $schema->hasTable("permissions");
+            if (!$hasTables) {
+                fwrite(STDERR, "[fixhome] Running Neon Postgres migrations...\n");
                 Illuminate\Support\Facades\Artisan::call("migrate", ["--force" => true]);
-                Illuminate\Support\Facades\Artisan::call("db:seed", ["--force" => true]);
-                fwrite(STDERR, "[fixhome] Neon Postgres schema & seed completed.\n");
-            } else {
-                $userCount = (int) $db->table("users")->count();
-                if ($userCount === 0) {
-                    fwrite(STDERR, "[fixhome] Empty Neon database detected; running migrations & seed...\n");
-                    Illuminate\Support\Facades\Artisan::call("migrate", ["--force" => true]);
-                    Illuminate\Support\Facades\Artisan::call("db:seed", ["--force" => true]);
-                    fwrite(STDERR, "[fixhome] Neon Postgres seed completed.\n");
-                }
+            }
+            $needsSeed = !$db->table("users")->where("email", "customer@fixhome.com")->exists()
+                || !$db->table("users")->where("email", "admin@fixhome.com")->exists()
+                || !$db->table("permissions")->where("name", "view_any_booking")->exists();
+            if ($needsSeed) {
+                fwrite(STDERR, "[fixhome] Seeding Neon Postgres FixHome data...\n");
+                Illuminate\Support\Facades\Artisan::call("db:seed", ["--class" => "Database\\Seeders\\FixHomeSeeder", "--force" => true]);
+                fwrite(STDERR, "[fixhome] Neon Postgres seed completed.\n");
             }
         } catch (Throwable $e) {
-            fwrite(STDERR, "[fixhome] Postgres bootstrap warning: " . $e->getMessage() . "\n");
+            fwrite(STDERR, "[fixhome] Postgres bootstrap error: " . $e->getMessage() . "\n");
         } finally {
             try {
                 $db->statement("SELECT pg_advisory_unlock(?)", [$lockKey]);
