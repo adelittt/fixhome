@@ -15,6 +15,11 @@ class FixHomeStatsOverview extends BaseWidget
 
     protected static ?string $pollingInterval = '30s';
 
+    protected function getColumns(): int
+    {
+        return 4;
+    }
+
     protected function getStats(): array
     {
         $paidTransactions = Transaksi::where('status_pembayaran', 'paid');

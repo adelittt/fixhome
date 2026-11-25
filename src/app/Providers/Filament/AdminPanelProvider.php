@@ -46,10 +46,10 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::hex('#775537'),
                 'gray' => Color::Stone,
-                'info' => Color::hex('#4c6264'),
-                'success' => Color::hex('#4c6264'),
-                'warning' => Color::hex('#bfa96a'),
-                'danger' => Color::hex('#ba1a1a'),
+                'info' => Color::hex('#2563EB'),
+                'success' => Color::hex('#16A34A'),
+                'warning' => Color::hex('#D97706'),
+                'danger' => Color::hex('#DC2626'),
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
