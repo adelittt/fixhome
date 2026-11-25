@@ -129,6 +129,69 @@
 }
 
 /* Spring-gliding active pill indicator on desktop header nav */
+.fh-header-pill {
+    transition:
+        max-width 440ms cubic-bezier(0.32, 0.72, 0, 1),
+        height 380ms cubic-bezier(0.32, 0.72, 0, 1),
+        padding 380ms cubic-bezier(0.32, 0.72, 0, 1),
+        gap 380ms cubic-bezier(0.32, 0.72, 0, 1),
+        box-shadow 320ms ease,
+        background-color 320ms ease;
+    will-change: max-width;
+}
+
+.fh-header-collapsible {
+    transition:
+        opacity 220ms ease,
+        max-width 420ms cubic-bezier(0.32, 0.72, 0, 1),
+        transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+    max-width: 720px;
+}
+
+.fh-compact-badge {
+    max-width: 0;
+    opacity: 0;
+    padding-left: 0 !important;
+    border-left-width: 0 !important;
+    overflow: hidden;
+    transition:
+        max-width 360ms cubic-bezier(0.32, 0.72, 0, 1),
+        opacity 240ms ease,
+        padding-left 300ms ease;
+}
+
+@media (min-width: 768px) {
+    .fh-header-pill.is-compact {
+        max-width: 248px;
+        height: 46px;
+        padding-left: 16px;
+        padding-right: 16px;
+        gap: 0;
+        justify-content: center;
+        box-shadow: 0 10px 30px rgba(17, 24, 39, 0.12), 0 0 0 1px rgba(22, 163, 74, 0.14);
+        cursor: pointer;
+    }
+
+    .fh-header-pill.is-compact .fh-header-logo {
+        height: 24px;
+    }
+
+    .fh-header-pill.is-compact .fh-header-collapsible {
+        max-width: 0;
+        opacity: 0;
+        transform: scale(0.94);
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .fh-header-pill.is-compact .fh-compact-badge {
+        max-width: 140px;
+        opacity: 1;
+        padding-left: 10px !important;
+        border-left-width: 1px !important;
+    }
+}
+
 .fh-nav-pill {
     will-change: transform, width;
     transition:

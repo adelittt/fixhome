@@ -108,14 +108,71 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Subtle header elevation on scroll
+    // Dynamic Island: shrink header pill to center on scroll, expand smoothly on hover/focus
+    const compactLabelEl = document.getElementById('header-compact-label');
+    let isHeaderHovered = false;
+    let collapseTimer = null;
+
+    const sectionTitles = {
+        beranda: 'Beranda',
+        'layanan-populer': 'Layanan',
+        'katalog-teknisi': 'Teknisi',
+        'cara-kerja': 'Cara Kerja',
+        'jadi-mitra': 'Jadi Mitra',
+        'tentang-kami': 'Tentang Kami',
+    };
+
+    const syncHeaderCompactState = () => {
+        if (!headerPillBar) return;
+        const isDesktop = window.innerWidth >= 768;
+        const isMenuOpen = mobileMenu && !mobileMenu.classList.contains('hidden');
+        const shouldCompact = isDesktop && window.scrollY > 90 && !isHeaderHovered && !isMenuOpen;
+        const wasCompact = headerPillBar.classList.contains('is-compact');
+
+        headerPillBar.classList.toggle('is-compact', shouldCompact);
+        headerPillBar.classList.toggle('shadow-[0_10px_32px_rgba(17,24,39,0.12)]', window.scrollY > 12 && !shouldCompact);
+
+        // Re-align sliding nav pill smoothly once expanded back from compact mode
+        if (wasCompact && !shouldCompact) {
+            setTimeout(() => {
+                const activeLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-target') === currentActiveId);
+                if (activeLink) moveNavPillTo(activeLink, { animate: false });
+            }, 340);
+        }
+    };
+
     if (headerPillBar) {
-        const updateHeaderShadow = () => {
-            const scrolled = window.scrollY > 12;
-            headerPillBar.classList.toggle('shadow-[0_10px_32px_rgba(17,24,39,0.12)]', scrolled);
-        };
-        updateHeaderShadow();
-        window.addEventListener('scroll', updateHeaderShadow, { passive: true });
+        headerPillBar.addEventListener('mouseenter', () => {
+            if (collapseTimer) {
+                clearTimeout(collapseTimer);
+                collapseTimer = null;
+            }
+            isHeaderHovered = true;
+            syncHeaderCompactState();
+        });
+
+        headerPillBar.addEventListener('mouseleave', () => {
+            if (collapseTimer) clearTimeout(collapseTimer);
+            collapseTimer = setTimeout(() => {
+                isHeaderHovered = false;
+                syncHeaderCompactState();
+            }, 180);
+        });
+
+        headerPillBar.addEventListener('focusin', () => {
+            isHeaderHovered = true;
+            syncHeaderCompactState();
+        });
+
+        headerPillBar.addEventListener('focusout', (e) => {
+            if (!headerPillBar.contains(e.relatedTarget)) {
+                isHeaderHovered = false;
+                syncHeaderCompactState();
+            }
+        });
+
+        window.addEventListener('scroll', syncHeaderCompactState, { passive: true });
+        window.addEventListener('resize', syncHeaderCompactState);
     }
 
     // 2. Interactive Pricing & 95/5 Split Simulator (matches Transaksi::calculateSplit)
@@ -200,6 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const setActiveSection = (targetId, { animatePill = true, popPill = false } = {}) => {
         currentActiveId = targetId;
+        if (compactLabelEl && sectionTitles[targetId]) {
+            compactLabelEl.textContent = sectionTitles[targetId];
+        }
 
         let activeDesktopLink = null;
         desktopNavLinks.forEach((link) => {
@@ -304,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initial pill placement (snap without flash) + re-align once web fonts finish loading
         syncScrollSpy(false);
+        syncHeaderCompactState();
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(() => {
                 const activeLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-target') === currentActiveId);

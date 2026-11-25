@@ -86,37 +86,43 @@
 <body class="fh-plus bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col overscroll-none" id="top">
 
     <div class="flex-1 flex flex-col pb-16 sm:pb-0">
-        <!-- FLOATING PILL HEADER NAVIGATION -->
+        <!-- FLOATING PILL HEADER NAVIGATION (Dynamic Island Morph on Scroll) -->
         <header class="fh-header-anim fixed top-3 sm:top-4 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none" id="site-header">
-            <div class="pointer-events-auto h-14 max-w-[1140px] mx-auto px-4 sm:px-5 rounded-full bg-white/95 backdrop-blur-md border border-white/80 shadow-[0_6px_28px_rgba(17,24,39,0.08)] flex items-center justify-between gap-4 transition-shadow duration-300" id="header-pill-bar">
-                <!-- Brand Logo -->
-                <a aria-label="Beranda FixHome" class="flex items-center shrink-0 group active:scale-[0.98] transition-transform" href="#beranda" data-nav-target="beranda">
-                    <img alt="FixHome" class="h-7 sm:h-[30px] w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
-                </a>
+            <div class="fh-header-pill pointer-events-auto h-14 max-w-[1140px] mx-auto px-4 sm:px-5 rounded-full bg-white/95 backdrop-blur-md border border-white/80 shadow-[0_6px_28px_rgba(17,24,39,0.08)] flex items-center justify-between gap-4 overflow-hidden" id="header-pill-bar">
+                <!-- Brand Logo + Compact Active Indicator -->
+                <div class="flex items-center gap-2.5 shrink-0">
+                    <a aria-label="Beranda FixHome" class="flex items-center shrink-0 group active:scale-[0.98] transition-transform" href="#beranda" data-nav-target="beranda">
+                        <img alt="FixHome" class="fh-header-logo h-7 sm:h-[30px] w-auto object-contain group-hover:opacity-90 transition-all duration-300" src="{{ asset('images/fixhome-logo-full.png') }}" />
+                    </a>
+                    <span class="fh-compact-badge hidden md:inline-flex items-center gap-1.5 pl-2.5 border-l border-[#E5E7EB] text-[12px] font-semibold text-[#15803D] whitespace-nowrap" id="header-compact-badge">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#16A34A] animate-pulse"></span>
+                        <span id="header-compact-label">Beranda</span>
+                    </span>
+                </div>
 
                 <!-- Center Navigation Links -->
-                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-0.5 lg:gap-1 relative" id="desktop-nav">
+                <nav aria-label="Navigasi utama" class="fh-header-collapsible hidden md:flex items-center gap-0.5 lg:gap-1 relative" id="desktop-nav">
                     <span aria-hidden="true" class="fh-nav-pill pointer-events-none absolute top-0 bottom-0 left-0 rounded-full bg-[#DCFCE7] z-0 opacity-0" id="nav-active-pill"></span>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#15803D] font-semibold whitespace-nowrap" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] whitespace-nowrap" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] whitespace-nowrap" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] whitespace-nowrap" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
                     @guest
-                        <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
+                        <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] whitespace-nowrap" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
                     @endguest
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] whitespace-nowrap" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
                     @auth
                         @if (Auth::user()->role === 'admin')
-                            <a class="relative z-10 font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1 hover:bg-[#DCFCE7] active:scale-95 transition-all" href="{{ url('/admin') }}">Panel Admin</a>
+                            <a class="relative z-10 font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1 hover:bg-[#DCFCE7] active:scale-95 transition-all whitespace-nowrap" href="{{ url('/admin') }}">Panel Admin</a>
                         @endif
                     @endauth
                 </nav>
 
                 <!-- Right Controls (Masuk & Daftar only) -->
-                <div class="flex items-center gap-2">
+                <div class="fh-header-collapsible flex items-center gap-2 shrink-0">
                     <div class="hidden sm:flex items-center gap-2">
                         @auth
-                            <a class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white border border-[#E5E7EB] shadow-sm text-xs font-semibold text-[#111827] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ $dashboardUrl }}">
+                            <a class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white border border-[#E5E7EB] shadow-sm text-xs font-semibold text-[#111827] hover:border-[#16A34A] active:scale-95 transition-all whitespace-nowrap" href="{{ $dashboardUrl }}">
                                 <span class="w-6 h-6 rounded-full bg-[#16A34A] text-white flex items-center justify-center text-[11px] font-bold">
                                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                 </span>
@@ -124,10 +130,10 @@
                                 <span class="material-symbols-outlined text-[16px] text-[#4B5563]">dashboard</span>
                             </a>
                         @else
-                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-[#15803D] bg-white border border-[#E5E7EB] rounded-full px-4 py-1.5 hover:bg-[#F0FDF4] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ route('login') }}">
+                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-[#15803D] bg-white border border-[#E5E7EB] rounded-full px-4 py-1.5 hover:bg-[#F0FDF4] hover:border-[#16A34A] active:scale-95 transition-all whitespace-nowrap" href="{{ route('login') }}">
                                 Masuk
                             </a>
-                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-white bg-[#16A34A] hover:bg-[#15803D] rounded-full px-4 py-1.5 shadow-[0_3px_10px_rgba(22,163,74,0.24)] active:scale-95 transition-all" href="{{ route('register') }}">
+                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-white bg-[#16A34A] hover:bg-[#15803D] rounded-full px-4 py-1.5 shadow-[0_3px_10px_rgba(22,163,74,0.24)] active:scale-95 transition-all whitespace-nowrap" href="{{ route('register') }}">
                                 Daftar
                             </a>
                         @endauth
