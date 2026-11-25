@@ -6,6 +6,7 @@ use App\Filament\Admin\Resources\TeknisiResource\Pages;
 use App\Models\Teknisi;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -26,7 +27,19 @@ class TeknisiResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
+        $pending = static::getModel()::where('status_verifikasi', 'pending')->count();
+        if ($pending > 0) {
+            return $pending . ' baru';
+        }
+
         return (string) static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $pending = static::getModel()::where('status_verifikasi', 'pending')->count();
+
+        return $pending > 0 ? 'warning' : 'primary';
     }
 
     public static function form(Form $form): Form
@@ -157,14 +170,48 @@ class TeknisiResource extends Resource
                         'off' => 'Off',
                     ]),
             ])
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\Action::make('verifikasi')
-                    ->label('Verifikasi')
+                    ->label('Setujui')
                     ->icon('heroicon-o-check-badge')
                     ->color('success')
                     ->requiresConfirmation()
+                    ->modalHeading('Konfirmasi Verifikasi Mitra Teknisi')
+                    ->modalDescription('Teknisi yang disetujui akan langsung aktif (READY) dan muncul di pencarian customer.')
                     ->visible(fn (Teknisi $record): bool => $record->status_verifikasi !== 'verified')
-                    ->action(fn (Teknisi $record) => $record->update(['status_verifikasi' => 'verified'])),
+                    ->action(function (Teknisi $record): void {
+                        $record->update([
+                            'status_verifikasi' => 'verified',
+                            'status_kesiapan' => 'ready',
+                        ]);
+
+                        Notification::make()
+                            ->title('Mitra teknisi disetujui')
+                            ->body("{$record->nama_lengkap} sekarang terverifikasi dan siap menerima pesanan.")
+                            ->success()
+                            ->send();
+                    }),
+                Tables\Actions\Action::make('tolak')
+                    ->label('Tolak')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalHeading('Tolak Pendaftaran Mitra Teknisi')
+                    ->modalDescription('Teknisi yang ditolak tidak akan tampil di pencarian customer dan tidak dapat menerima order.')
+                    ->visible(fn (Teknisi $record): bool => $record->status_verifikasi === 'pending')
+                    ->action(function (Teknisi $record): void {
+                        $record->update([
+                            'status_verifikasi' => 'rejected',
+                            'status_kesiapan' => 'off',
+                        ]);
+
+                        Notification::make()
+                            ->title('Pendaftaran teknisi ditolak')
+                            ->body("Pengajuan {$record->nama_lengkap} telah ditolak.")
+                            ->danger()
+                            ->send();
+                    }),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

@@ -14,6 +14,31 @@
                 </div>
             </div>
 
+            @if (!$teknisi->isVerified())
+                <div class="p-5 rounded-[22px] {{ $teknisi->isRejected() ? 'bg-red-50 border border-red-200 text-red-900' : 'bg-amber-50 border border-amber-200 text-amber-900' }} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-[24px] {{ $teknisi->isRejected() ? 'text-red-600' : 'text-amber-600' }} shrink-0 mt-0.5">
+                            {{ $teknisi->isRejected() ? 'cancel' : 'hourglass_top' }}
+                        </span>
+                        <div>
+                            <h3 class="text-sm font-bold">
+                                {{ $teknisi->isRejected() ? 'Pendaftaran Mitra Teknisi Ditolak' : 'Menunggu Konfirmasi Verifikasi Admin' }}
+                            </h3>
+                            <p class="text-xs mt-0.5 leading-relaxed opacity-90">
+                                @if ($teknisi->isRejected())
+                                    Mohon maaf, pengajuan akun Mitra Teknisi Anda belum disetujui oleh Admin FixHome. Silakan hubungi tim admin untuk informasi lebih lanjut.
+                                @else
+                                    Data identitas dan keahlian Anda sedang ditinjau oleh Admin FixHome. Profil Anda belum tampil di pencarian customer sampai status diverifikasi.
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                    <span class="px-3.5 py-1.5 rounded-full text-xs font-bold shrink-0 self-start sm:self-center {{ $teknisi->isRejected() ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800' }}">
+                        {{ $teknisi->isRejected() ? 'Ditolak' : 'Menunggu Verifikasi' }}
+                    </span>
+                </div>
+            @endif
+
             <!-- Welcome Header Bar -->
             <div class="neu-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
@@ -33,11 +58,18 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <button type="button" id="toggle-ready-btn" onclick="toggleTeknisiStatus()"
-                            class="px-5 py-3 rounded-full text-xs font-bold transition-all flex items-center gap-2.5 {{ $teknisi->isReady() ? 'bg-primary-container text-on-primary shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF]' : 'bg-surface text-on-surface-variant shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]' }}">
-                        <span id="ready-ping-dot" class="w-2.5 h-2.5 rounded-full {{ $teknisi->isReady() ? 'bg-tertiary-fixed animate-ping' : 'bg-outline' }}"></span>
-                        <span id="ready-btn-text">{{ $teknisi->isReady() ? 'Status: READY (Siap Order)' : 'Status: OFF (Istirahat)' }}</span>
-                    </button>
+                    @if ($teknisi->isVerified())
+                        <button type="button" id="toggle-ready-btn" onclick="toggleTeknisiStatus()"
+                                class="px-5 py-3 rounded-full text-xs font-bold transition-all flex items-center gap-2.5 {{ $teknisi->isReady() ? 'bg-primary-container text-on-primary shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF]' : 'bg-surface text-on-surface-variant shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]' }}">
+                            <span id="ready-ping-dot" class="w-2.5 h-2.5 rounded-full {{ $teknisi->isReady() ? 'bg-tertiary-fixed animate-ping' : 'bg-outline' }}"></span>
+                            <span id="ready-btn-text">{{ $teknisi->isReady() ? 'Status: READY (Siap Order)' : 'Status: OFF (Istirahat)' }}</span>
+                        </button>
+                    @else
+                        <span class="px-5 py-3 rounded-full text-xs font-bold flex items-center gap-2 {{ $teknisi->isRejected() ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800' }}">
+                            <span class="w-2.5 h-2.5 rounded-full {{ $teknisi->isRejected() ? 'bg-red-600' : 'bg-amber-500 animate-pulse' }}"></span>
+                            <span>{{ $teknisi->isRejected() ? 'Akun Ditolak' : 'Menunggu Konfirmasi Admin' }}</span>
+                        </span>
+                    @endif
                 </div>
             </div>
 

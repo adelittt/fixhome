@@ -89,11 +89,11 @@ class AuthController extends Controller
                 'nama_lengkap' => $user->name,
                 'keahlian' => $validated['keahlian'] ?? 'Servis Umum',
                 'tarif_dasar' => $validated['tarif_dasar'] ?? 75000,
-                'status_kesiapan' => 'ready',
+                'status_kesiapan' => 'off',
                 'rating' => 5.0,
                 'no_ktp' => $validated['no_ktp'] ?? null,
                 'sertifikasi' => $validated['sertifikasi'] ?? null,
-                'status_verifikasi' => 'verified',
+                'status_verifikasi' => 'pending',
                 'latitude' => -6.2155,
                 'longitude' => 106.8205,
             ]);
@@ -101,6 +101,11 @@ class AuthController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+
+        if ($validated['role'] === 'teknisi') {
+            return redirect()->route('teknisi.dashboard')
+                ->with('success', 'Pendaftaran berhasil! Akun Mitra Teknisi Anda sedang menunggu konfirmasi verifikasi dari Admin FixHome.');
+        }
 
         return $this->redirectBasedOnRole($user);
     }

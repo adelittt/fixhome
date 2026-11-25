@@ -46,6 +46,14 @@ class TeknisiController extends Controller
     {
         $teknisi = Auth::user()->teknisi;
 
+        if (!$teknisi->isVerified()) {
+            $msg = $teknisi->isRejected()
+                ? 'Pendaftaran Anda ditolak oleh Admin. Hubungi Admin FixHome untuk informasi lebih lanjut.'
+                : 'Akun Anda masih menunggu konfirmasi verifikasi dari Admin FixHome sebelum dapat mengaktifkan status READY.';
+
+            return back()->withErrors(['verification' => $msg]);
+        }
+
         $newStatus = $teknisi->isReady() ? 'off' : 'ready';
 
         $teknisi->update([

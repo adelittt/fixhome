@@ -29,9 +29,14 @@ class FixHomeStatsOverview extends BaseWidget
         $pendingBookings = Booking::where('status_order', 'pending_payment')->count();
 
         $totalTeknisi = Teknisi::count();
-        $readyTeknisi = Teknisi::where('status_kesiapan', 'ready')->count();
+        $readyTeknisi = Teknisi::ready()->count();
+        $pendingTeknisi = Teknisi::where('status_verifikasi', 'pending')->count();
         $avgRating = (float) (Teknisi::where('rating', '>', 0)->avg('rating') ?? 0);
         $totalCustomers = Customer::count();
+
+        $teknisiDesc = $pendingTeknisi > 0
+            ? "{$pendingTeknisi} menunggu konfirmasi admin · {$totalCustomers} customer"
+            : 'Rating ★ ' . number_format($avgRating, 1) . " · {$totalCustomers} customer";
 
         return [
             Stat::make('Total Omzet (Lunas)', 'Rp ' . number_format($totalOmzet, 0, ',', '.'))
@@ -50,9 +55,9 @@ class FixHomeStatsOverview extends BaseWidget
                 ->color($pendingBookings > 0 ? 'warning' : 'info'),
 
             Stat::make('Mitra Teknisi Siap', "{$readyTeknisi} / {$totalTeknisi}")
-                ->description('Rating ★ ' . number_format($avgRating, 1) . " · {$totalCustomers} customer")
-                ->descriptionIcon('heroicon-m-wrench-screwdriver')
-                ->color('info'),
+                ->description($teknisiDesc)
+                ->descriptionIcon($pendingTeknisi > 0 ? 'heroicon-m-clock' : 'heroicon-m-wrench-screwdriver')
+                ->color($pendingTeknisi > 0 ? 'warning' : 'info'),
         ];
     }
 }

@@ -18,7 +18,7 @@ class BookingController extends Controller
 {
     public function showBookingForm(int $teknisiId)
     {
-        $technician = Teknisi::with('user')->findOrFail($teknisiId);
+        $technician = Teknisi::verified()->with('user')->findOrFail($teknisiId);
         $customer = Auth::user()->customer;
 
         // Perhitungan Jarak dan Biaya Tambahan (KF-05, KF-06, KF-07)
@@ -51,7 +51,7 @@ class BookingController extends Controller
         ]);
 
         $customer = Auth::user()->customer;
-        $technician = Teknisi::findOrFail($validated['teknisi_id']);
+        $technician = Teknisi::verified()->findOrFail($validated['teknisi_id']);
 
         $jadwalDateTime = $validated['jadwal_tanggal'] . ' ' . $validated['jadwal_jam'] . ':00';
 

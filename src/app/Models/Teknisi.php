@@ -53,9 +53,15 @@ class Teknisi extends Model
         return $this->hasMany(Ulasan::class);
     }
 
+    public function scopeVerified(Builder $query): Builder
+    {
+        return $query->where('status_verifikasi', 'verified');
+    }
+
     public function scopeReady(Builder $query): Builder
     {
-        return $query->where('status_kesiapan', 'ready');
+        return $query->where('status_kesiapan', 'ready')
+            ->where('status_verifikasi', 'verified');
     }
 
     public function scopeOff(Builder $query): Builder
@@ -63,9 +69,24 @@ class Teknisi extends Model
         return $query->where('status_kesiapan', 'off');
     }
 
+    public function isVerified(): bool
+    {
+        return $this->status_verifikasi === 'verified';
+    }
+
+    public function isPendingVerification(): bool
+    {
+        return $this->status_verifikasi === 'pending';
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status_verifikasi === 'rejected';
+    }
+
     public function isReady(): bool
     {
-        return $this->status_kesiapan === 'ready';
+        return $this->status_kesiapan === 'ready' && $this->isVerified();
     }
 
     public function isOff(): bool
