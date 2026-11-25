@@ -86,25 +86,25 @@
 <body class="fh-plus bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col overscroll-none" id="top">
 
     <div class="flex-1 flex flex-col pb-16 sm:pb-0">
-        <!-- HEADER NAVIGATION (FixHome Clean Minimalist Responsive Nav) -->
-        <header class="sticky top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md px-gutter lg:px-margin border-b border-[#E5E7EB]/80 transition-shadow" id="site-header">
-            <div class="h-16 max-w-[1140px] mx-auto flex items-center justify-between gap-gutter">
+        <!-- FLOATING PILL HEADER NAVIGATION -->
+        <header class="fh-header-anim fixed top-3 sm:top-4 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none" id="site-header">
+            <div class="pointer-events-auto h-14 max-w-[1140px] mx-auto px-4 sm:px-5 rounded-full bg-white/95 backdrop-blur-md border border-white/80 shadow-[0_6px_28px_rgba(17,24,39,0.08)] flex items-center justify-between gap-4 transition-shadow duration-300" id="header-pill-bar">
                 <!-- Brand Logo -->
                 <a aria-label="Beranda FixHome" class="flex items-center shrink-0 group active:scale-[0.98] transition-transform" href="#beranda" data-nav-target="beranda">
-                    <img alt="FixHome" class="h-7 sm:h-8 w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
+                    <img alt="FixHome" class="h-7 sm:h-[30px] w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
                 </a>
 
                 <!-- Center Navigation Links -->
                 <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-0.5 lg:gap-1 relative" id="desktop-nav">
                     <span aria-hidden="true" class="fh-nav-pill pointer-events-none absolute top-0 bottom-0 left-0 rounded-full bg-[#DCFCE7] z-0 opacity-0" id="nav-active-pill"></span>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
                     @guest
-                        <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
+                        <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
                     @endguest
-                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3.5 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
                     @auth
                         @if (Auth::user()->role === 'admin')
                             <a class="relative z-10 font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1 hover:bg-[#DCFCE7] active:scale-95 transition-all" href="{{ url('/admin') }}">Panel Admin</a>
@@ -112,7 +112,7 @@
                     @endauth
                 </nav>
 
-                <!-- Right Controls -->
+                <!-- Right Controls (Masuk & Daftar only) -->
                 <div class="flex items-center gap-2">
                     <div class="hidden sm:flex items-center gap-2">
                         @auth
@@ -124,14 +124,11 @@
                                 <span class="material-symbols-outlined text-[16px] text-[#4B5563]">dashboard</span>
                             </a>
                         @else
-                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-[#16A34A] bg-white border border-[#E5E7EB] rounded-full px-4 py-1.5 hover:bg-[#F0FDF4] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ route('login') }}">
+                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-[#15803D] bg-white border border-[#E5E7EB] rounded-full px-4 py-1.5 hover:bg-[#F0FDF4] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ route('login') }}">
                                 Masuk
                             </a>
-                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-white bg-[#16A34A] hover:bg-[#15803D] rounded-full px-4 py-1.5 shadow-[0_3px_10px_rgba(22,163,74,0.22)] active:scale-95 transition-all" href="{{ route('register') }}">
+                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-white bg-[#16A34A] hover:bg-[#15803D] rounded-full px-4 py-1.5 shadow-[0_3px_10px_rgba(22,163,74,0.24)] active:scale-95 transition-all" href="{{ route('register') }}">
                                 Daftar
-                            </a>
-                            <a aria-label="Portal Akun" class="w-8 h-8 rounded-full bg-[#16A34A] hover:bg-[#15803D] flex items-center justify-center active:scale-95 transition-all" href="{{ route('login') }}">
-                                <span class="material-symbols-outlined text-white text-[16px]">person</span>
                             </a>
                         @endauth
                     </div>
@@ -151,7 +148,7 @@
             </div>
 
             <!-- Mobile & Tablet Dropdown Menu -->
-            <div class="hidden md:hidden bg-white border-t border-[#E5E7EB] -mx-gutter lg:-mx-margin px-4 pt-3 pb-4 space-y-1.5 shadow-lg" id="mobile-menu">
+            <div class="pointer-events-auto hidden md:hidden mt-2 max-w-[1140px] mx-auto rounded-2xl bg-white/95 backdrop-blur-md border border-[#E5E7EB] px-4 pt-3 pb-4 space-y-1.5 shadow-xl" id="mobile-menu">
                 <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all active:scale-[0.99] bg-[#DCFCE7] text-[#15803D]" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
                 <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-[0.99] text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
                 <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-[0.99] text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
@@ -166,7 +163,7 @@
                     </div>
                 @else
                     <div class="grid grid-cols-2 gap-2 pt-2 sm:hidden">
-                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-[#16A34A] bg-white border border-[#E5E7EB] text-center hover:bg-[#F0FDF4] active:scale-[0.98] transition-all" href="{{ route('login') }}">Masuk</a>
+                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-[#15803D] bg-white border border-[#E5E7EB] text-center hover:bg-[#F0FDF4] active:scale-[0.98] transition-all" href="{{ route('login') }}">Masuk</a>
                         <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] text-center active:scale-[0.98] transition-all" href="{{ route('register') }}">Daftar</a>
                     </div>
                 @endauth
@@ -176,89 +173,91 @@
         <!-- PAGE CONTENT -->
         <main class="flex-1 w-full bg-surface" id="konten-utama">
             <div class="flex flex-col w-full bg-surface text-on-surface min-h-screen relative overflow-x-clip">
-                <!-- Top Decorative Ambient Light Wells -->
-                <div class="relative w-full max-w-[1140px] mx-auto px-gutter lg:px-margin overflow-visible pointer-events-none">
-                    <div class="absolute -top-24 -left-20 w-96 h-96 rounded-full bg-secondary-container/40 blur-3xl"></div>
-                    <div class="absolute -top-12 -right-16 w-80 h-80 rounded-full bg-tertiary-fixed/35 blur-3xl"></div>
-                </div>
+                <!-- 1. FULL-BLEED PHOTOGRAPHIC HERO SECTION -->
+                <section class="relative w-full min-h-[580px] sm:min-h-[640px] lg:min-h-[680px] lg:h-[92vh] lg:max-h-[820px] flex items-center overflow-hidden scroll-mt-0" id="beranda">
+                    <!-- Full-Bleed Technician Background -->
+                    <img
+                        alt="Teknisi FixHome sedang melakukan perbaikan rumah"
+                        class="fh-hero-bg absolute inset-0 w-full h-full object-cover object-[74%_center] sm:object-right select-none pointer-events-none"
+                        fetchpriority="high"
+                        loading="eager"
+                        src="{{ asset('images/fixhome-hero-bg.webp') }}"
+                    />
+                    <!-- Airy Left-to-Right Luminous White Veil -->
+                    <div aria-hidden="true" class="fh-hero-veil absolute inset-0 pointer-events-none"></div>
+                    <!-- Soft Seamless Bottom Fade to White Canvas -->
+                    <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white via-white/45 to-transparent pointer-events-none"></div>
 
-                <!-- 1. HERO SECTION -->
-                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin pt-space-lg lg:pt-space-xl pb-space-xl relative z-10 scroll-mt-24" id="beranda">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-                        <!-- Left Column: Copy & Tactile Search Engine -->
-                        <div class="lg:col-span-7 flex flex-col gap-space-md">
-                            <h1 class="font-headline-xl-mobile sm:font-headline-xl text-headline-xl-mobile sm:text-headline-xl text-primary font-extrabold tracking-tight max-w-2xl font-recoleta">
-                                Perbaikan Rumah Tuntas, Material Tepat Tanpa Ribet
+                    <!-- Hero Foreground Content -->
+                    <div class="relative z-10 w-full max-w-[1140px] mx-auto px-5 sm:px-8 pt-24 sm:pt-28 pb-14">
+                        <div class="max-w-[540px] flex flex-col items-start">
+                            <!-- Pill Eyebrow -->
+                            <div class="fh-hero-anim inline-flex items-center px-3.5 py-1 rounded-full bg-[#DCFCE7]/95 text-[#15803D] font-label-md text-[12px] font-semibold tracking-tight" data-hero-step="1">
+                                Solusi Perbaikan Rumah Anda
+                            </div>
+
+                            <!-- Two-Tone Display Headline -->
+                            <h1 class="fh-hero-anim font-headline-xl text-[30px] sm:text-[40px] lg:text-[44px] leading-[1.14] font-extrabold tracking-[-0.03em] mt-4" data-hero-step="2">
+                                <span class="block text-[#16A34A]">Perbaikan Rumah Tuntas,</span>
+                                <span class="block text-[#111827]">Material Tepat Tanpa Ribet</span>
                             </h1>
-                            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                                Pesan teknisi terverifikasi, diskusi kebutuhan lewat live chat, dan nikmati perbaikan berkualitas bergaransi resmi 14 hari.
+
+                            <!-- Subtitle -->
+                            <p class="fh-hero-anim font-body-lg text-[14.5px] sm:text-[15.5px] leading-[1.6] text-[#4B5563] mt-3.5 max-w-[470px]" data-hero-step="3">
+                                Pesan teknisi terverifikasi, pilih material berkualitas, dan nikmati perbaikan rumah dengan lebih mudah.
                             </p>
 
-                            <!-- Tactile Neumorphic Search Bar Console -->
-                            <form action="{{ route('customer.technicians') }}" class="stitch-surface-card mt-space-sm p-space-md lg:p-space-lg rounded-[28px] bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col gap-space-md" method="GET">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-stretch">
-                                    <!-- Inset Field 1: Category Picker -->
-                                    <div class="stitch-surface-inset md:col-span-7 relative flex items-center px-space-md py-space-sm rounded-full bg-surface shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF]">
-                                        <span class="material-symbols-outlined text-primary text-[20px] mr-space-xs shrink-0">home_repair_service</span>
-                                        <select
-                                            aria-label="Pilih Kategori Jasa"
-                                            class="w-full bg-transparent border-0 focus:ring-0 font-body-md text-body-md text-on-surface focus:outline-none appearance-none cursor-pointer pr-6 py-0.5"
-                                            name="category"
-                                        >
-                                            <option value="">Pilih Kategori Jasa</option>
-                                            @foreach ($services as $svc)
-                                                @if ($svc['category'])
-                                                    <option value="{{ $svc['category'] }}">{{ $svc['title'] }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        <span class="material-symbols-outlined absolute right-4 text-on-surface-variant text-[18px] pointer-events-none">expand_more</span>
-                                    </div>
-
-                                    <!-- Primary CTA: Cari Teknisi -->
-                                    <button
-                                        class="md:col-span-5 w-full inline-flex items-center justify-center gap-space-xs px-space-xl py-space-sm rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:shadow-[0_4px_12px_rgba(119,85,55,0.38)] active:shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35)] transition-all"
-                                        type="submit"
+                            <!-- Inline Pill Category Search Bar -->
+                            <form action="{{ route('customer.technicians') }}" class="fh-hero-anim mt-6 w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5" data-hero-step="4" method="GET">
+                                <div class="relative flex-1 flex items-center bg-white/95 backdrop-blur-sm rounded-full px-4 py-2.5 border border-[#E5E7EB]/90 shadow-[0_6px_22px_rgba(17,24,39,0.07)] focus-within:border-[#16A34A] focus-within:ring-2 focus-within:ring-[#16A34A]/15 transition-all">
+                                    <span class="material-symbols-outlined text-[#16A34A] text-[20px] mr-2.5 shrink-0">home</span>
+                                    <select
+                                        aria-label="Pilih Kategori Jasa"
+                                        class="w-full bg-transparent border-0 focus:ring-0 font-body-md text-[13.5px] text-[#374151] focus:outline-none appearance-none cursor-pointer pr-6 py-0.5"
+                                        name="category"
                                     >
-                                        <span class="material-symbols-outlined text-[20px]">search</span>
-                                        <span>Cari Teknisi</span>
-                                    </button>
+                                        <option value="">Pilih Kategori Jasa</option>
+                                        @foreach ($services as $svc)
+                                            @if ($svc['category'])
+                                                <option value="{{ $svc['category'] }}">{{ $svc['title'] }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <span class="material-symbols-outlined absolute right-3.5 text-[#6B7280] text-[18px] pointer-events-none">expand_more</span>
                                 </div>
 
-                                <!-- Bottom Row: Quick Trust Signals -->
-                                <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs pt-space-xs text-on-surface-variant font-label-md text-label-md">
-                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> Estimasi Biaya Jelas</span>
-                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">verified_user</span> Garansi 14 Hari</span>
-                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">group</span> 1.200+ Teknisi Siap</span>
-                                </div>
+                                <button
+                                    class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#16A34A] hover:bg-[#15803D] text-white font-label-lg text-[13.5px] font-semibold shadow-[0_8px_20px_rgba(22,163,74,0.28)] hover:shadow-[0_10px_24px_rgba(22,163,74,0.34)] active:scale-[0.97] transition-all shrink-0"
+                                    type="submit"
+                                >
+                                    <span class="material-symbols-outlined text-[18px]">search</span>
+                                    <span>Cari Teknisi</span>
+                                </button>
                             </form>
-                        </div>
 
-                        <!-- Right Column: Tactile Staged Physical Card Composition -->
-                        <div class="lg:col-span-5 relative flex justify-center py-space-md">
-                            <div class="stitch-surface-card w-full max-w-[400px] rounded-[22px] p-space-md bg-surface flex flex-col items-center relative overflow-visible">
-                                <div class="relative w-full rounded-[20px] bg-surface p-1.5 shadow-[inset_3px_3px_7px_#D2D2D2,inset_-3px_-3px_7px_#FFFFFF] overflow-hidden">
-                                    <img
-                                        alt="Ilustrasi 3D rumah dan peralatan perbaikan FixHome"
-                                        class="w-full aspect-[4/3] object-cover rounded-[16px]"
-                                        loading="eager"
-                                        src="{{ asset('images/fixhome-hero-tactile.jpg') }}"
-                                    />
-                                    <div aria-hidden="true" class="hero-shimmer-overlay pointer-events-none"></div>
-                                </div>
-
-                                <div class="stitch-surface-card absolute -bottom-5 left-1/2 -translate-x-1/2 px-space-md py-2 rounded-full bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] flex items-center gap-2 whitespace-nowrap z-20">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
-                                    <span class="material-symbols-outlined text-[18px] text-tertiary">verified</span>
-                                    <span class="font-label-sm text-label-sm font-semibold text-primary">Teknisi Terverifikasi &amp; Bergaransi</span>
-                                </div>
+                            <!-- Minimalist Trust Row -->
+                            <div class="fh-hero-anim mt-5 flex flex-wrap items-center gap-y-2 text-[#374151] font-label-md text-[12px] font-medium" data-hero-step="5">
+                                <span class="inline-flex items-center gap-1.5 pr-3 sm:pr-4">
+                                    <span class="material-symbols-outlined text-[16px] text-[#16A34A]">verified_user</span>
+                                    Estimasi Biaya Jelas
+                                </span>
+                                <span aria-hidden="true" class="hidden sm:inline-block h-3.5 w-px bg-[#D1D5DB]"></span>
+                                <span class="inline-flex items-center gap-1.5 px-0 sm:px-4 pr-3">
+                                    <span class="material-symbols-outlined text-[16px] text-[#16A34A]">shield</span>
+                                    Garansi 14 Hari
+                                </span>
+                                <span aria-hidden="true" class="hidden sm:inline-block h-3.5 w-px bg-[#D1D5DB]"></span>
+                                <span class="inline-flex items-center gap-1.5 sm:pl-4">
+                                    <span class="material-symbols-outlined text-[16px] text-[#16A34A]">groups</span>
+                                    1.200+ Teknisi Siap
+                                </span>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- 2. SERVICE CATEGORIES SECTION -->
-                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="layanan-populer">
+                <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" data-reveal id="layanan-populer">
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm mb-space-lg">
                         <div>
                             <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-secondary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
@@ -318,7 +317,7 @@
                 </section>
 
                 <!-- 2B. KATALOG TEKNISI -->
-                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="katalog-teknisi">
+                <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" data-reveal id="katalog-teknisi">
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
                         <div>
                             <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
@@ -407,7 +406,7 @@
                 </section>
 
                 <!-- 3. KEY FEATURE HIGHLIGHT SECTION (CARA KERJA & TRANSPARANSI BIAYA) -->
-                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="cara-kerja">
+                <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" data-reveal id="cara-kerja">
                     <div class="stitch-surface-card rounded-[24px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] relative">
                         <div class="max-w-3xl mb-space-xl">
                             <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-2px_-2px_6px_#FFFFFF,2px_2px_6px_#D2D2D2] text-tertiary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
@@ -528,7 +527,7 @@
                 </section>
 
                 <!-- 4. TRUST & TRANSPARENCY SECTION -->
-                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="transparansi">
+                <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" data-reveal id="transparansi">
                     <div class="text-center max-w-2xl mx-auto mb-space-xl">
                         <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
                             <span class="material-symbols-outlined text-[16px]">verified</span>
@@ -576,7 +575,7 @@
                 </section>
 
                 <!-- 5. PARTNERSHIP CALLOUT BANNER -->
-                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin pt-space-md pb-space-xl scroll-mt-24" id="jadi-mitra">
+                <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin pt-space-md pb-space-xl scroll-mt-24" data-reveal id="jadi-mitra">
                     <!-- Partnership Invitation Card -->
                     <div class="stitch-surface-card rounded-[24px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col md:flex-row items-center justify-between gap-space-lg">
                         <div class="max-w-xl text-center md:text-left">
@@ -605,7 +604,7 @@
                 </section>
 
                 <!-- 6. TENTANG KAMI -->
-                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="tentang-kami">
+                <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" data-reveal id="tentang-kami">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
                         <!-- Left: Story -->
                         <div class="lg:col-span-6 flex flex-col gap-space-md">

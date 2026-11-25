@@ -1,6 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+        document.documentElement.classList.add('fh-anim-ready');
+    }
+
+    // 0. Hero Initial Load & Replayable Restart Entrance Animation
+    const headerAnimEl = document.querySelector('.fh-header-anim');
+    const heroBgEl = document.querySelector('.fh-hero-bg');
+    const heroAnimItems = Array.from(document.querySelectorAll('.fh-hero-anim'));
+
+    heroAnimItems.forEach((el, idx) => {
+        const step = parseInt(el.getAttribute('data-hero-step') || String(idx + 1), 10);
+        el.style.setProperty('--hero-delay', `${step * 85}ms`);
+    });
+
+    const playHeroEntrance = () => {
+        if (prefersReducedMotion) return;
+
+        // Reset to initial state cleanly without transition flicker
+        const targets = [headerAnimEl, heroBgEl, ...heroAnimItems].filter(Boolean);
+        targets.forEach((el) => {
+            el.style.transition = 'none';
+            el.classList.remove('is-entered');
+        });
+
+        // Force reflow, then trigger smooth staggered entrance
+        void document.body.offsetHeight;
+        targets.forEach((el) => {
+            el.style.transition = '';
+        });
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                targets.forEach((el) => el.classList.add('is-entered'));
+            });
+        });
+    };
+
+    playHeroEntrance();
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) playHeroEntrance();
+    });
+
+    // 0B. Smooth Scroll Reveal (sections & cards appear only when scrolled into view)
+    const revealSections = Array.from(document.querySelectorAll('[data-reveal]'));
+    revealSections.forEach((section) => {
+        const cards = Array.from(section.querySelectorAll('.stitch-surface-card'));
+        cards.forEach((card, idx) => {
+            card.style.setProperty('--card-delay', `${Math.min(idx, 6) * 70}ms`);
+        });
+    });
+
+    if (revealSections.length > 0 && !prefersReducedMotion && 'IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px -60px 0px' },
+        );
+        revealSections.forEach((sec) => revealObserver.observe(sec));
+    } else {
+        revealSections.forEach((sec) => sec.classList.add('is-visible'));
+    }
+
     // 1. Mobile & Tablet Navigation Menu
     const headerEl = document.getElementById('site-header');
+    const headerPillBar = document.getElementById('header-pill-bar');
     const toggleBtn = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const menuIcon = document.getElementById('mobile-menu-icon');
@@ -38,10 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Subtle header shadow on scroll
-    if (headerEl) {
+    // Subtle header elevation on scroll
+    if (headerPillBar) {
         const updateHeaderShadow = () => {
-            headerEl.classList.toggle('shadow-sm', window.scrollY > 8);
+            const scrolled = window.scrollY > 12;
+            headerPillBar.classList.toggle('shadow-[0_10px_32px_rgba(17,24,39,0.12)]', scrolled);
         };
         updateHeaderShadow();
         window.addEventListener('scroll', updateHeaderShadow, { passive: true });
@@ -193,6 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 : Math.max(0, targetEl.getBoundingClientRect().top + window.scrollY - headerOffset);
 
             window.scrollTo({ top: topPos, behavior: 'smooth' });
+            if (targetId === 'beranda') {
+                setTimeout(() => playHeroEntrance(), 220);
+            }
             if (history.replaceState) {
                 history.replaceState(null, '', `#${targetId}`);
             }
