@@ -26,7 +26,7 @@
 }
 
 ::selection {
-    background-color: #15803d;
+    background-color: #9caa52;
     color: #ffffff;
 }
 
@@ -113,14 +113,14 @@
 
 .fh-plus .stitch-surface-card {
     background-color: #ffffff !important;
-    border: 1px solid #e2ebe5 !important;
-    box-shadow: 0 4px 16px rgba(20, 83, 45, 0.05), 0 1px 3px rgba(21, 128, 61, 0.06) !important;
+    border: 1px solid #e0e2bd !important;
+    box-shadow: 0 4px 16px rgba(78, 94, 36, 0.06), 0 1px 3px rgba(156, 170, 82, 0.08) !important;
 }
 
 .fh-plus .stitch-surface-inset {
-    background-color: #f8faf9 !important;
-    border: 1px solid #dce5df !important;
-    box-shadow: inset 2px 2px 5px rgba(20, 83, 45, 0.04), inset -2px -2px 5px #ffffff !important;
+    background-color: #fefee2 !important;
+    border: 1px solid #e0e2bd !important;
+    box-shadow: inset 2px 2px 5px rgba(78, 94, 36, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.85) !important;
 }
 
 .fh-plus .material-symbols-outlined {
@@ -294,89 +294,89 @@
 }
 
 @layer components {
-    /* Clean Green & White surface tokens */
+    /* Clean Whisper White / Sunlight / Green Fields / Weeping Willow surface tokens */
     .neu-card {
-        @apply bg-white rounded-[24px] border border-[#E2EBE5];
-        box-shadow: 0 4px 16px rgba(20, 83, 45, 0.05), 0 1px 3px rgba(21, 128, 61, 0.06);
+        @apply bg-white rounded-[24px] border border-[#E0E2BD];
+        box-shadow: 0 4px 16px rgba(78, 94, 36, 0.06), 0 1px 3px rgba(156, 170, 82, 0.08);
     }
 
     .neu-card-sm {
-        @apply bg-white rounded-[18px] border border-[#E2EBE5];
-        box-shadow: 0 3px 12px rgba(20, 83, 45, 0.04), 0 1px 2px rgba(21, 128, 61, 0.05);
+        @apply bg-white rounded-[18px] border border-[#E0E2BD];
+        box-shadow: 0 3px 12px rgba(78, 94, 36, 0.05), 0 1px 2px rgba(156, 170, 82, 0.07);
     }
 
     .neu-card-lg {
-        @apply bg-white rounded-[28px] border border-[#E2EBE5];
-        box-shadow: 0 8px 24px rgba(20, 83, 45, 0.06), 0 2px 6px rgba(21, 128, 61, 0.06);
+        @apply bg-white rounded-[28px] border border-[#E0E2BD];
+        box-shadow: 0 8px 24px rgba(78, 94, 36, 0.07), 0 2px 6px rgba(156, 170, 82, 0.08);
     }
 
     .neu-inset {
-        @apply bg-[#F8FAF9] rounded-[16px] border border-[#DCE5DF];
-        box-shadow: inset 2px 2px 5px rgba(20, 83, 45, 0.04), inset -2px -2px 5px #ffffff;
+        @apply bg-[#FEFEE2] rounded-[16px] border border-[#E0E2BD];
+        box-shadow: inset 2px 2px 5px rgba(78, 94, 36, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.85);
     }
 
     .neu-inset-sm {
-        @apply bg-[#F8FAF9] rounded-full border border-[#DCE5DF];
-        box-shadow: inset 2px 2px 4px rgba(20, 83, 45, 0.04), inset -2px -2px 4px #ffffff;
+        @apply bg-[#FEFEE2] rounded-full border border-[#E0E2BD];
+        box-shadow: inset 2px 2px 4px rgba(78, 94, 36, 0.05), inset -2px -2px 4px rgba(255, 255, 255, 0.85);
     }
 
     .neu-input {
-        @apply w-full bg-white text-on-surface placeholder:text-outline rounded-2xl border border-[#DCE5DF] focus:outline-none focus:border-[#15803D] focus:ring-2 focus:ring-[#15803D]/20 transition-all;
+        @apply w-full bg-white text-on-surface placeholder:text-outline rounded-2xl border border-[#E0E2BD] focus:outline-none focus:border-[#9CAA52] focus:ring-2 focus:ring-[#9CAA52]/25 transition-all;
         box-shadow: none;
     }
 
     .neu-btn-primary {
-        @apply inline-flex items-center justify-center rounded-full bg-[#15803D] hover:bg-[#14532D] text-white font-label-lg font-semibold transition-all active:scale-[0.98];
-        box-shadow: 0 6px 16px rgba(21, 128, 61, 0.24);
+        @apply inline-flex items-center justify-center rounded-full bg-[#7F8F3C] hover:bg-[#4E5E24] text-white font-label-lg font-semibold transition-all active:scale-[0.98];
+        box-shadow: 0 6px 16px rgba(127, 143, 60, 0.28);
     }
 
     .neu-btn-primary:active {
-        box-shadow: inset 2px 2px 5px rgba(5, 46, 22, 0.35);
+        box-shadow: inset 2px 2px 5px rgba(50, 62, 20, 0.35);
     }
 
     .neu-btn-secondary {
-        @apply inline-flex items-center justify-center rounded-full bg-white text-[#14532D] font-label-lg font-semibold border border-[#DCE5DF] transition-all hover:bg-[#F0FDF4] active:scale-[0.98];
-        box-shadow: 0 2px 8px rgba(20, 83, 45, 0.05);
+        @apply inline-flex items-center justify-center rounded-full bg-white text-[#4E5E24] font-label-lg font-semibold border border-[#E0E2BD] transition-all hover:bg-[#FEFEE2] active:scale-[0.98];
+        box-shadow: 0 2px 8px rgba(78, 94, 36, 0.06);
     }
 
     .neu-btn-secondary:hover {
-        box-shadow: 0 4px 12px rgba(21, 128, 61, 0.12);
+        box-shadow: 0 4px 12px rgba(156, 170, 82, 0.16);
     }
 
     .neu-btn-secondary:active {
-        box-shadow: inset 2px 2px 4px rgba(20, 83, 45, 0.08);
+        box-shadow: inset 2px 2px 4px rgba(78, 94, 36, 0.08);
     }
 
     .neu-pill {
-        @apply inline-flex items-center gap-1.5 rounded-full bg-white border border-[#DCE5DF];
-        box-shadow: 0 2px 6px rgba(20, 83, 45, 0.04);
+        @apply inline-flex items-center gap-1.5 rounded-full bg-white border border-[#E0E2BD];
+        box-shadow: 0 2px 6px rgba(78, 94, 36, 0.05);
     }
 
     .neu-icon-teal {
-        @apply bg-[#DCFCE7] text-[#15803D] flex items-center justify-center;
+        @apply bg-[#B1BA67]/45 text-[#4E5E24] flex items-center justify-center;
         box-shadow: none;
     }
 
     .neu-icon-gold {
-        @apply bg-[#F0FDF4] text-[#14532D] border border-[#BBF7D0] flex items-center justify-center;
+        @apply bg-[#F9C744] text-[#3B2C00] flex items-center justify-center;
         box-shadow: none;
     }
 
     .neu-icon-primary {
-        @apply bg-[#15803D] text-white flex items-center justify-center;
+        @apply bg-[#7F8F3C] text-white flex items-center justify-center;
         box-shadow: none;
     }
 
     .hero-banner-overlay {
         background: linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.96) 0%,
-            rgba(255, 255, 255, 0.88) 54%,
-            rgba(255, 255, 255, 0.28) 100%
+            rgba(254, 254, 226, 0.96) 0%,
+            rgba(254, 254, 226, 0.86) 54%,
+            rgba(254, 254, 226, 0.25) 100%
         );
     }
 
     .hero-headline-shadow {
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+        text-shadow: 0 1px 0 rgba(254, 254, 226, 0.85);
     }
 }
