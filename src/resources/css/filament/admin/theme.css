@@ -15,17 +15,17 @@
    ========================================================================== */
 
 :root {
-    --fh-bg: #fcf8e8;
+    --fh-bg: #f8faf9;
     --fh-surface: #ffffff;
-    --fh-surface-muted: #f5de8f;
-    --fh-border: #ebda9d;
-    --fh-primary: #910608;
-    --fh-primary-container: #d02618;
-    --fh-secondary: #7c9418;
-    --fh-secondary-container: #b5d14c;
-    --fh-tertiary-fixed: #dfef00;
-    --fh-on-surface: #261714;
-    --fh-on-surface-variant: #5a463d;
+    --fh-surface-muted: #f0fdf4;
+    --fh-border: #dce5df;
+    --fh-primary: #14532d;
+    --fh-primary-container: #15803d;
+    --fh-secondary: #16a34a;
+    --fh-secondary-container: #dcfce7;
+    --fh-tertiary-fixed: #bbf7d0;
+    --fh-on-surface: #1f2937;
+    --fh-on-surface-variant: #52605a;
 }
 
 /* Base Canvas: Clean warm off-white, zero distracting blobs */
