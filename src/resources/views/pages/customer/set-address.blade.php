@@ -1,6 +1,6 @@
 <x-layouts.app title="Tentukan Lokasi Rumah Anda - FixHome">
     <div class="w-full flex-1 flex flex-col justify-center py-space-lg lg:py-space-xl px-gutter lg:px-margin">
-        <div class="max-w-[1280px] mx-auto w-full">
+        <div class="max-w-[1140px] mx-auto w-full">
 
             <!-- Header Title -->
             <div class="mb-space-lg">

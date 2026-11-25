@@ -1,7 +1,7 @@
 <x-layouts.app title="Beranda - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
-        <div class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-xl">
+        <div class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-xl">
 
             <!-- Mobile Only Header Bar -->
             <div class="lg:hidden neu-card-sm px-5 py-4 flex items-center justify-between">
@@ -19,7 +19,7 @@
 
             <!-- Active Order Banner (If Any) -->
             @if($activeBooking)
-                <div class="rounded-[28px] bg-primary-container text-on-primary p-6 shadow-[0_12px_28px_rgba(119,85,55,0.28),-6px_-6px_16px_#FFFFFF] flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden">
+                <div class="rounded-[22px] bg-[#16A34A] text-white p-6 shadow-[0_10px_24px_rgba(22,163,74,0.22)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden">
                     <div class="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-tertiary-fixed/15 blur-2xl pointer-events-none"></div>
                     <div class="space-y-1.5 relative z-10">
                         <div class="flex items-center gap-2.5">
@@ -40,33 +40,32 @@
                 </div>
             @endif
 
-            <!-- Hero Banner Section (Harmonized with Landing Page) -->
+            <!-- Hero Banner Section (Harmonized with Full-Bleed Technician Hero) -->
             <div class="relative overflow-hidden neu-card-lg p-6 sm:p-10 min-h-[260px] flex items-center">
                 <div class="absolute inset-0 w-full h-full pointer-events-none">
-                    <img alt="FixHome Banner" class="w-full h-full object-cover" src="{{ asset('images/fixhome-hero-banner.jpg') }}" />
-                    <div class="absolute inset-0 hero-banner-overlay"></div>
-                    <div aria-hidden="true" class="hero-shimmer-overlay pointer-events-none"></div>
+                    <img alt="Teknisi FixHome" class="w-full h-full object-cover object-right" src="{{ asset('images/fixhome-hero-bg.webp') }}" />
+                    <div class="absolute inset-0 fh-hero-veil"></div>
                 </div>
 
-                <div class="relative z-10 max-w-2xl space-y-4">
-                    <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-surface/95 backdrop-blur-md shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] text-secondary font-label-sm font-semibold font-lucy-rose">
-                        <span class="w-2 h-2 rounded-full bg-secondary-container"></span>
-                        <span>Radius Terdekat &amp; Transparansi 95% / 5%</span>
+                <div class="relative z-10 max-w-xl space-y-3.5">
+                    <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-[#DCFCE7] text-[#15803D] font-label-sm text-[11.5px] font-semibold">
+                        Radius Terdekat &amp; Transparansi 95% / 5%
                     </div>
-                    <h1 class="font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-extrabold font-recoleta leading-tight hero-headline-shadow">
-                        Butuh Teknisi Rumah? Temukan yang Terdekat dari Rumah Anda.
+                    <h1 class="font-headline-lg text-[24px] sm:text-[30px] font-extrabold leading-tight">
+                        <span class="text-[#16A34A]">Butuh Teknisi Rumah?</span>
+                        <span class="block text-[#111827]">Temukan yang Terdekat dari Rumah Anda.</span>
                     </h1>
-                    <p class="font-body-md text-body-md text-on-surface-variant font-medium leading-relaxed">
+                    <p class="font-body-md text-[13.5px] text-[#4B5563] leading-relaxed">
                         Layanan cepat perbaikan AC, instalasi listrik, perbaikan saluran air, hingga atap rumah dengan tarif transparan dan bergaransi 14 hari.
                     </p>
 
-                    <!-- Tactile Search Bar -->
+                    <!-- Clean Pill Search Bar -->
                     <form action="{{ route('customer.technicians') }}" method="GET" class="pt-1">
-                        <div class="neu-card-sm p-2 rounded-full flex items-center gap-2 max-w-xl">
-                            <div class="flex-1 neu-inset rounded-full flex items-center px-4 py-2.5">
-                                <span class="material-symbols-outlined text-primary text-[20px] mr-2">search</span>
+                        <div class="flex items-center gap-2 max-w-lg">
+                            <div class="flex-1 bg-white/95 rounded-full border border-[#E5E7EB] shadow-sm flex items-center px-4 py-2.5 focus-within:border-[#16A34A] focus-within:ring-2 focus-within:ring-[#16A34A]/15">
+                                <span class="material-symbols-outlined text-[#16A34A] text-[19px] mr-2">search</span>
                                 <input type="text" name="search"
-                                    class="w-full bg-transparent text-xs sm:text-sm text-on-surface placeholder:text-outline focus:outline-none"
+                                    class="w-full bg-transparent text-xs sm:text-sm text-[#111827] placeholder:text-[#6B7280] focus:outline-none"
                                     placeholder="Cari nama teknisi, AC, listrik, pipa...">
                             </div>
                             <button type="submit" class="neu-btn-primary px-6 py-2.5 text-xs shrink-0">
@@ -77,41 +76,43 @@
                 </div>
             </div>
 
-            <!-- Categories Section -->
+            <!-- Categories Section (Photo-Top Cards Matching Landing Page) -->
             <div class="space-y-4">
                 <div class="flex items-end justify-between gap-4">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full neu-pill text-secondary font-label-sm font-semibold mb-1.5 font-lucy-rose">
-                            <span>Keahlian Terstandar</span>
-                        </div>
-                        <h2 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">Kategori Layanan Utama</h2>
-                        <p class="font-body-sm text-on-surface-variant">Pilih kategori servis spesialis yang Anda perlukan</p>
+                        <span class="inline-flex items-center px-3 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] font-label-sm font-semibold mb-1.5">
+                            Keahlian Terstandar
+                        </span>
+                        <h2 class="font-headline-md text-[20px] text-[#111827] font-bold">Kategori Layanan Utama</h2>
+                        <p class="font-body-sm text-[#4B5563]">Pilih kategori servis spesialis yang Anda perlukan</p>
                     </div>
-                    <a href="{{ route('customer.technicians') }}" class="neu-btn-secondary px-4 py-2 text-xs text-primary shrink-0 gap-1">
+                    <a href="{{ route('customer.technicians') }}" class="neu-btn-secondary px-4 py-2 text-xs text-[#15803D] shrink-0 gap-1">
                         <span>Lihat Semua</span>
                         <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                     </a>
                 </div>
 
                 @php
-                    $materialIcons = [
-                        'zap' => 'electric_bolt',
-                        'wind' => 'ac_unit',
-                        'droplet' => 'plumbing',
-                        'home' => 'roofing',
-                        'paint-bucket' => 'format_paint',
-                        'key' => 'cleaning_services',
+                    $categoryPhotos = [
+                        'Instalasi Listrik' => 'images/services/listrik.jpg',
+                        'AC & Pendingin' => 'images/services/ac-pendingin.jpg',
+                        'Pipa & Saluran Air' => 'images/services/pipa-air.jpg',
+                        'Atap & Plafon Bocor' => 'images/services/atap-plafon.jpg',
+                        'Pengecatan & Tembok' => 'images/services/pengecatan.jpg',
+                        'Kunci & Pintu Rusak' => 'images/services/kebersihan.jpg',
                     ];
                 @endphp
 
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-md">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
                     @foreach($categories as $cat)
                         <a href="{{ route('customer.technicians', ['category' => $cat['tag']]) }}"
-                           class="neu-card-sm p-4 hover:-translate-y-1 transition-all flex flex-col items-center text-center group">
-                            <div class="w-14 h-14 rounded-2xl neu-icon-teal mb-3 group-hover:scale-105 transition-transform">
-                                <span class="material-symbols-outlined text-[26px]">{{ $materialIcons[$cat['icon']] ?? 'home_repair_service' }}</span>
+                           class="neu-card-sm overflow-hidden hover:-translate-y-1 transition-all flex flex-col group">
+                            <div class="w-full h-24 overflow-hidden bg-[#F3F4F6]">
+                                <img alt="{{ $cat['name'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="{{ asset($categoryPhotos[$cat['tag']] ?? 'images/services/pipa-air.jpg') }}" />
                             </div>
-                            <span class="font-title-sm text-xs font-bold text-primary font-butler leading-snug">{{ $cat['name'] }}</span>
+                            <div class="p-3 text-center">
+                                <span class="font-title-sm text-xs font-bold text-[#111827] group-hover:text-[#16A34A] transition-colors leading-snug block">{{ $cat['name'] }}</span>
+                            </div>
                         </a>
                     @endforeach
                 </div>

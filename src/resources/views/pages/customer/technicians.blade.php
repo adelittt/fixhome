@@ -1,7 +1,7 @@
 <x-layouts.app title="Daftar Teknisi - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
-        <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
+        <div class="max-w-[1140px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
 
             <!-- Page Header -->
             <div class="mb-space-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4 neu-card p-6">
@@ -71,7 +71,7 @@
                             <label class="block font-label-sm text-on-surface-variant font-semibold mb-2.5">Kategori Spesialisasi</label>
                             <div class="flex lg:flex-col gap-2 overflow-x-auto hide-scrollbar pb-1 lg:pb-0">
                                 <button type="button" onclick="selectCategory('')" id="cat-btn-all"
-                                    class="cat-filter-btn px-3.5 py-2.5 rounded-full text-xs font-bold text-left shrink-0 transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.25)]">
+                                    class="cat-filter-btn px-3.5 py-2.5 rounded-full text-xs font-bold text-left shrink-0 transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)]">
                                     Semua Kategori
                                 </button>
                                 @foreach(['AC & Pendingin', 'Instalasi Listrik', 'Pipa & Saluran Air', 'Atap & Plafon Bocor', 'Pengecatan & Tembok', 'Kunci & Pintu Rusak'] as $catName)
@@ -158,7 +158,7 @@
         let selectedCategory = @json(strtolower($category ?? ''));
         let maxRadius = 35;
 
-        const catActiveClass = 'cat-filter-btn px-3.5 py-2.5 rounded-full text-xs font-bold text-left shrink-0 transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.25)]';
+        const catActiveClass = 'cat-filter-btn px-3.5 py-2.5 rounded-full text-xs font-bold text-left shrink-0 transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)]';
         const catInactiveClass = 'cat-filter-btn px-3.5 py-2.5 rounded-full text-xs font-semibold text-left shrink-0 transition-all bg-surface text-on-surface-variant hover:text-primary shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]';
 
         function updateRadius(val) {

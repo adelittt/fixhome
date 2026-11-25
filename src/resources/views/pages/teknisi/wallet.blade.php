@@ -1,7 +1,7 @@
 <x-layouts.app title="Dompet Digital Mitra Teknisi - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-16">
 
-        <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-lg">
+        <div class="max-w-[1140px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-lg">
 
             <!-- Toast Notification -->
             <div id="wallet-toast" class="fixed top-24 right-5 z-[60] transform translate-x-[120%] opacity-0 transition-all duration-300 pointer-events-none">
@@ -56,7 +56,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
 
                 <!-- Card 1: Total Saldo Bersih 95% -->
-                <div class="bg-primary-container text-on-primary rounded-[26px] p-6 shadow-[0_12px_26px_rgba(119,85,55,0.28),-6px_-6px_16px_#FFFFFF] space-y-3 relative overflow-hidden">
+                <div class="bg-primary-container text-on-primary rounded-[26px] p-6 shadow-[0_12px_26px_rgba(22,163,74,0.24),-6px_-6px_16px_#FFFFFF] space-y-3 relative overflow-hidden">
                     <div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-tertiary-fixed/15 blur-2xl pointer-events-none"></div>
                     <span class="text-xs font-bold uppercase tracking-wider text-tertiary-fixed block relative z-10">Saldo Bersih Tersedia (95%)</span>
                     <div class="flex items-baseline justify-between gap-2 relative z-10">

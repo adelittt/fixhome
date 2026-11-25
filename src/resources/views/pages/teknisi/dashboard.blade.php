@@ -1,7 +1,7 @@
 <x-layouts.app title="Dashboard Mitra Teknisi - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-14">
 
-        <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-lg">
+        <div class="max-w-[1140px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg space-y-space-lg">
 
             <!-- Toast Notification -->
             <div id="dashboard-toast" class="fixed top-24 right-5 z-[60] transform translate-x-[120%] opacity-0 transition-all duration-300 pointer-events-none">
@@ -60,7 +60,7 @@
                 <div class="flex items-center gap-3">
                     @if ($teknisi->isVerified())
                         <button type="button" id="toggle-ready-btn" onclick="toggleTeknisiStatus()"
-                                class="px-5 py-3 rounded-full text-xs font-bold transition-all flex items-center gap-2.5 {{ $teknisi->isReady() ? 'bg-primary-container text-on-primary shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF]' : 'bg-surface text-on-surface-variant shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]' }}">
+                                class="px-5 py-3 rounded-full text-xs font-bold transition-all flex items-center gap-2.5 {{ $teknisi->isReady() ? 'bg-primary-container text-on-primary shadow-[0_8px_18px_rgba(22,163,74,0.24),-4px_-4px_10px_#FFFFFF]' : 'bg-surface text-on-surface-variant shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]' }}">
                             <span id="ready-ping-dot" class="w-2.5 h-2.5 rounded-full {{ $teknisi->isReady() ? 'bg-tertiary-fixed animate-ping' : 'bg-outline' }}"></span>
                             <span id="ready-btn-text">{{ $teknisi->isReady() ? 'Status: READY (Siap Order)' : 'Status: OFF (Istirahat)' }}</span>
                         </button>
@@ -77,7 +77,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
 
                 <!-- Card 1: Wallet 95% -->
-                <div class="bg-primary-container text-on-primary rounded-[26px] p-6 shadow-[0_12px_26px_rgba(119,85,55,0.28),-6px_-6px_16px_#FFFFFF] space-y-3 flex flex-col justify-between relative overflow-hidden">
+                <div class="bg-primary-container text-on-primary rounded-[26px] p-6 shadow-[0_12px_26px_rgba(22,163,74,0.24),-6px_-6px_16px_#FFFFFF] space-y-3 flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-tertiary-fixed/15 blur-2xl pointer-events-none"></div>
                     <div class="space-y-3 relative z-10">
                         <div class="flex items-center justify-between">
@@ -173,13 +173,13 @@
                                     </a>
 
                                     <div class="flex-1 w-full grid grid-cols-3 gap-2">
-                                        <button type="button" onclick="updateOrderStatus({{ $order->id }}, 'otw', this)" class="btn-step py-2.5 rounded-full text-xs font-bold transition-all {{ $order->status_order === 'paid' || $order->status_order === 'otw' ? 'bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.28)]' : 'bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]' }}">
+                                        <button type="button" onclick="updateOrderStatus({{ $order->id }}, 'otw', this)" class="btn-step py-2.5 rounded-full text-xs font-bold transition-all {{ $order->status_order === 'paid' || $order->status_order === 'otw' ? 'bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)]' : 'bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]' }}">
                                             🛵 Meluncur
                                         </button>
-                                        <button type="button" onclick="updateOrderStatus({{ $order->id }}, 'working', this)" class="btn-step py-2.5 rounded-full text-xs font-bold transition-all {{ $order->status_order === 'working' ? 'bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.28)]' : 'bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]' }}">
+                                        <button type="button" onclick="updateOrderStatus({{ $order->id }}, 'working', this)" class="btn-step py-2.5 rounded-full text-xs font-bold transition-all {{ $order->status_order === 'working' ? 'bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)]' : 'bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]' }}">
                                             🔧 Servis
                                         </button>
-                                        <button type="button" onclick="updateOrderStatus({{ $order->id }}, 'completed', this)" class="btn-step py-2.5 rounded-full text-xs font-bold transition-all {{ $order->status_order === 'completed' ? 'bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.28)]' : 'bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]' }}">
+                                        <button type="button" onclick="updateOrderStatus({{ $order->id }}, 'completed', this)" class="btn-step py-2.5 rounded-full text-xs font-bold transition-all {{ $order->status_order === 'completed' ? 'bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)]' : 'bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]' }}">
                                             ✓ Selesai
                                         </button>
                                     </div>
@@ -308,7 +308,7 @@
                     cardDesc.textContent = 'Profil Anda disembunyikan dan koordinat GPS dimatikan (BR-08).';
                     showToast('Status: OFF (Istirahat)', 'Anda kini tidak akan muncul dalam pencarian radius customer terdekat (BR-08).', '⏸️');
                 } else {
-                    btn.className = 'px-5 py-3 rounded-full text-xs font-bold transition-all flex items-center gap-2.5 bg-primary-container text-on-primary shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF]';
+                    btn.className = 'px-5 py-3 rounded-full text-xs font-bold transition-all flex items-center gap-2.5 bg-primary-container text-on-primary shadow-[0_8px_18px_rgba(22,163,74,0.24),-4px_-4px_10px_#FFFFFF]';
                     btnText.textContent = 'Status: READY (Siap Order)';
                     dot.className = 'w-2.5 h-2.5 rounded-full bg-tertiary-fixed animate-ping';
                     cardDot.className = 'w-3.5 h-3.5 rounded-full bg-secondary';
@@ -353,7 +353,7 @@
                 buttons.forEach(b => {
                     b.className = 'btn-step py-2.5 rounded-full text-xs font-bold transition-all bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]';
                 });
-                buttonEl.className = 'btn-step py-2.5 rounded-full text-xs font-bold transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.28)]';
+                buttonEl.className = 'btn-step py-2.5 rounded-full text-xs font-bold transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)]';
             })
             .catch(() => {
                 showToast('Gagal', 'Gagal memperbarui status order.', '⚠️');

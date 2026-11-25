@@ -1,7 +1,7 @@
 <x-layouts.app title="Rincian Pembayaran - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
-        <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
+        <div class="max-w-[1140px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
 
             <div class="mb-space-lg flex flex-wrap items-center justify-between gap-3">
                 <a href="{{ route('customer.home') }}" class="neu-btn-secondary px-4 py-2 text-xs text-primary gap-1.5">
@@ -147,7 +147,7 @@
                                         <span class="material-symbols-outlined text-[14px]">open_in_new</span>
                                     </a>
                                 </div>
-                                <div id="snap-embed-container" class="w-full min-h-[620px] rounded-[22px] overflow-hidden bg-white border border-[#EAE2DA] shadow-[inset_2px_2px_6px_rgba(119,85,55,0.06)] flex items-center justify-center">
+                                <div id="snap-embed-container" class="w-full min-h-[620px] rounded-[22px] overflow-hidden bg-white border border-[#E5E7EB] shadow-inner flex items-center justify-center">
                                     <div class="text-center p-8 space-y-3">
                                         <div class="w-10 h-10 mx-auto border-4 border-secondary-container border-t-primary-container rounded-full animate-spin"></div>
                                         <p class="text-xs font-semibold text-on-surface-variant">Menyiapkan QRIS Midtrans untuk tagihan Rp {{ number_format($booking->total_biaya, 0, ',', '.') }}...</p>

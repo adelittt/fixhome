@@ -1,7 +1,7 @@
 <x-layouts.app title="Formulir Pemesanan - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
-        <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
+        <div class="max-w-[1140px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
 
             <!-- Back Link -->
             <div class="mb-space-lg flex items-center justify-between">

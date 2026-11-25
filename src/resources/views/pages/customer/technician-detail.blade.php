@@ -1,7 +1,7 @@
 <x-layouts.app title="{{ $technician->nama_lengkap }} - Detail Teknisi">
     <div class="w-full flex-1 flex flex-col justify-between pb-24 lg:pb-12">
 
-        <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
+        <div class="max-w-[1140px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg">
 
             <!-- Back Navigation -->
             <div class="mb-space-lg flex items-center justify-between">

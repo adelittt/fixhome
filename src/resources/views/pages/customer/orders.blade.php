@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="flex items-center gap-2.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-                    <button type="button" onclick="filterStatus('all', this)" class="status-tab px-4 py-2 rounded-full font-bold transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.25)] shrink-0">
+                    <button type="button" onclick="filterStatus('all', this)" class="status-tab px-4 py-2 rounded-full font-bold transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)] shrink-0">
                         Semua (<span id="count-all">{{ $bookings->count() }}</span>)
                     </button>
                     <button type="button" onclick="filterStatus('active', this)" class="status-tab px-4 py-2 rounded-full font-semibold transition-all bg-surface text-on-surface-variant hover:text-primary shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] shrink-0">
@@ -165,7 +165,7 @@
         let currentStatusFilter = 'all';
         let currentSearchQuery = '';
 
-        const tabActiveClass = 'status-tab px-4 py-2 rounded-full font-bold transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(119,85,55,0.25)] shrink-0';
+        const tabActiveClass = 'status-tab px-4 py-2 rounded-full font-bold transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)] shrink-0';
         const tabInactiveClass = 'status-tab px-4 py-2 rounded-full font-semibold transition-all bg-surface text-on-surface-variant hover:text-primary shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] shrink-0';
 
         function applyFilters() {

@@ -111,7 +111,7 @@
                             </div>
                             <div>
                                 <label class="block font-label-sm text-on-surface-variant font-semibold mb-1">Keahlian Utama</label>
-                                <select name="keahlian" class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-surface text-on-surface shadow-[-2px_-2px_5px_#FFFFFF,2px_2px_5px_#D2D2D2] focus:outline-none">
+                                <select name="keahlian" class="w-full px-3.5 py-2.5 text-xs rounded-xl bg-white border border-[#D1D5DB] text-[#111827] focus:border-[#16A34A] focus:ring-2 focus:ring-[#16A34A]/20 focus:outline-none">
                                     <option value="AC & Pendingin">AC &amp; Pendingin</option>
                                     <option value="Instalasi Listrik">Instalasi Listrik</option>
                                     <option value="Pipa & Saluran Air">Pipa &amp; Saluran Air</option>
@@ -124,18 +124,18 @@
                                 <div>
                                     <label class="block font-label-sm text-on-surface-variant font-semibold mb-1">Nomor KTP (Verifikasi)</label>
                                     <input type="text" name="no_ktp" placeholder="16 digit NIK KTP"
-                                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-surface text-on-surface shadow-[-2px_-2px_5px_#FFFFFF,2px_2px_5px_#D2D2D2] focus:outline-none">
+                                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-white border border-[#D1D5DB] text-[#111827] focus:border-[#16A34A] focus:ring-2 focus:ring-[#16A34A]/20 focus:outline-none">
                                 </div>
                                 <div>
                                     <label class="block font-label-sm text-on-surface-variant font-semibold mb-1">Tarif Dasar Jasa (Rp)</label>
                                     <input type="number" name="tarif_dasar" value="75000"
-                                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-surface text-on-surface shadow-[-2px_-2px_5px_#FFFFFF,2px_2px_5px_#D2D2D2] focus:outline-none">
+                                        class="w-full px-3.5 py-2 text-xs rounded-xl bg-white border border-[#D1D5DB] text-[#111827] focus:border-[#16A34A] focus:ring-2 focus:ring-[#16A34A]/20 focus:outline-none">
                                 </div>
                             </div>
                             <div>
                                 <label class="block font-label-sm text-on-surface-variant font-semibold mb-1">Bukti Sertifikasi / Pelatihan (Opsional)</label>
                                 <input type="text" name="sertifikasi" placeholder="Contoh: Sertifikasi BNSP / SKK Kelistrikan"
-                                    class="w-full px-3.5 py-2 text-xs rounded-xl bg-surface text-on-surface shadow-[-2px_-2px_5px_#FFFFFF,2px_2px_5px_#D2D2D2] focus:outline-none">
+                                    class="w-full px-3.5 py-2 text-xs rounded-xl bg-white border border-[#D1D5DB] text-[#111827] focus:border-[#16A34A] focus:ring-2 focus:ring-[#16A34A]/20 focus:outline-none">
                             </div>
                         </div>
 

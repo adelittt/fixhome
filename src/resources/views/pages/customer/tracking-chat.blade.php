@@ -1,7 +1,7 @@
 <x-layouts.app title="Pelacakan & Chat - FixHome">
     <div class="w-full flex-1 flex flex-col justify-between pb-10">
 
-        <div class="max-w-[1280px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg flex-1 flex flex-col space-y-5">
+        <div class="max-w-[1140px] mx-auto w-full px-gutter lg:px-margin pt-space-md sm:pt-space-lg flex-1 flex flex-col space-y-5">
 
             <!-- Toast Notification Container -->
             <div id="live-toast" class="fixed top-24 right-5 z-[60] transform translate-x-[120%] opacity-0 transition-all duration-300 pointer-events-none">
