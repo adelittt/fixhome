@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html class="scroll-smooth bg-surface" lang="id">
+<html class="scroll-smooth" lang="id">
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="Pesan teknisi perbaikan rumah terverifikasi untuk AC, listrik, pipa, atap, hingga pengecatan. Biaya jelas, live chat, dan garansi resmi 14 hari." name="description" />
-    <meta content="#775537" name="theme-color" />
+    <meta content="Pesan teknisi perbaikan rumah terverifikasi untuk AC, listrik, pipa, atap, hingga pengecatan. Tarif dasar terbuka, biaya jarak jelas, pelacakan GPS, dan garansi pengerjaan 14 hari." name="description" />
+    <meta content="#0F766E" name="theme-color" />
     <link href="{{ asset('images/fixhome-icon.png') }}" rel="icon" type="image/png" />
-    <title>FixHome - Layanan Perbaikan Rumah Terverifikasi &amp; Bergaransi</title>
+    <title>FixHome — Layanan Perbaikan Rumah Terverifikasi &amp; Bergaransi</title>
 
-    <!-- Fonts: Recoleta, Butler, Lucy Rose (fallbacks Fraunces, Playfair Display, Cinzel Decorative) + Plus Jakarta Sans & Material Symbols -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.cdnfonts.com/css/recoleta" rel="stylesheet" />
-    <link href="https://fonts.cdnfonts.com/css/butler" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400..800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/landing.css', 'resources/js/landing.js'])
 </head>
@@ -24,787 +20,645 @@
             ? url('/admin')
             : (Auth::user()->role === 'teknisi' ? route('teknisi.dashboard') : route('customer.home')))
         : route('login');
+
     $techniciansUrl = Auth::check() && Auth::user()->role === 'customer'
         ? route('customer.technicians')
         : (Auth::check() ? $dashboardUrl : route('login'));
 
     $services = [
         [
-            'title' => 'Perbaikan Pipa & Saluran Air',
-            'category' => 'Pipa & Saluran Air',
-            'icon' => 'plumbing',
-            'price' => 'Mulai Rp75.000',
-            'count' => '320+ Teknisi Siap',
-            'desc' => 'Solusi tuntas pipa bocor, saluran mampet, instalasi toren, kloset, dan pompa booster otomatis.',
-        ],
-        [
-            'title' => 'Instalasi Listrik',
-            'category' => 'Instalasi Listrik',
-            'icon' => 'electric_bolt',
-            'price' => 'Mulai Rp85.000',
-            'count' => '240+ Teknisi Siap',
-            'desc' => 'Penanganan korsleting, pasang titik lampu baru, perapian panel MCB, dan grounding bersertifikasi.',
-        ],
-        [
-            'title' => 'Perawatan AC & Pendingin',
+            'title' => 'Perawatan & Cuci AC',
             'category' => 'AC & Pendingin',
-            'icon' => 'ac_unit',
             'price' => 'Mulai Rp65.000',
-            'count' => '190+ Teknisi Siap',
-            'desc' => 'Cuci unit indoor & outdoor, isi freon R32/R410A, perbaikan bocor air, dan pemindahan posisi AC.',
+            'desc' => 'Cuci unit indoor & outdoor, tambah freon R32/R410A, atasi AC menetes, dan bongkar pasang.',
+            'icon' => 'ac',
+        ],
+        [
+            'title' => 'Perbaikan Pipa & Sanitasi',
+            'category' => 'Pipa & Saluran Air',
+            'price' => 'Mulai Rp75.000',
+            'desc' => 'Atasi pipa bocor, saluran mampet, pemasangan toren air, kloset, dan pompa pendorong.',
+            'icon' => 'pipe',
+        ],
+        [
+            'title' => 'Instalasi & Reparasi Listrik',
+            'category' => 'Instalasi Listrik',
+            'price' => 'Mulai Rp85.000',
+            'desc' => 'Penanganan korsleting, tambah titik lampu atau stopkontak, panel MCB, dan grounding.',
+            'icon' => 'electric',
+        ],
+        [
+            'title' => 'Pengecatan & Dinding',
+            'category' => 'Pengecatan & Tembok',
+            'price' => 'Mulai Rp90.000',
+            'desc' => 'Cat interior kamar, fasad eksterior, lapisan anti bocor, dan perapian plamir retak.',
+            'icon' => 'paint',
         ],
         [
             'title' => 'Perbaikan Atap & Plafon',
             'category' => 'Atap & Plafon Bocor',
-            'icon' => 'roofing',
             'price' => 'Mulai Rp120.000',
-            'count' => '180+ Teknisi Siap',
-            'desc' => 'Pencegahan atap rembes bocor, ganti genteng retak, tambal plafon gypsum berjamur, & talang air.',
-        ],
-        [
-            'title' => 'Pengecatan Rumah',
-            'category' => 'Pengecatan & Tembok',
-            'icon' => 'format_paint',
-            'price' => 'Mulai Rp90.000',
-            'count' => '210+ Teknisi Siap',
-            'desc' => 'Pengecatan interior kamar, dinding eksterior fasad cuaca tropis, waterproofing, dan perbaikan plamir retak.',
+            'desc' => 'Penanganan atap rembes, ganti genteng pecah, perbaikan plafon gypsum, dan talang air.',
+            'icon' => 'roof',
         ],
         [
             'title' => 'Kebersihan & Deep Cleaning',
             'category' => null,
-            'icon' => 'cleaning_services',
             'price' => 'Mulai Rp50.000',
-            'count' => '150+ Teknisi Siap',
-            'desc' => 'Pembersihan kerak toren air, sedot tungau kasur/sofa hidro-alergi, dan pembersihan menyeluruh pasca renovasi.',
+            'desc' => 'Kuras kerak toren air, pembersihan tungau kasur atau sofa, serta bersih pasca renovasi.',
+            'icon' => 'clean',
         ],
     ];
 
-    // Katalog teknisi siap kerja (read-only showcase, aman bila DB belum siap)
     try {
         $featuredTechnicians = \App\Models\Teknisi::ready()->orderByDesc('rating')->take(3)->get();
     } catch (\Throwable $e) {
         $featuredTechnicians = collect();
     }
 @endphp
-<body class="fh-plus bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col overscroll-none" id="top">
+<body class="fh-clean bg-[#F8FAFC] text-[#1F2937] antialiased min-h-screen flex flex-col" id="top">
 
-    <div class="flex-1 flex flex-col pb-16 sm:pb-0">
-        <!-- HEADER NAVIGATION (FixHome Plus Stitch Minimalist Nav) -->
-        <header class="sticky top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md px-gutter lg:px-margin border-b border-white/60">
-            <div class="h-20 max-w-[1280px] mx-auto flex items-center justify-between gap-gutter">
-                <!-- Brand Logo -->
-                <a aria-label="Beranda FixHome" class="flex items-center shrink-0 group" href="{{ route('splash') }}">
-                    <img alt="FixHome" class="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
-                </a>
+    <a class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-[#164E63] focus:text-white focus:text-sm focus:font-semibold" href="#konten-utama">
+        Lewati ke konten utama
+    </a>
 
-                <!-- Center Navigation Links -->
-                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-space-lg">
-                    <a class="font-body-md text-body-md text-primary-container font-semibold transition-colors py-space-xs px-space-sm" href="#top">Beranda</a>
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#layanan-populer">Layanan</a>
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#katalog-teknisi">Teknisi</a>
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#cara-kerja">Cara Kerja</a>
-                    @guest
-                        <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#jadi-mitra">Jadi Mitra</a>
-                    @endguest
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#tentang-kami">Tentang Kami</a>
-                    @auth
-                        @if (Auth::user()->role === 'admin')
-                            <a class="font-label-md text-label-md text-primary-container bg-surface rounded-full px-3.5 py-1.5 shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] hover:opacity-90 transition" href="{{ url('/admin') }}">Panel Admin</a>
-                        @endif
-                    @endauth
-                </nav>
+    <!-- NAVBAR: Minimalist, crisp white surface with subtle slate border -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#E2E8F0]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
+            <!-- Brand Logo -->
+            <a aria-label="Beranda FixHome" class="inline-flex items-center gap-2.5 shrink-0" href="#top">
+                <span class="w-9 h-9 rounded-lg bg-[#0F766E] text-white inline-flex items-center justify-center">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M3 10.5 12 3l9 7.5" />
+                        <path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5" />
+                        <path d="M14.7 13.3a2.5 2.5 0 0 1-3.4 3.4l-2.3 2.3" />
+                        <circle cx="13.5" cy="14.5" r="1" />
+                    </svg>
+                </span>
+                <span class="text-lg font-bold tracking-tight text-[#164E63]">
+                    FixHome<span class="text-[#0F766E]">+</span>
+                </span>
+            </a>
 
-                <!-- Right Controls -->
-                <div class="hidden sm:flex items-center gap-3">
-                    @auth
-                        <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] text-sm font-semibold text-primary transition-all hover:opacity-90" href="{{ $dashboardUrl }}">
-                            <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold">
-                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                            </span>
-                            <span class="max-w-[110px] truncate">{{ Auth::user()->name }}</span>
-                            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">dashboard</span>
-                        </a>
-                    @else
-                        <div class="flex items-center gap-space-sm">
-                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-primary-container bg-surface rounded-full px-space-lg py-space-sm shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] hover:shadow-[-2px_-2px_6px_#FFFFFF,2px_2px_6px_#D2D2D2] transition-all" href="{{ route('login') }}">
-                                Masuk
-                            </a>
-                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-on-primary bg-primary-container rounded-full px-space-lg py-space-sm shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:opacity-95 transition-all" href="{{ route('register') }}">
-                                Daftar
-                            </a>
-                            <a aria-label="Portal Akun" class="w-8 h-8 rounded-full bg-primary flex items-center justify-center hover:opacity-90 transition" href="{{ route('login') }}">
-                                <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
-                            </a>
-                        </div>
-                    @endauth
-                </div>
+            <!-- Center Navigation -->
+            <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-7">
+                <a class="fh-nav-link text-sm font-medium text-[#0F766E]" href="#top">Beranda</a>
+                <a class="fh-nav-link text-sm font-medium text-[#64748B] hover:text-[#1F2937] transition-colors" href="#layanan">Layanan</a>
+                <a class="fh-nav-link text-sm font-medium text-[#64748B] hover:text-[#1F2937] transition-colors" href="#cara-kerja">Cara Kerja</a>
+                <a class="fh-nav-link text-sm font-medium text-[#64748B] hover:text-[#1F2937] transition-colors" href="#keunggulan">Keunggulan</a>
+                <a class="fh-nav-link text-sm font-medium text-[#64748B] hover:text-[#1F2937] transition-colors" href="#tentang-kami">Tentang Kami</a>
+            </nav>
 
-                <!-- Mobile Menu Trigger -->
-                <div class="flex items-center sm:hidden gap-2">
-                    <button
-                        aria-controls="mobile-menu"
-                        aria-expanded="false"
-                        aria-label="Buka menu navigasi"
-                        class="w-9 h-9 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] flex items-center justify-center text-primary"
-                        id="mobile-menu-toggle"
-                        type="button"
-                    >
-                        <span aria-hidden="true" class="material-symbols-outlined text-[20px]" id="mobile-menu-icon">menu</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Mobile Dropdown Menu -->
-            <div class="hidden sm:hidden bg-surface border-t border-outline-variant/40 -mx-gutter px-4 pt-3 pb-4 space-y-2" id="mobile-menu">
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#top">Beranda</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#layanan-populer">Layanan Perbaikan</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#katalog-teknisi">Daftar Teknisi</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#cara-kerja">Cara Kerja</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#transparansi">Garansi &amp; Biaya</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#tentang-kami">Tentang Kami</a>
+            <!-- Right Auth Actions -->
+            <div class="flex items-center gap-2.5">
                 @auth
-                    <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-on-primary bg-primary-container text-center" href="{{ $dashboardUrl }}">Buka Dashboard</a>
+                    <a class="inline-flex items-center justify-center h-9 px-4 rounded-lg bg-[#0F766E] hover:bg-[#115E59] text-white text-sm font-semibold transition-colors" href="{{ $dashboardUrl }}">
+                        Dashboard
+                    </a>
+                    <a aria-label="Profil {{ Auth::user()->name }}" class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#164E63] text-white text-xs font-semibold" href="{{ $dashboardUrl }}">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    </a>
                 @else
-                    <div class="grid grid-cols-2 gap-2 pt-2">
-                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface text-center shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="{{ route('login') }}">Masuk</a>
-                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-on-primary bg-primary-container text-center" href="{{ route('register') }}">Daftar</a>
-                    </div>
+                    <a class="hidden sm:inline-flex items-center justify-center h-9 px-4 rounded-lg bg-white border border-[#E2E8F0] hover:border-[#CBD5E1] hover:bg-[#F8FAFC] text-sm font-semibold text-[#1F2937] transition-colors" href="{{ route('login') }}">
+                        Masuk
+                    </a>
+                    <a class="inline-flex items-center justify-center h-9 px-4 rounded-lg bg-[#0F766E] hover:bg-[#115E59] text-white text-sm font-semibold transition-colors" href="{{ route('register') }}">
+                        Daftar
+                    </a>
                 @endauth
-            </div>
-        </header>
 
-        <!-- PAGE CONTENT -->
-        <main class="flex-1 w-full bg-surface" id="konten-utama">
-            <div class="flex flex-col w-full bg-surface text-on-surface min-h-screen relative overflow-x-clip">
-                <!-- Top Decorative Ambient Light Wells -->
-                <div class="relative w-full max-w-[1280px] mx-auto px-gutter lg:px-margin overflow-visible pointer-events-none">
-                    <div class="absolute -top-24 -left-20 w-96 h-96 rounded-full bg-secondary-container/40 blur-3xl"></div>
-                    <div class="absolute -top-12 -right-16 w-80 h-80 rounded-full bg-tertiary-fixed/35 blur-3xl"></div>
+                <!-- Mobile Menu Button -->
+                <button
+                    aria-controls="mobile-menu"
+                    aria-expanded="false"
+                    aria-label="Buka menu navigasi"
+                    class="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg border border-[#E2E8F0] bg-white text-[#1F2937]"
+                    id="mobile-menu-toggle"
+                    type="button"
+                >
+                    <svg aria-hidden="true" class="w-5 h-5" fill="none" id="mobile-menu-svg-open" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                        <line x1="4" x2="20" y1="6" y2="6" />
+                        <line x1="4" x2="20" y1="12" y2="12" />
+                        <line x1="4" x2="20" y1="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div class="hidden md:hidden bg-white border-t border-[#E2E8F0]" id="mobile-menu">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+                <a class="px-3 py-2.5 rounded-lg text-sm font-medium text-[#1F2937] hover:bg-[#F8FAFC]" href="#top">Beranda</a>
+                <a class="px-3 py-2.5 rounded-lg text-sm font-medium text-[#1F2937] hover:bg-[#F8FAFC]" href="#layanan">Layanan</a>
+                <a class="px-3 py-2.5 rounded-lg text-sm font-medium text-[#1F2937] hover:bg-[#F8FAFC]" href="#cara-kerja">Cara Kerja</a>
+                <a class="px-3 py-2.5 rounded-lg text-sm font-medium text-[#1F2937] hover:bg-[#F8FAFC]" href="#keunggulan">Keunggulan</a>
+                <a class="px-3 py-2.5 rounded-lg text-sm font-medium text-[#1F2937] hover:bg-[#F8FAFC]" href="#tentang-kami">Tentang Kami</a>
+                <div class="pt-3 mt-2 border-t border-[#E2E8F0] grid grid-cols-2 gap-2.5">
+                    @auth
+                        <a class="col-span-2 inline-flex items-center justify-center h-10 rounded-lg bg-[#0F766E] text-white text-sm font-semibold" href="{{ $dashboardUrl }}">Buka Dashboard</a>
+                    @else
+                        <a class="inline-flex items-center justify-center h-10 rounded-lg bg-white border border-[#E2E8F0] text-sm font-semibold text-[#1F2937]" href="{{ route('login') }}">Masuk</a>
+                        <a class="inline-flex items-center justify-center h-10 rounded-lg bg-[#0F766E] text-white text-sm font-semibold" href="{{ route('register') }}">Daftar</a>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 w-full" id="konten-utama">
+
+        <!-- 1. HERO SECTION: Two-column editorial layout, white background, zero blobs/floating cards -->
+        <section class="w-full bg-white border-b border-[#E2E8F0]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                    <!-- Left Column: Copy, Clean Search Form & Verifiable Trust Indicators -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="space-y-4">
+                            <h1 class="text-3xl sm:text-4xl lg:text-[46px] font-bold tracking-tight text-[#164E63] leading-[1.14]">
+                                Perbaikan Rumah, Jadi Lebih Mudah.
+                            </h1>
+                            <p class="text-base sm:text-[17px] text-[#64748B] leading-relaxed max-w-xl">
+                                Pesan teknisi terverifikasi untuk AC, listrik, pipa, atap, hingga pengecatan. Tarif dasar terbuka, biaya jarak jelas, dan dilindungi garansi pengerjaan 14 hari.
+                            </p>
+                        </div>
+
+                        <!-- Clean Category Search Form (Preserves existing customer.technicians route) -->
+                        <form action="{{ route('customer.technicians') }}" class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-3 sm:p-4 space-y-3" method="GET">
+                            <label class="block text-xs font-semibold text-[#1F2937]" for="hero-category">
+                                Pilih kategori perbaikan
+                            </label>
+                            <div class="flex flex-col sm:flex-row gap-2.5">
+                                <div class="relative flex-1">
+                                    <select
+                                        class="w-full h-11 pl-3.5 pr-10 rounded-lg bg-white border border-[#E2E8F0] text-sm font-medium text-[#1F2937] focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/15 appearance-none cursor-pointer"
+                                        id="hero-category"
+                                        name="category"
+                                    >
+                                        <option value="">Semua kategori layanan</option>
+                                        @foreach ($services as $svc)
+                                            @if ($svc['category'])
+                                                <option value="{{ $svc['category'] }}">{{ $svc['title'] }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <svg aria-hidden="true" class="w-4 h-4 text-[#64748B] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="m6 9 6 6 6-6" />
+                                    </svg>
+                                </div>
+                                <button
+                                    class="h-11 px-6 rounded-lg bg-[#0F766E] hover:bg-[#115E59] text-white text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors shrink-0"
+                                    type="submit"
+                                >
+                                    <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="11" cy="11" r="8" />
+                                        <path d="m21 21-4.3-4.3" />
+                                    </svg>
+                                    <span>Cari Teknisi</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Verifiable Trust Indicators (No fabricated numbers) -->
+                        <div class="flex flex-wrap items-center gap-x-6 gap-y-2.5 pt-1 text-sm text-[#64748B]">
+                            <span class="inline-flex items-center gap-2">
+                                <span class="w-5 h-5 rounded-full bg-[#DCFCE7] text-[#16A34A] inline-flex items-center justify-center shrink-0">
+                                    <svg aria-hidden="true" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg>
+                                </span>
+                                <span class="font-medium text-[#1F2937]">Teknisi Terverifikasi</span>
+                            </span>
+                            <span class="inline-flex items-center gap-2">
+                                <svg aria-hidden="true" class="w-4 h-4 text-[#0F766E] shrink-0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                                    <path d="m9 12 2 2 4-4" />
+                                </svg>
+                                <span>Garansi 14 Hari</span>
+                            </span>
+                            <span class="inline-flex items-center gap-2">
+                                <svg aria-hidden="true" class="w-4 h-4 text-[#0F766E] shrink-0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                    <circle cx="12" cy="10" r="3" />
+                                </svg>
+                                <span>Biaya jarak Rp0 (&lt; 10 km)</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Natural, realistic home-service technician photo (no overlays or floating cards) -->
+                    <div class="lg:col-span-6">
+                        <div class="rounded-2xl overflow-hidden border border-[#E2E8F0] bg-[#F8FAFC]">
+                            <img
+                                alt="Teknisi perbaikan rumah FixHome siap membantu dengan peralatan lengkap"
+                                class="w-full aspect-[4/3] object-cover object-top block"
+                                loading="eager"
+                                src="{{ asset('images/fixhome-hero-technician.jpg') }}"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. SERVICE CATEGORIES -->
+        <section class="w-full bg-[#F8FAFC] py-16 lg:py-20 border-b border-[#E2E8F0] scroll-mt-16" id="layanan">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+                    <div class="max-w-2xl">
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#164E63]">
+                            Layanan untuk Kebutuhan Rumah Anda
+                        </h2>
+                        <p class="mt-2 text-sm sm:text-base text-[#64748B]">
+                            Pilih jenis pekerjaan yang dibutuhkan dan bandingkan tarif dasar teknisi di sekitar lokasi Anda.
+                        </p>
+                    </div>
+                    <a class="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0F766E] hover:text-[#115E59] shrink-0" href="{{ $techniciansUrl }}">
+                        <span>Lihat semua teknisi</span>
+                        <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg>
+                    </a>
                 </div>
 
-                <!-- 1. HERO SECTION -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-lg lg:pt-space-xl pb-space-xl relative z-10" id="beranda">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-                        <!-- Left Column: Copy & Tactile Search Engine -->
-                        <div class="lg:col-span-7 flex flex-col gap-space-md">
-                            <h1 class="font-headline-xl-mobile sm:font-headline-xl text-headline-xl-mobile sm:text-headline-xl text-primary font-extrabold tracking-tight max-w-2xl font-recoleta">
-                                Perbaikan Rumah Tuntas, Material Tepat Tanpa Ribet
-                            </h1>
-                            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                                Pesan teknisi terverifikasi, diskusi kebutuhan lewat live chat, dan nikmati perbaikan berkualitas bergaransi resmi 14 hari.
-                            </p>
-
-                            <!-- Tactile Neumorphic Search Bar Console -->
-                            <form action="{{ route('customer.technicians') }}" class="stitch-surface-card mt-space-sm p-space-md lg:p-space-lg rounded-[28px] bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col gap-space-md" method="GET">
-                                <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-stretch">
-                                    <!-- Inset Field 1: Category Picker -->
-                                    <div class="stitch-surface-inset md:col-span-7 relative flex items-center px-space-md py-space-sm rounded-full bg-surface shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF]">
-                                        <span class="material-symbols-outlined text-primary text-[20px] mr-space-xs shrink-0">home_repair_service</span>
-                                        <select
-                                            aria-label="Pilih Kategori Jasa"
-                                            class="w-full bg-transparent border-0 focus:ring-0 font-body-md text-body-md text-on-surface focus:outline-none appearance-none cursor-pointer pr-6 py-0.5"
-                                            name="category"
-                                        >
-                                            <option value="">Pilih Kategori Jasa</option>
-                                            @foreach ($services as $svc)
-                                                @if ($svc['category'])
-                                                    <option value="{{ $svc['category'] }}">{{ $svc['title'] }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        <span class="material-symbols-outlined absolute right-4 text-on-surface-variant text-[18px] pointer-events-none">expand_more</span>
-                                    </div>
-
-                                    <!-- Primary CTA: Cari Teknisi -->
-                                    <button
-                                        class="md:col-span-5 w-full inline-flex items-center justify-center gap-space-xs px-space-xl py-space-sm rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:shadow-[0_4px_12px_rgba(119,85,55,0.38)] active:shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35)] transition-all"
-                                        type="submit"
-                                    >
-                                        <span class="material-symbols-outlined text-[20px]">search</span>
-                                        <span>Cari Teknisi</span>
-                                    </button>
-                                </div>
-
-                                <!-- Bottom Row: Quick Trust Signals -->
-                                <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs pt-space-xs text-on-surface-variant font-label-md text-label-md">
-                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> Estimasi Biaya Jelas</span>
-                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">verified_user</span> Garansi 14 Hari</span>
-                                    <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary">group</span> 1.200+ Teknisi Siap</span>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Right Column: Tactile Staged Physical Card Composition -->
-                        <div class="lg:col-span-5 relative flex justify-center py-space-md">
-                            <div class="stitch-surface-card w-full max-w-[460px] rounded-[28px] p-space-md lg:p-space-lg bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] flex flex-col items-center relative overflow-visible">
-                                <div class="relative w-full rounded-[20px] bg-surface p-1.5 shadow-[inset_3px_3px_7px_#D2D2D2,inset_-3px_-3px_7px_#FFFFFF] overflow-hidden">
-                                    <img
-                                        alt="Ilustrasi 3D rumah dan peralatan perbaikan FixHome"
-                                        class="w-full aspect-[4/3] object-cover rounded-[16px]"
-                                        loading="eager"
-                                        src="{{ asset('images/fixhome-hero-tactile.jpg') }}"
-                                    />
-                                    <div aria-hidden="true" class="hero-shimmer-overlay pointer-events-none"></div>
-                                </div>
-
-                                <div class="stitch-surface-card absolute -bottom-5 left-1/2 -translate-x-1/2 px-space-md py-2 rounded-full bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] flex items-center gap-2 whitespace-nowrap z-20">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
-                                    <span class="material-symbols-outlined text-[18px] text-tertiary">verified</span>
-                                    <span class="font-label-sm text-label-sm font-semibold text-primary">Teknisi Terverifikasi &amp; Bergaransi</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 2. SERVICE CATEGORIES SECTION -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="layanan-populer">
-                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm mb-space-lg">
-                        <div>
-                            <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-secondary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
-                                <span>Keahlian Lengkap &amp; Terstandar</span>
-                            </div>
-                            <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-bold font-recoleta">
-                                Layanan Perbaikan Rumah Terpopuler
-                            </h2>
-                            <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                                Pilih layanan yang Anda butuhkan, dikerjakan oleh tukang berpengalaman bersertifikasi.
-                            </p>
-                        </div>
-                        <div class="flex items-center gap-space-sm self-start md:self-auto">
-                            <a aria-label="Kembali ke atas" class="stitch-surface-card w-10 h-10 rounded-full bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] active:shadow-[inset_3px_3px_6px_#D2D2D2,inset_-3px_-3px_6px_#FFFFFF] flex items-center justify-center text-primary transition-all" href="#beranda">
-                                <span class="material-symbols-outlined text-[20px]">chevron_left</span>
-                            </a>
-                            <a aria-label="Lihat Katalog Teknisi" class="stitch-surface-card w-10 h-10 rounded-full bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] active:shadow-[inset_3px_3px_6px_#D2D2D2,inset_-3px_-3px_6px_#FFFFFF] flex items-center justify-center text-primary transition-all" href="#katalog-teknisi">
-                                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- 6-Grid Tactile Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
-                        @foreach ($services as $svc)
-                            <a
-                                class="stitch-surface-card service-card-item group cursor-pointer rounded-[24px] p-space-lg bg-surface shadow-[-6px_-6px_16px_#FFFFFF,6px_6px_16px_#D2D2D2] hover:shadow-[-8px_-8px_20px_#FFFFFF,8px_8px_20px_#C8C8C8] hover:-translate-y-1 transition-all flex flex-col justify-between h-full"
-                                href="{{ route('customer.technicians', array_filter(['category' => $svc['category']])) }}"
-                            >
-                                <div>
-                                    <div class="flex items-center justify-between mb-space-md">
-                                        <div class="w-14 h-14 rounded-2xl bg-secondary-container flex items-center justify-center shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] group-hover:scale-105 transition-transform">
-                                            <span class="material-symbols-outlined text-primary text-[28px]">{{ $svc['icon'] }}</span>
-                                        </div>
-                                        <span class="stitch-surface-inset px-space-sm py-1 rounded-full bg-surface shadow-[inset_2px_2px_4px_#D2D2D2,inset_-2px_-2px_4px_#FFFFFF] font-label-sm text-label-sm font-semibold text-primary">
-                                            {{ $svc['price'] }}
-                                        </span>
-                                    </div>
-                                    <h3 class="font-title-md text-title-md text-primary font-bold mb-space-xs font-butler">
-                                        {{ $svc['title'] }}
-                                    </h3>
-                                    <p class="font-body-md text-body-md text-on-surface-variant">
-                                        {{ $svc['desc'] }}
-                                    </p>
-                                </div>
-                                <div class="mt-space-lg pt-space-sm flex items-center justify-between">
-                                    <span class="font-label-sm text-label-sm text-secondary font-semibold">
-                                        {{ $svc['count'] }}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    @foreach ($services as $svc)
+                        <a
+                            class="group bg-white border border-[#E2E8F0] hover:border-[#0F766E]/50 rounded-xl p-6 flex flex-col justify-between transition-colors"
+                            href="{{ route('customer.technicians', array_filter(['category' => $svc['category']])) }}"
+                        >
+                            <div>
+                                <div class="flex items-center justify-between gap-3 mb-4">
+                                    <span class="w-10 h-10 rounded-lg bg-[#CCFBF1]/70 text-[#0F766E] inline-flex items-center justify-center shrink-0">
+                                        @if ($svc['icon'] === 'ac')
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                                                <path d="M2 12h20" /><path d="M12 2v20" /><path d="m20 16-4-4 4-4" /><path d="m4 8 4 4-4 4" /><path d="m16 4-4 4-4-4" /><path d="m8 20 4-4 4 4" />
+                                            </svg>
+                                        @elseif ($svc['icon'] === 'pipe')
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+                                            </svg>
+                                        @elseif ($svc['icon'] === 'electric')
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                            </svg>
+                                        @elseif ($svc['icon'] === 'paint')
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                                                <rect height="6" rx="1" width="16" x="2" y="2" /><path d="M10 16v-2a2 2 0 0 1 2-2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" /><rect height="6" rx="1" width="4" x="8" y="16" />
+                                            </svg>
+                                        @elseif ($svc['icon'] === 'roof')
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
+                                            </svg>
+                                        @else
+                                            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                                                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                                            </svg>
+                                        @endif
                                     </span>
-                                    <span class="stitch-surface-card w-10 h-10 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] group-hover:shadow-[inset_2px_2px_5px_#D2D2D2,inset_-2px_-2px_5px_#FFFFFF] flex items-center justify-center text-primary transition-all">
-                                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                                    <span class="text-xs font-semibold text-[#164E63] tabular-nums">
+                                        {{ $svc['price'] }}
                                     </span>
                                 </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-
-                <!-- 2B. KATALOG TEKNISI -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="katalog-teknisi">
-                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
-                        <div>
-                            <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
-                                <span class="material-symbols-outlined text-[15px]">engineering</span>
-                                <span>Katalog Teknisi Terverifikasi</span>
+                                <h3 class="text-base font-semibold text-[#1F2937] group-hover:text-[#0F766E] transition-colors">
+                                    {{ $svc['title'] }}
+                                </h3>
+                                <p class="mt-1.5 text-sm text-[#64748B] leading-relaxed">
+                                    {{ $svc['desc'] }}
+                                </p>
                             </div>
-                            <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-bold font-recoleta">
-                                Daftar Teknisi Siap Kerja
-                            </h2>
-                            <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                                Pilih teknisi harian bersertifikasi, negosiasikan pekerjaan lewat live chat, dan pantau jadwal pengerjaan.
-                            </p>
-                        </div>
-
-                        <!-- Tactile Filter Chips -->
-                        <div class="flex items-center gap-space-xs overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-                            <a class="px-space-md py-1.5 rounded-full font-label-md text-label-md whitespace-nowrap transition-all bg-primary-container text-on-primary shadow-[inset_2px_2px_5px_rgba(0,0,0,0.32),0_4px_12px_rgba(119,85,55,0.22)] font-bold" href="{{ route('customer.technicians') }}">Semua</a>
-                            @foreach ($services as $svc)
-                                @if ($svc['category'])
-                                    <a class="stitch-surface-card px-space-md py-1.5 rounded-full font-label-md text-label-md whitespace-nowrap transition-all bg-surface text-on-surface-variant shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] hover:text-primary" href="{{ route('customer.technicians', ['category' => $svc['category']]) }}">{{ $svc['category'] }}</a>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-
-                    @if ($featuredTechnicians->isEmpty())
-                        <div class="stitch-surface-card rounded-[26px] p-space-xl bg-surface shadow-[-6px_-6px_16px_#FFFFFF,6px_6px_16px_#D2D2D2] text-center">
-                            <div class="w-14 h-14 mx-auto rounded-2xl bg-secondary-container flex items-center justify-center mb-space-md">
-                                <span class="material-symbols-outlined text-primary text-[28px]">engineering</span>
+                            <div class="mt-5 pt-4 border-t border-[#F1F5F9] flex items-center justify-between text-sm font-medium text-[#0F766E]">
+                                <span>Cari teknisi</span>
+                                <svg aria-hidden="true" class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                                </svg>
                             </div>
-                            <h3 class="font-title-md text-title-md text-primary font-bold font-butler">Teknisi Sedang Disiapkan</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mt-1 mb-space-md">
-                                Masuk ke akun Anda untuk melihat teknisi terdekat yang siap menerima pesanan.
-                            </p>
-                            <a class="inline-flex items-center gap-1.5 px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-[0_6px_14px_rgba(119,85,55,0.25)] hover:opacity-95 transition" href="{{ $techniciansUrl }}">
-                                <span class="material-symbols-outlined text-[16px]">search</span>
-                                <span>Cari Teknisi Terdekat</span>
-                            </a>
+                        </a>
+                    @endforeach
+                </div>
+
+                @if ($featuredTechnicians->isNotEmpty())
+                    <!-- Real Ready Technicians from Database (No fabricated numbers) -->
+                    <div class="mt-14 pt-12 border-t border-[#E2E8F0]">
+                        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+                            <div>
+                                <h3 class="text-lg sm:text-xl font-bold text-[#164E63]">Teknisi Siap Menerima Pesanan</h3>
+                                <p class="text-sm text-[#64748B] mt-1">Teknisi aktif yang tersedia di sistem FixHome saat ini.</p>
+                            </div>
+                            <a class="text-sm font-semibold text-[#0F766E] hover:text-[#115E59]" href="{{ $techniciansUrl }}">Lihat daftar lengkap</a>
                         </div>
-                    @else
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                             @foreach ($featuredTechnicians as $tech)
                                 @php
                                     $skills = array_values(array_filter(array_map('trim', explode(',', (string) $tech->keahlian))));
                                     $initials = collect(explode(' ', (string) $tech->nama_lengkap))->filter()->take(2)->map(fn ($w) => strtoupper(substr($w, 0, 1)))->implode('');
                                 @endphp
-                                <div class="stitch-surface-card rounded-[24px] p-space-lg bg-surface shadow-[-6px_-6px_16px_#FFFFFF,6px_6px_16px_#D2D2D2] flex flex-col justify-between gap-space-md transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_20px_#FFFFFF,8px_8px_20px_#C8C8C8]">
-                                    <div>
-                                        <div class="flex items-start justify-between gap-space-sm mb-space-md">
-                                            <div class="flex items-center gap-space-sm min-w-0">
-                                                <div class="w-14 h-14 rounded-2xl bg-secondary-container flex items-center justify-center shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] font-headline-sm text-headline-sm text-primary font-bold shrink-0">
+                                <div class="bg-white border border-[#E2E8F0] rounded-xl p-5 flex flex-col justify-between gap-4">
+                                    <div class="space-y-3">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div class="flex items-center gap-3 min-w-0">
+                                                <span class="w-10 h-10 rounded-lg bg-[#164E63] text-white text-sm font-semibold inline-flex items-center justify-center shrink-0">
                                                     {{ $initials ?: 'T' }}
-                                                </div>
+                                                </span>
                                                 <div class="min-w-0">
-                                                    <h3 class="font-title-md text-title-md text-primary font-bold font-butler truncate">{{ $tech->nama_lengkap }}</h3>
-                                                    <span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
-                                                        <span class="material-symbols-outlined text-[15px] text-tertiary" style="font-variation-settings: 'FILL' 1;">star</span>
-                                                        {{ number_format((float) ($tech->rating ?: 4.9), 1) }} &middot; Terverifikasi
-                                                    </span>
+                                                    <h4 class="text-sm font-semibold text-[#1F2937] truncate">{{ $tech->nama_lengkap }}</h4>
+                                                    @if ((float) $tech->rating > 0)
+                                                        <div class="inline-flex items-center gap-1 text-xs text-[#64748B] mt-0.5">
+                                                            <svg aria-hidden="true" class="w-3.5 h-3.5 text-[#F59E0B] fill-[#F59E0B]" viewBox="0 0 24 24">
+                                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                                            </svg>
+                                                            <span class="font-semibold text-[#1F2937]">{{ number_format((float) $tech->rating, 1) }}</span>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
-                                            <span class="stitch-surface-inset inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface shadow-[inset_2px_2px_4px_#D2D2D2,inset_-2px_-2px_4px_#FFFFFF] font-label-sm text-label-sm font-semibold text-secondary shrink-0">
-                                                <span class="w-2 h-2 rounded-full bg-[#3FAE6D]"></span> Siap
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#DCFCE7] text-[#16A34A] text-xs font-semibold shrink-0">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-[#16A34A]"></span>
+                                                Terverifikasi
                                             </span>
                                         </div>
-                                        <div class="flex flex-wrap gap-space-xs">
-                                            @foreach (array_slice($skills ?: ['Teknisi Umum'], 0, 3) as $skill)
-                                                <span class="px-space-sm py-1 rounded-full bg-secondary-container/60 font-label-sm text-label-sm text-primary">{{ $skill }}</span>
-                                            @endforeach
-                                        </div>
+
+                                        <p class="text-xs text-[#64748B] line-clamp-2">
+                                            {{ implode(' · ', array_slice($skills ?: ['Teknisi Umum'], 0, 3)) }}
+                                        </p>
                                     </div>
-                                    <div class="flex items-center justify-between pt-space-sm">
+
+                                    <div class="pt-3 border-t border-[#F1F5F9] flex items-center justify-between gap-3">
                                         <div>
-                                            <span class="block font-label-sm text-label-sm text-on-surface-variant">Tarif dasar</span>
-                                            <span class="font-headline-sm text-headline-sm text-primary font-bold">Rp{{ number_format((float) ($tech->tarif_dasar ?: 50000), 0, ',', '.') }}</span>
+                                            <span class="block text-[11px] text-[#64748B]">Tarif dasar</span>
+                                            <span class="text-sm font-bold text-[#1F2937] tabular-nums">Rp{{ number_format((float) ($tech->tarif_dasar ?: 50000), 0, ',', '.') }}</span>
                                         </div>
-                                        <a class="inline-flex items-center gap-1.5 px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-[0_6px_14px_rgba(119,85,55,0.25)] hover:opacity-95 transition" href="{{ Auth::check() && Auth::user()->role === 'customer' ? route('customer.technician-detail', $tech->id) : route('login') }}">
-                                            <span>Pesan</span>
-                                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                                        <a class="inline-flex items-center justify-center h-9 px-4 rounded-lg bg-[#0F766E] hover:bg-[#115E59] text-white text-xs font-semibold transition-colors" href="{{ Auth::check() && Auth::user()->role === 'customer' ? route('customer.technician-detail', $tech->id) : route('login') }}">
+                                            Pesan
                                         </a>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
-                    @endif
-                </section>
-
-                <!-- 3. KEY FEATURE HIGHLIGHT SECTION (CARA KERJA & TRANSPARANSI BIAYA) -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="cara-kerja">
-                    <div class="stitch-surface-card rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] relative">
-                        <div class="max-w-3xl mb-space-xl">
-                            <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-2px_-2px_6px_#FFFFFF,2px_2px_6px_#D2D2D2] text-tertiary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
-                                <span class="material-symbols-outlined text-[16px]">lock_open</span>
-                                <span>Transparansi Tanpa Keterikatan</span>
-                            </div>
-                            <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-bold font-recoleta">
-                                Cara Kerja FixHome: Pesan, Diskusi, Beres
-                            </h2>
-                            <p class="font-body-md text-body-md text-on-surface-variant mt-2">
-                                Teknisi Anda mendiagnosa kerusakan dan memberikan rincian biaya sebelum pekerjaan dimulai. Tidak ada biaya tersembunyi!
-                            </p>
-                        </div>
-
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-                            <!-- Left: 3 Process Steps -->
-                            <div class="lg:col-span-6 flex flex-col gap-space-md">
-                                <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] flex items-start gap-space-md group transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                                    <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 font-headline-sm text-headline-sm text-primary font-bold shadow-[inset_2px_2px_4px_#B2CED0,inset_-2px_-2px_4px_#E6FAFC] group-hover:scale-110 transition-transform duration-300">1</div>
-                                    <div>
-                                        <h3 class="font-title-md text-title-md text-primary font-semibold font-butler">Pilih Teknisi &amp; Jadwal</h3>
-                                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                                            Pilih kategori jasa, bandingkan teknisi terdekat beserta tarif dasarnya, lalu tentukan jadwal kunjungan.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] flex items-start gap-space-md group transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                                    <div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center flex-shrink-0 font-headline-sm text-headline-sm text-primary font-bold shadow-[inset_2px_2px_4px_#DCC582,inset_-2px_-2px_4px_#FFF9E6] group-hover:scale-110 transition-transform duration-300">2</div>
-                                    <div>
-                                        <h3 class="font-title-md text-title-md text-primary font-semibold font-butler">Diagnosa &amp; Live Chat</h3>
-                                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                                            Diskusikan kendala langsung di ruang obrolan, pantau posisi teknisi secara real-time saat menuju lokasi.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] flex items-start gap-space-md group transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                                    <div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center flex-shrink-0 font-headline-sm text-headline-sm text-primary font-bold shadow-[inset_2px_2px_4px_#D2D2D2,inset_-2px_-2px_4px_#FFFFFF] group-hover:scale-110 transition-transform duration-300">3</div>
-                                    <div>
-                                        <h3 class="font-title-md text-title-md text-primary font-semibold font-butler">Bayar Aman &amp; Bergaransi</h3>
-                                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                                            Pembayaran tercatat jelas di dashboard Anda, dan setiap pekerjaan dilindungi garansi resmi 14 hari.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Right: Live Cost Breakdown Box -->
-                            <div class="lg:col-span-6">
-                                <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col gap-space-md transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <div class="flex items-center gap-2">
-                                            <span class="w-3 h-3 rounded-full bg-tertiary-fixed"></span>
-                                            <span class="font-headline-sm text-headline-sm text-primary font-bold">Rincian Biaya (Live)</span>
-                                        </div>
-                                        <span class="stitch-surface-inset font-label-sm text-label-sm text-on-surface-variant px-space-sm py-0.5 rounded-full bg-surface shadow-[inset_2px_2px_4px_#D2D2D2,inset_-2px_-2px_4px_#FFFFFF]">
-                                            Tiket #FX-8902
-                                        </span>
-                                    </div>
-
-                                    <!-- Recessed List Frame -->
-                                    <div class="stitch-surface-inset p-space-md rounded-[18px] bg-surface shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF] flex flex-col gap-space-sm">
-                                        <div class="flex items-center justify-between pb-space-xs gap-2">
-                                            <div class="flex items-center gap-space-xs">
-                                                <span class="material-symbols-outlined text-[18px] text-primary">circle</span>
-                                                <span class="font-body-md text-body-md font-semibold text-on-surface">Jasa Perbaikan Pipa Bocor</span>
-                                            </div>
-                                            <span class="font-label-md text-label-md text-primary shrink-0">Rp75.000</span>
-                                        </div>
-                                        <div class="flex items-center justify-between pb-space-xs gap-2">
-                                            <div class="flex items-center gap-space-xs">
-                                                <span class="material-symbols-outlined text-[18px] text-primary">circle</span>
-                                                <span class="font-body-md text-body-md font-semibold text-on-surface">Biaya Jarak (&lt; 10 km)</span>
-                                            </div>
-                                            <span class="font-label-md text-label-md text-primary shrink-0">Rp0</span>
-                                        </div>
-                                        <div class="flex items-center justify-between gap-2">
-                                            <div class="flex items-center gap-space-xs">
-                                                <span class="material-symbols-outlined text-[18px] text-primary">circle</span>
-                                                <span class="font-body-md text-body-md font-semibold text-on-surface">Garansi Resmi 14 Hari</span>
-                                            </div>
-                                            <span class="font-label-md text-label-md text-primary shrink-0">Gratis</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Total Calculation Bar -->
-                                    <div class="flex items-center justify-between px-space-sm pt-space-xs">
-                                        <span class="font-body-md text-body-md text-on-surface-variant font-medium">Total Estimasi Biaya:</span>
-                                        <span class="font-headline-sm text-headline-sm text-primary font-bold">Rp75.000</span>
-                                    </div>
-
-                                    <!-- Two Equal-Weight Tactile Action Buttons -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-xs">
-                                        <a
-                                            class="w-full py-3 px-6 rounded-full bg-tertiary-fixed text-primary font-label-lg text-label-lg font-bold shadow-[0_6px_14px_rgba(251,226,157,0.45),-4px_-4px_8px_#FFFFFF] hover:opacity-95 active:shadow-[inset_3px_3px_6px_#DCC582,inset_-3px_-3px_6px_#FFFFFF] transition-all flex items-center justify-center gap-2 active:scale-[0.98] hover:-translate-y-0.5"
-                                            href="{{ $techniciansUrl }}"
-                                        >
-                                            <span class="material-symbols-outlined text-[20px]">engineering</span>
-                                            <span>Cari Teknisi</span>
-                                        </a>
-                                        <a
-                                            class="stitch-surface-card w-full py-3 px-6 rounded-full bg-surface text-primary font-label-lg text-label-lg font-bold shadow-[-6px_-6px_14px_#FFFFFF,6px_6px_14px_#D2D2D2] hover:shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] active:shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF] transition-all flex items-center justify-center gap-2 active:scale-[0.98] hover:-translate-y-0.5"
-                                            href="{{ Auth::check() ? $dashboardUrl : route('register') }}"
-                                        >
-                                            <span class="material-symbols-outlined text-[20px]">chat</span>
-                                            <span>{{ Auth::check() ? 'Buka Dashboard' : 'Daftar Gratis' }}</span>
-                                        </a>
-                                    </div>
-
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant text-center italic mt-space-xs">
-                                        *) Biaya jarak Rp0 untuk radius &lt; 10 km, flat Rp10.000 untuk jarak &ge; 10 km.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </section>
+                @endif
+            </div>
+        </section>
 
-                <!-- 4. TRUST & TRANSPARENCY SECTION -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="transparansi">
-                    <div class="text-center max-w-2xl mx-auto mb-space-xl">
-                        <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
-                            <span class="material-symbols-outlined text-[16px]">verified</span>
-                            <span>Standar Integritas FixHome</span>
-                        </div>
-                        <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-bold font-recoleta">
-                            Transparan &amp; Tanpa Biaya Tersembunyi
-                        </h2>
-                        <p class="font-body-md text-body-md text-on-surface-variant mt-2">
-                            Sistem penetapan harga dan komisi yang adil bagi pelanggan dan teknisi.
+        <!-- 3. HOW IT WORKS: Clean 3-step horizontal flow without heavy cards -->
+        <section class="w-full bg-white py-16 lg:py-20 border-b border-[#E2E8F0] scroll-mt-16" id="cara-kerja">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#164E63]">
+                        Cara Kerja FixHome
+                    </h2>
+                    <p class="mt-2 text-sm sm:text-base text-[#64748B]">
+                        Alur pemesanan ringkas dari pemilihan layanan hingga pekerjaan selesai dan bergaransi.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+                    <div class="space-y-3 border-t-2 border-[#0F766E] pt-5">
+                        <span class="text-xs font-bold tracking-wider text-[#0F766E]">LANGKAH 01</span>
+                        <h3 class="text-lg font-semibold text-[#1F2937]">Pilih layanan</h3>
+                        <p class="text-sm text-[#64748B] leading-relaxed">
+                            Pilih kategori perbaikan dan temukan teknisi terverifikasi terdekat lengkap dengan estimasi tarif dasarnya.
                         </p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
-                        <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
-                            <div class="w-14 h-14 rounded-2xl bg-secondary-container shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] flex items-center justify-center text-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-[26px]">shield_person</span>
-                            </div>
-                            <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-space-xs font-butler">Verifikasi Ketat</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant">
-                                Teknisi wajib melewati verifikasi identitas (KTP, sertifikasi, dan uji keahlian) oleh tim Admin FixHome sebelum menerima pesanan.
-                            </p>
-                        </div>
-
-                        <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
-                            <div class="w-14 h-14 rounded-2xl bg-tertiary-fixed shadow-[inset_3px_3px_6px_#DCC582,inset_-3px_-3px_6px_#FFF9E6] flex items-center justify-center text-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-[26px]">route</span>
-                            </div>
-                            <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-space-xs font-butler">Biaya Jarak Jelas &amp; Terukur</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant">
-                                Gratis Biaya Jarak (Rp0) untuk radius &lt; 10 km dari lokasi Anda ke teknisi. Biaya tetap flat hanya Rp10.000 untuk jarak operasional &ge; 10 km.
-                            </p>
-                        </div>
-
-                        <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
-                            <div class="w-14 h-14 rounded-2xl bg-primary shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35),inset_-3px_-3px_6px_rgba(255,255,255,0.2)] flex items-center justify-center text-on-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
-                                <span class="material-symbols-outlined text-[26px]">receipt_long</span>
-                            </div>
-                            <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-space-xs font-butler">Komisi Terpisah &amp; Adil</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant">
-                                Pencatatan jelas tanpa markup gelap: hanya 5% komisi jasa teknisi untuk pemeliharaan sistem dan garansi resmi 14 hari.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 5. STATS & CALLOUT BANNER -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-md pb-space-xl scroll-mt-24" id="jadi-mitra">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-space-md mb-space-xl">
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-primary font-bold block font-butler">15.000+</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Perbaikan Sukses</span>
-                        </div>
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-secondary font-bold block font-butler">98.4%</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Kepuasan Pelanggan</span>
-                        </div>
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-tertiary font-bold block font-butler">14 Hari</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Garansi Resmi</span>
-                        </div>
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-primary font-bold block font-butler">1.200+</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Teknisi Tersertifikasi</span>
-                        </div>
+                    <div class="space-y-3 border-t-2 border-[#E2E8F0] pt-5">
+                        <span class="text-xs font-bold tracking-wider text-[#0F766E]">LANGKAH 02</span>
+                        <h3 class="text-lg font-semibold text-[#1F2937]">Atur jadwal &amp; bayar</h3>
+                        <p class="text-sm text-[#64748B] leading-relaxed">
+                            Tentukan hari serta jam kunjungan, lalu selesaikan pembayaran QRIS dengan rincian biaya yang transparan.
+                        </p>
                     </div>
 
-                    <!-- Partnership Invitation Card -->
-                    <div class="stitch-surface-card rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col md:flex-row items-center justify-between gap-space-lg">
-                        <div class="max-w-xl text-center md:text-left">
-                            <h3 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">
-                                Punya Keahlian Pertukangan?
-                            </h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                                Bergabunglah dengan ekosistem perbaikan rumah FixHome dan jangkau ribuan pemilik rumah di sekitar Anda setiap hari.
-                            </p>
-                        </div>
-                        <div class="flex flex-col sm:flex-row items-center gap-space-md w-full md:w-auto shrink-0">
-                            <a
-                                class="w-full sm:w-auto text-center px-space-xl py-space-sm rounded-full bg-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:opacity-95 active:shadow-[inset_3px_3px_6px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-0.5 active:scale-[0.98]"
-                                href="{{ route('register') }}"
-                            >
-                                Daftar Jadi Teknisi
-                            </a>
-                            <a
-                                class="stitch-surface-card w-full sm:w-auto text-center px-space-xl py-space-sm rounded-full bg-surface text-primary font-label-lg text-label-lg font-semibold shadow-[-6px_-6px_14px_#FFFFFF,6px_6px_14px_#D2D2D2] active:shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF] transition-all hover:-translate-y-0.5 active:scale-[0.98]"
-                                href="{{ Auth::check() ? $dashboardUrl : route('login') }}"
-                            >
-                                {{ Auth::check() ? 'Buka Dashboard' : 'Masuk ke Akun' }}
-                            </a>
-                        </div>
+                    <div class="space-y-3 border-t-2 border-[#E2E8F0] pt-5">
+                        <span class="text-xs font-bold tracking-wider text-[#0F766E]">LANGKAH 03</span>
+                        <h3 class="text-lg font-semibold text-[#1F2937]">Teknisi datang &amp; selesai</h3>
+                        <p class="text-sm text-[#64748B] leading-relaxed">
+                            Pantau kedatangan teknisi lewat pelacakan GPS, koordinasi via live chat, dan nikmati garansi pengerjaan 14 hari.
+                        </p>
                     </div>
-                </section>
+                </div>
+            </div>
+        </section>
 
-                <!-- 6. TENTANG KAMI -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="tentang-kami">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-                        <!-- Left: Story -->
-                        <div class="lg:col-span-6 flex flex-col gap-space-md">
-                            <div class="stitch-surface-card self-start inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold font-lucy-rose">
-                                <span class="material-symbols-outlined text-[16px]">diversity_3</span>
-                                <span>Tentang Kami</span>
-                            </div>
-                            <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-primary font-bold font-recoleta">
-                                Membuat Perbaikan Rumah Lebih Mudah, Jelas, dan Tenang
+        <!-- 4. WHY FIXHOME: Asymmetric 2-column layout (NOT another card grid) -->
+        <section class="w-full bg-white py-16 lg:py-20 border-b border-[#E2E8F0] scroll-mt-16" id="keunggulan">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+                    <!-- Left Column: Positioning + Concrete Cost Rules Table -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="space-y-3">
+                            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#164E63]">
+                                Kenapa Memilih FixHome?
                             </h2>
-                            <p class="font-body-lg text-body-lg text-on-surface-variant">
-                                FixHome lahir dari pengalaman sederhana: mencari tukang yang bisa dipercaya itu sulit, harganya sering tidak jelas, dan hasilnya tidak bergaransi. Kami membangun platform yang mempertemukan pemilik rumah dengan teknisi terverifikasi secara cepat dan transparan.
+                            <p class="text-sm sm:text-base text-[#64748B] leading-relaxed">
+                                Setiap pemesanan dirancang agar pemilik rumah dan teknisi sama-sama mendapatkan kepastian biaya, jadwal, dan kualitas pengerjaan.
                             </p>
-                            <p class="font-body-md text-body-md text-on-surface-variant">
-                                Setiap teknisi melewati verifikasi identitas dan keahlian, setiap biaya ditampilkan sebelum pekerjaan dimulai, dan setiap perbaikan dilindungi garansi resmi 14 hari. Di sisi lain, teknisi mendapatkan penghasilan yang adil dengan komisi platform hanya 5%.
-                            </p>
+                        </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-xs">
-                                <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
-                                    <div class="flex items-center gap-space-xs mb-1">
-                                        <span class="material-symbols-outlined text-[20px] text-primary">visibility</span>
-                                        <h3 class="font-title-md text-title-md text-primary font-bold font-butler">Visi</h3>
-                                    </div>
-                                    <p class="font-body-md text-body-md text-on-surface-variant">
-                                        Menjadi platform perbaikan rumah paling tepercaya di Indonesia.
-                                    </p>
+                        <!-- Structured Transparency Box -->
+                        <div class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-5 space-y-3.5">
+                            <h3 class="text-sm font-semibold text-[#164E63]">Ringkasan Ketentuan Layanan</h3>
+                            <dl class="divide-y divide-[#E2E8F0] text-sm">
+                                <div class="py-2.5 flex items-center justify-between gap-4">
+                                    <dt class="text-[#64748B]">Biaya jarak (&lt; 10 km)</dt>
+                                    <dd class="font-semibold text-[#16A34A]">Rp0 (Gratis)</dd>
                                 </div>
-                                <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2]">
-                                    <div class="flex items-center gap-space-xs mb-1">
-                                        <span class="material-symbols-outlined text-[20px] text-primary">flag</span>
-                                        <h3 class="font-title-md text-title-md text-primary font-bold font-butler">Misi</h3>
-                                    </div>
-                                    <p class="font-body-md text-body-md text-on-surface-variant">
-                                        Menghadirkan layanan yang cepat, transparan, dan bergaransi bagi setiap rumah.
-                                    </p>
+                                <div class="py-2.5 flex items-center justify-between gap-4">
+                                    <dt class="text-[#64748B]">Biaya jarak (&ge; 10 km)</dt>
+                                    <dd class="font-semibold text-[#1F2937]">Flat Rp10.000</dd>
                                 </div>
+                                <div class="py-2.5 flex items-center justify-between gap-4">
+                                    <dt class="text-[#64748B]">Garansi pengerjaan</dt>
+                                    <dd class="font-semibold text-[#1F2937]">14 hari resmi</dd>
+                                </div>
+                                <div class="pt-2.5 flex items-center justify-between gap-4">
+                                    <dt class="text-[#64748B]">Komisi platform</dt>
+                                    <dd class="font-semibold text-[#1F2937]">5% (95% hak teknisi)</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Clean 2-column feature list with subtle dividers -->
+                    <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+                        <div class="flex items-start gap-3.5">
+                            <span class="w-9 h-9 rounded-lg bg-[#DCFCE7] text-[#16A34A] inline-flex items-center justify-center shrink-0 mt-0.5">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /><path d="m9 12 2 2 4-4" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-semibold text-[#1F2937]">Teknisi Terverifikasi</h3>
+                                <p class="mt-1 text-sm text-[#64748B] leading-relaxed">Identitas dan keahlian teknisi diperiksa tim admin sebelum dapat menerima pesanan.</p>
                             </div>
                         </div>
 
-                        <!-- Right: Values Card -->
-                        <div class="lg:col-span-6">
-                            <div class="stitch-surface-card rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] flex flex-col gap-space-md">
-                                <div class="flex items-center gap-space-sm">
-                                    <img alt="" aria-hidden="true" class="w-12 h-12 object-contain" src="{{ asset('images/fixhome-icon.png') }}" />
-                                    <div>
-                                        <span class="block font-headline-sm text-headline-sm text-primary font-bold font-recoleta">Nilai yang Kami Pegang</span>
-                                        <span class="font-body-sm text-body-sm text-on-surface-variant">Prinsip di balik setiap pesanan FixHome</span>
-                                    </div>
-                                </div>
+                        <div class="flex items-start gap-3.5">
+                            <span class="w-9 h-9 rounded-lg bg-[#CCFBF1]/70 text-[#0F766E] inline-flex items-center justify-center shrink-0 mt-0.5">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M8 7h8" /><path d="M8 11h8" /><path d="M8 15h5" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-semibold text-[#1F2937]">Transparansi Biaya</h3>
+                                <p class="mt-1 text-sm text-[#64748B] leading-relaxed">Tarif dasar, biaya jarak, dan pembagian 95% / 5% ditampilkan jelas sebelum Anda membayar.</p>
+                            </div>
+                        </div>
 
-                                <div class="stitch-surface-inset p-space-md rounded-[20px] bg-surface shadow-[inset_4px_4px_8px_#D2D2D2,inset_-4px_-4px_8px_#FFFFFF] flex flex-col gap-space-md">
-                                    <div class="flex items-start gap-space-md">
-                                        <div class="w-11 h-11 rounded-2xl bg-secondary-container flex items-center justify-center text-primary shrink-0 shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC]">
-                                            <span class="material-symbols-outlined text-[22px]">handshake</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="font-title-sm text-title-sm text-primary font-bold">Kepercayaan</h3>
-                                            <p class="font-body-md text-body-md text-on-surface-variant">Hanya teknisi terverifikasi yang bisa menerima pesanan.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start gap-space-md">
-                                        <div class="w-11 h-11 rounded-2xl bg-tertiary-fixed flex items-center justify-center text-primary shrink-0 shadow-[inset_3px_3px_6px_#DCC582,inset_-3px_-3px_6px_#FFF9E6]">
-                                            <span class="material-symbols-outlined text-[22px]">payments</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="font-title-sm text-title-sm text-primary font-bold">Transparansi</h3>
-                                            <p class="font-body-md text-body-md text-on-surface-variant">Tarif dasar, biaya jarak, dan komisi tercatat terbuka.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start gap-space-md">
-                                        <div class="w-11 h-11 rounded-2xl bg-primary flex items-center justify-center text-on-primary shrink-0 shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35),inset_-3px_-3px_6px_rgba(255,255,255,0.2)]">
-                                            <span class="material-symbols-outlined text-[22px]">workspace_premium</span>
-                                        </div>
-                                        <div>
-                                            <h3 class="font-title-sm text-title-sm text-primary font-bold">Kualitas Bergaransi</h3>
-                                            <p class="font-body-md text-body-md text-on-surface-variant">Hasil kerja dilindungi garansi resmi 14 hari.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="flex items-start gap-3.5">
+                            <span class="w-9 h-9 rounded-lg bg-[#DBEAFE] text-[#2563EB] inline-flex items-center justify-center shrink-0 mt-0.5">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <polygon points="3 11 22 2 13 21 11 13 3 11" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-semibold text-[#1F2937]">Pelacakan Pesanan &amp; GPS</h3>
+                                <p class="mt-1 text-sm text-[#64748B] leading-relaxed">Pantau status pesanan dan lokasi teknisi secara real-time saat menuju rumah Anda.</p>
+                            </div>
+                        </div>
 
-                                <div class="flex items-center justify-between gap-space-sm px-space-sm">
-                                    <span class="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant">
-                                        <span class="material-symbols-outlined text-[16px] text-tertiary">location_on</span>
-                                        Beroperasi di Jabodetabek
-                                    </span>
-                                    <a class="inline-flex items-center gap-1 font-label-lg text-label-lg text-primary-container font-bold hover:underline" href="{{ $techniciansUrl }}">
-                                        Mulai Pesan
-                                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                                    </a>
-                                </div>
+                        <div class="flex items-start gap-3.5">
+                            <span class="w-9 h-9 rounded-lg bg-[#CCFBF1]/70 text-[#0F766E] inline-flex items-center justify-center shrink-0 mt-0.5">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-semibold text-[#1F2937]">Live Chat Langsung</h3>
+                                <p class="mt-1 text-sm text-[#64748B] leading-relaxed">Diskusikan keluhan dan konfirmasi jadwal langsung dengan teknisi di dalam aplikasi.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3.5">
+                            <span class="w-9 h-9 rounded-lg bg-[#CCFBF1]/70 text-[#0F766E] inline-flex items-center justify-center shrink-0 mt-0.5">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <rect height="5" rx="1" width="5" x="3" y="3" /><rect height="5" rx="1" width="5" x="16" y="3" /><rect height="5" rx="1" width="5" x="3" y="16" /><path d="M21 16h-3a2 2 0 0 0-2 2v3" /><path d="M21 21v.01" /><path d="M12 7v3a2 2 0 0 1-2 2H7" /><path d="M3 12h.01" /><path d="M12 3h.01" /><path d="M12 16v.01" /><path d="M16 12h1" /><path d="M21 12v.01" /><path d="M12 21v-1" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-semibold text-[#1F2937]">Pembayaran QRIS Terverifikasi</h3>
+                                <p class="mt-1 text-sm text-[#64748B] leading-relaxed">Pembayaran diproses melalui Midtrans dengan tenggat 2 jam dan verifikasi status otomatis.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3.5">
+                            <span class="w-9 h-9 rounded-lg bg-[#DCFCE7] text-[#16A34A] inline-flex items-center justify-center shrink-0 mt-0.5">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="8" r="6" /><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                                </svg>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-semibold text-[#1F2937]">Garansi Pengerjaan 14 Hari</h3>
+                                <p class="mt-1 text-sm text-[#64748B] leading-relaxed">Setiap pekerjaan yang diselesaikan melalui FixHome dilindungi garansi resmi selama 14 hari.</p>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
-        </main>
-
-        <!-- GLOBAL FOOTER (Old Copper #775537) -->
-        <footer class="w-full bg-primary-container text-inverse-on-surface pt-space-xl pb-space-lg mt-space-xl">
-            <div class="max-w-[1280px] mx-auto px-gutter lg:px-margin">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl">
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Pelanggan</h3>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ $techniciansUrl }}">Cari Teknisi</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="#layanan-populer">Kategori Layanan</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="#cara-kerja">Cara Pemesanan</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="#transparansi">Perlindungan Garansi</a>
-                    </div>
-
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Teknisi</h3>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('register') }}">Daftar Menjadi Teknisi</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="#transparansi">Standar Uji Kompetensi</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="#transparansi">Komisi Transparan (5%)</a>
-                    </div>
-
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Akun</h3>
-                        @auth
-                            <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ $dashboardUrl }}">Dashboard Saya</a>
-                        @else
-                            <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('login') }}">Masuk</a>
-                            <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('register') }}">Daftar Gratis</a>
-                        @endauth
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="#katalog-teknisi">Teknisi Siap Kerja</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="#tentang-kami">Tentang Kami</a>
-                    </div>
-
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Kontak &amp; Bantuan</h3>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors flex items-center gap-space-xs" href="#cara-kerja">
-                            <span class="material-symbols-outlined text-[16px]">chat</span>
-                            Live Chat di Aplikasi
-                        </a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors flex items-center gap-space-xs" href="#transparansi">
-                            <span class="material-symbols-outlined text-[16px]">support_agent</span>
-                            Bantuan 24/7
-                        </a>
-                        <span class="font-body-sm text-body-sm text-tertiary-fixed/85 mt-1">Wilayah operasional: Jabodetabek</span>
-                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="pt-space-lg border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-space-md text-inverse-on-surface/75">
-                    <p class="font-body-sm text-body-sm text-center md:text-left">&copy; {{ date('Y') }} FixHome Indonesia. Solusi Perbaikan Rumah Terpercaya.</p>
-                    <div class="flex items-center gap-space-sm font-label-sm text-label-sm text-tertiary-fixed">
-                        <span class="material-symbols-outlined text-[16px]">verified</span>
-                        <span>Garansi Resmi &amp; Teknisi Terverifikasi</span>
+        <!-- 5. ABOUT US: Quiet, honest editorial section -->
+        <section class="w-full bg-[#F8FAFC] py-16 lg:py-20 border-b border-[#E2E8F0] scroll-mt-16" id="tentang-kami">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    <div class="lg:col-span-5">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-[#0F766E]">Tentang Kami</span>
+                        <h2 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-[#164E63]">
+                            Menghubungkan Pemilik Rumah dengan Teknisi Andal
+                        </h2>
+                    </div>
+                    <div class="lg:col-span-7 space-y-4 text-sm sm:text-base text-[#64748B] leading-relaxed">
+                        <p>
+                            FixHome dibangun untuk menyelesaikan masalah sehari-hari saat merawat rumah: sulitnya mencari teknisi yang terpercaya, biaya yang sering tidak pasti, dan tidak adanya jaminan setelah pekerjaan selesai.
+                        </p>
+                        <p>
+                            Melalui sistem pemesanan berbasis lokasi di wilayah operasional Jabodetabek, kami memastikan pemilik rumah memperoleh estimasi biaya yang terbuka sejak awal, sekaligus memberi ruang kerja yang adil bagi teknisi lokal dengan skema bagi hasil 95% untuk teknisi dan 5% untuk operasional platform.
+                        </p>
                     </div>
                 </div>
             </div>
-        </footer>
-    </div>
+        </section>
 
-    <!-- Mobile Bottom Navigation (Hidden on desktop, touch target >= 44px) -->
-    <nav aria-label="Navigasi Bawah" class="sm:hidden fixed bottom-0 inset-x-0 z-40 px-2 py-1.5 bg-surface/95 backdrop-blur-md border-t border-white/70 shadow-[0_-6px_16px_rgba(119,85,55,0.10)]">
-        <div class="grid grid-cols-4 gap-1.5 h-14">
-            <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition bg-surface shadow-[inset_3px_3px_6px_#D2D2D2,inset_-3px_-3px_6px_#FFFFFF] text-[#775537] font-bold" href="#beranda">
-                <span class="material-symbols-outlined text-[20px] mb-0.5">home</span>
-                <span>Beranda</span>
-            </a>
-            <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="#layanan-populer">
-                <span class="material-symbols-outlined text-[20px] mb-0.5">home_repair_service</span>
-                <span>Layanan</span>
-            </a>
-            <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="#katalog-teknisi">
-                <span class="material-symbols-outlined text-[20px] mb-0.5">engineering</span>
-                <span>Teknisi</span>
-            </a>
-            @auth
-                <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="{{ $dashboardUrl }}">
-                    <span class="material-symbols-outlined text-[20px] mb-0.5">dashboard</span>
-                    <span>Dasbor</span>
-                </a>
-            @else
-                <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="{{ route('login') }}">
-                    <span class="material-symbols-outlined text-[20px] mb-0.5">person</span>
-                    <span>Masuk</span>
-                </a>
-            @endauth
+        <!-- 6. CTA SECTION: Solid Dark Navy surface, single standout Deep Teal primary CTA -->
+        <section class="w-full bg-white py-16 lg:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-[#164E63] rounded-2xl px-6 py-10 sm:px-10 sm:py-12 lg:px-14 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                    <div class="max-w-xl space-y-2.5">
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                            Ada yang Perlu Diperbaiki di Rumah?
+                        </h2>
+                        <p class="text-sm sm:text-base text-[#CBD5E1] leading-relaxed">
+                            Temukan teknisi terverifikasi terdekat atau bergabung sebagai mitra teknisi FixHome.
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                        <a class="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-[#0F766E] hover:bg-[#115E59] text-white text-sm font-semibold transition-colors" href="{{ $techniciansUrl }}">
+                            Cari Teknisi
+                        </a>
+                        <a class="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-transparent border border-white/30 hover:bg-white/10 text-white text-sm font-semibold transition-colors" href="{{ route('register', ['role' => 'teknisi']) }}">
+                            Daftar Jadi Teknisi
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER: Clean Dark Navy -->
+    <footer class="w-full bg-[#164E63] text-[#CBD5E1] border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-14">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 pb-10 border-b border-white/10">
+                <div class="space-y-3">
+                    <a class="inline-flex items-center gap-2.5" href="#top">
+                        <span class="w-8 h-8 rounded-lg bg-[#0F766E] text-white inline-flex items-center justify-center">
+                            <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M3 10.5 12 3l9 7.5" />
+                                <path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5" />
+                            </svg>
+                        </span>
+                        <span class="text-base font-bold tracking-tight text-white">FixHome<span class="text-[#CCFBF1]">+</span></span>
+                    </a>
+                    <p class="text-sm text-[#94A3B8] leading-relaxed">
+                        Platform pemesanan jasa perbaikan rumah terverifikasi dengan biaya terbuka dan garansi pengerjaan 14 hari.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-semibold text-white">Pelanggan</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a class="hover:text-white transition-colors" href="{{ $techniciansUrl }}">Cari Teknisi</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#layanan">Kategori Layanan</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#cara-kerja">Cara Pemesanan</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#keunggulan">Garansi 14 Hari</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-semibold text-white">Teknisi</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a class="hover:text-white transition-colors" href="{{ route('register', ['role' => 'teknisi']) }}">Daftar Jadi Teknisi</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#keunggulan">Skema Bagi Hasil 95% / 5%</a></li>
+                        <li><a class="hover:text-white transition-colors" href="{{ route('login') }}">Masuk ke Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-sm font-semibold text-white">Bantuan &amp; Informasi</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a class="hover:text-white transition-colors" href="#tentang-kami">Tentang Kami</a></li>
+                        <li><a class="hover:text-white transition-colors" href="#cara-kerja">Live Chat di Aplikasi</a></li>
+                        <li class="text-[#94A3B8]">Wilayah operasional: Jabodetabek</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#94A3B8]">
+                <p>&copy; {{ date('Y') }} FixHome Indonesia. Hak cipta dilindungi.</p>
+                <p>Teknisi Terverifikasi &middot; Garansi Resmi 14 Hari</p>
+            </div>
         </div>
-    </nav>
+    </footer>
 </body>
 </html>

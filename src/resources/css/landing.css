@@ -105,6 +105,28 @@
 }
 
 /* ==========================================================================
+   FixHome Clean Modern Teal & Navy Landing (Scoped to .fh-clean)
+   ========================================================================== */
+.fh-clean {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #1f2937;
+}
+
+.fh-clean ::selection {
+    background-color: #0f766e;
+    color: #ffffff;
+}
+
+.fh-clean a:focus-visible,
+.fh-clean button:focus-visible,
+.fh-clean select:focus-visible,
+.fh-clean input:focus-visible {
+    outline: 2px solid #0f766e;
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
    FixHome Plus-style Tactile Landing (ported from fixhome-plus service-catalog)
    ========================================================================== */
 .fh-plus {
