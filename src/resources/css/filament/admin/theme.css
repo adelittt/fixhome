@@ -143,7 +143,16 @@ body.fh-sidebar-resizing {
 /* Active Sidebar Item */
 .fi-sidebar-item-active > .fi-sidebar-item-button {
     background-color: var(--fh-primary-container) !important;
-    box-shadow: 0 4px 12px rgba(119, 85, 55, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.22) !important;
+}
+
+/* Hide vertical connector lines between grouped sidebar dots */
+.fi-sidebar-item-grouped-border > div.w-px {
+    display: none !important;
+}
+
+.fi-sidebar-item-active > .fi-sidebar-item-button .fi-sidebar-item-grouped-border > div.rounded-full {
+    background-color: #ffffff !important;
 }
 
 .fi-sidebar-item-active > .fi-sidebar-item-button .fi-sidebar-item-label,
