@@ -1,5 +1,5 @@
-<x-layouts.app title="Masuk - FixHome">
-    <div class="w-full flex-1 flex items-center justify-center py-8 sm:py-12 px-4 sm:px-6">
+<x-layouts.auth title="Masuk - FixHome">
+    <div class="w-full flex items-center justify-center py-5 sm:py-8 px-4 sm:px-6">
         <div class="w-full max-w-[440px] lg:max-w-[920px] bg-white rounded-[24px] border border-[#E5E7EB] shadow-[0_12px_40px_rgba(17,24,39,0.06)] overflow-hidden lg:grid lg:grid-cols-12">
 
             <!-- Left Visual Photographic Panel (Desktop) -->
@@ -36,17 +36,6 @@
             <!-- Right Minimalist Form Column -->
             <div class="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between bg-white">
                 <div>
-                    <!-- Mobile Brand Bar -->
-                    <div class="flex lg:hidden items-center justify-between pb-6">
-                        <a href="{{ route('splash') }}" class="w-9 h-9 rounded-full bg-[#F8FAFC] border border-[#E5E7EB] flex items-center justify-center text-[#111827]">
-                            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
-                        </a>
-                        <a href="{{ route('splash') }}" class="flex items-center">
-                            <img alt="FixHome" class="h-7 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
-                        </a>
-                        <div class="w-9"></div>
-                    </div>
-
                     <div class="mb-6">
                         <h1 class="text-[24px] font-extrabold text-[#111827] tracking-[-0.02em]">Masuk ke FixHome</h1>
                         <p class="text-[13.5px] text-[#6B7280] mt-1">
@@ -249,4 +238,4 @@
         }
     </script>
     @endpush
-</x-layouts.app>
+</x-layouts.auth>
