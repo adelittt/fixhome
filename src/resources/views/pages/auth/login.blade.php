@@ -6,10 +6,10 @@
             <div class="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-7 overflow-hidden bg-[#111827]">
                 <img
                     alt="Teknisi FixHome"
-                    class="absolute inset-0 w-full h-full object-cover object-center scale-[1.02]"
-                    src="{{ asset('images/fixhome-hero-bg.webp') }}"
+                    class="absolute inset-0 w-full h-full object-cover object-[50%_22%]"
+                    src="{{ asset('images/fixhome-auth-teknisi.jpg') }}"
                 />
-                <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-[#0F172A]/90 via-[#0F172A]/35 to-[#0F172A]/15"></div>
+                <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-[#0F172A]/90 via-[#0F172A]/20 to-transparent"></div>
 
                 <!-- Top Frosted Logo Pill -->
                 <div class="relative z-10">
