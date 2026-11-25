@@ -1,64 +1,56 @@
 <x-layouts.app title="Masuk - FixHome">
-    <div class="w-full flex-1 flex items-center justify-center py-space-xl px-gutter lg:px-margin">
-        <div class="w-full max-w-md lg:max-w-4xl neu-card-lg overflow-hidden lg:grid lg:grid-cols-12">
+    <div class="w-full flex-1 flex items-center justify-center py-8 sm:py-12 px-4 sm:px-6">
+        <div class="w-full max-w-[440px] lg:max-w-[920px] bg-white rounded-[24px] border border-[#E5E7EB] shadow-[0_12px_40px_rgba(17,24,39,0.06)] overflow-hidden lg:grid lg:grid-cols-12">
 
-            <!-- Left Editorial Panel (Desktop) -->
-            <div class="hidden lg:flex lg:col-span-5 bg-primary-container text-inverse-on-surface p-space-xl flex-col justify-between relative overflow-hidden">
-                <div class="absolute -bottom-24 -right-20 w-72 h-72 rounded-full bg-tertiary-fixed/15 blur-3xl pointer-events-none"></div>
-                <div class="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-secondary-container/15 blur-2xl pointer-events-none"></div>
+            <!-- Left Visual Photographic Panel (Desktop) -->
+            <div class="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-7 overflow-hidden bg-[#111827]">
+                <img
+                    alt="Teknisi FixHome"
+                    class="absolute inset-0 w-full h-full object-cover object-center scale-[1.02]"
+                    src="{{ asset('images/fixhome-hero-bg.webp') }}"
+                />
+                <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-[#0F172A]/90 via-[#0F172A]/35 to-[#0F172A]/15"></div>
 
-                <div class="relative z-10 space-y-5">
-                    <a href="{{ route('splash') }}" class="inline-flex items-center rounded-xl bg-surface px-3.5 py-2 shadow-sm w-fit">
-                        <img alt="FixHome" class="h-8 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
+                <!-- Top Frosted Logo Pill -->
+                <div class="relative z-10">
+                    <a href="{{ route('splash') }}" class="inline-flex items-center rounded-full bg-white/95 backdrop-blur-md px-3.5 py-1.5 shadow-sm">
+                        <img alt="FixHome" class="h-6 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                     </a>
-
-                    <h2 class="font-headline-md text-headline-md text-on-primary font-bold font-recoleta leading-snug pt-2">
-                        Satu Pintu Masuk untuk Seluruh Ekosistem FixHome.
-                    </h2>
-                    <p class="font-body-md text-body-md text-inverse-on-surface/80 leading-relaxed">
-                        Masuk menggunakan akun Customer atau Mitra Teknisi. Sistem otomatis mengarahkan Anda ke halaman yang sesuai dengan peran akun Anda.
-                    </p>
-
-                    <div class="space-y-2.5 pt-2 text-xs text-inverse-on-surface/90">
-                        <div class="flex items-center gap-2.5">
-                            <span class="material-symbols-outlined text-tertiary-fixed text-[18px]">home</span>
-                            <span>Customer — Booking teknisi, lacak GPS &amp; live chat</span>
-                        </div>
-                        <div class="flex items-center gap-2.5">
-                            <span class="material-symbols-outlined text-tertiary-fixed text-[18px]">engineering</span>
-                            <span>Mitra Teknisi — Kelola pesanan &amp; dompet 95%</span>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="relative z-10 pt-5 mt-6 border-t border-inverse-on-surface/15 text-xs text-inverse-on-surface/80">
-                    <span class="font-bold block text-tertiary-fixed mb-1 font-butler">Akses Terpadu &amp; Aman</span>
-                    Autentikasi terpusat dengan pemisahan hak akses (RBAC) otomatis sesuai peran pengguna.
+                <!-- Bottom Clean Editorial Copy -->
+                <div class="relative z-10 space-y-3">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-[11px] font-medium text-white">
+                        <span class="material-symbols-outlined text-[14px] text-[#4ADE80]">verified</span>
+                        <span>Terverifikasi &amp; Bergaransi 14 Hari</span>
+                    </div>
+                    <h2 class="text-[22px] leading-[1.25] font-bold text-white tracking-[-0.02em]">
+                        Perbaikan rumah tuntas, tanpa ribet.
+                    </h2>
+                    <p class="text-[12.5px] leading-relaxed text-white/80">
+                        Satu pintu masuk untuk Customer dan Mitra Teknisi FixHome dengan pemantauan pesanan &amp; live chat real-time.
+                    </p>
                 </div>
             </div>
 
-            <!-- Right Form Column -->
-            <div class="lg:col-span-7 p-6 sm:p-space-xl flex flex-col justify-between bg-surface">
+            <!-- Right Minimalist Form Column -->
+            <div class="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between bg-white">
                 <div>
                     <!-- Mobile Brand Bar -->
-                    <div class="flex lg:hidden items-center justify-between pb-4">
-                        <a href="{{ route('splash') }}" class="w-9 h-9 rounded-full neu-btn-secondary text-primary">
+                    <div class="flex lg:hidden items-center justify-between pb-6">
+                        <a href="{{ route('splash') }}" class="w-9 h-9 rounded-full bg-[#F8FAFC] border border-[#E5E7EB] flex items-center justify-center text-[#111827]">
                             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                         </a>
                         <a href="{{ route('splash') }}" class="flex items-center">
-                            <img alt="FixHome" class="h-8 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
+                            <img alt="FixHome" class="h-7 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                         </a>
                         <div class="w-9"></div>
                     </div>
 
-                    <div class="mb-5">
-                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full neu-pill text-secondary font-label-sm font-semibold mb-2 font-lucy-rose">
-                            <span class="material-symbols-outlined text-[14px] text-tertiary">lock_open</span>
-                            <span>Portal Masuk Terpadu</span>
-                        </div>
-                        <h1 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">Masuk ke Akun Anda</h1>
-                        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                            Berlaku untuk <strong class="text-primary">Customer</strong> dan <strong class="text-primary">Teknisi Mitra</strong>.
+                    <div class="mb-6">
+                        <h1 class="text-[24px] font-extrabold text-[#111827] tracking-[-0.02em]">Masuk ke FixHome</h1>
+                        <p class="text-[13.5px] text-[#6B7280] mt-1">
+                            Masuk menggunakan akun Customer atau Mitra Teknisi Anda.
                         </p>
                     </div>
 
@@ -71,8 +63,8 @@
                             $serverAlert = $errors->first();
                         }
                     @endphp
-                    <div id="login-alert" role="alert" class="{{ $serverAlert ? '' : 'hidden' }} mb-4 p-3.5 rounded-2xl bg-error-container text-on-error-container text-xs font-semibold flex items-start gap-2.5 shadow-sm">
-                        <span class="material-symbols-outlined text-error text-[19px] shrink-0 mt-0.5">warning</span>
+                    <div id="login-alert" role="alert" class="{{ $serverAlert ? '' : 'hidden' }} mb-4 p-3.5 rounded-xl bg-[#FEF2F2] border border-[#FECACA] text-[#991B1B] text-xs font-medium flex items-start gap-2.5">
+                        <span class="material-symbols-outlined text-[#EF4444] text-[18px] shrink-0 mt-0.5">error</span>
                         <span id="login-alert-text" class="leading-relaxed">{{ $serverAlert }}</span>
                     </div>
 
@@ -80,72 +72,75 @@
                         @csrf
 
                         <div>
-                            <label for="email" class="block font-label-md text-label-md text-primary mb-1.5">
-                                Alamat Email <span class="text-error">*</span>
+                            <label for="email" class="block text-[12.5px] font-semibold text-[#374151] mb-1.5">
+                                Alamat Email
                             </label>
-                            <div id="email-wrap" class="neu-inset rounded-full flex items-center px-4 py-2.5 transition-all {{ ($errors->has('email') || $errors->has('auth')) ? 'ring-2 ring-error/60' : '' }}">
-                                <span class="material-symbols-outlined text-primary text-[19px] mr-2.5">mail</span>
+                            <div id="email-wrap" class="flex items-center rounded-xl bg-white border border-[#D1D5DB] px-3.5 py-2.5 focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#16A34A]/10 transition-all {{ ($errors->has('email') || $errors->has('auth')) ? 'border-[#EF4444] ring-2 ring-[#EF4444]/15' : '' }}">
+                                <span class="material-symbols-outlined text-[#9CA3AF] text-[18px] mr-2.5">mail</span>
                                 <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
-                                    class="w-full bg-transparent text-sm text-on-surface placeholder:text-outline focus:outline-none"
+                                    class="w-full bg-transparent text-[13.5px] text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none"
                                     placeholder="nama@email.com">
                             </div>
-                            <p id="email-error" class="{{ $errors->has('email') ? '' : 'hidden' }} mt-1.5 px-2 text-[11px] font-semibold text-error flex items-center gap-1">
+                            <p id="email-error" class="{{ $errors->has('email') ? '' : 'hidden' }} mt-1.5 text-[11.5px] font-medium text-[#DC2626] flex items-center gap-1">
                                 <span class="material-symbols-outlined text-[14px]">info</span>
                                 <span id="email-error-text">{{ $errors->first('email') }}</span>
                             </p>
                         </div>
 
                         <div>
-                            <label for="password" class="block font-label-md text-label-md text-primary mb-1.5">
-                                Kata Sandi <span class="text-error">*</span>
-                            </label>
-                            <div id="password-wrap" class="neu-inset rounded-full flex items-center px-4 py-2.5 transition-all {{ ($errors->has('password') || $errors->has('auth')) ? 'ring-2 ring-error/60' : '' }}">
-                                <span class="material-symbols-outlined text-primary text-[19px] mr-2.5">lock</span>
-                                <input type="password" id="password" name="password" required
-                                    class="w-full bg-transparent text-sm text-on-surface placeholder:text-outline focus:outline-none"
-                                    placeholder="Masukkan kata sandi">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label for="password" class="block text-[12.5px] font-semibold text-[#374151]">
+                                    Kata Sandi
+                                </label>
+                                <a href="{{ route('public.cara-kerja') }}" class="text-[12px] font-medium text-[#16A34A] hover:underline">Butuh bantuan?</a>
                             </div>
-                            <p id="password-error" class="{{ $errors->has('password') ? '' : 'hidden' }} mt-1.5 px-2 text-[11px] font-semibold text-error flex items-center gap-1">
+                            <div id="password-wrap" class="flex items-center rounded-xl bg-white border border-[#D1D5DB] px-3.5 py-2.5 focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#16A34A]/10 transition-all {{ ($errors->has('password') || $errors->has('auth')) ? 'border-[#EF4444] ring-2 ring-[#EF4444]/15' : '' }}">
+                                <span class="material-symbols-outlined text-[#9CA3AF] text-[18px] mr-2.5">lock</span>
+                                <input type="password" id="password" name="password" required
+                                    class="w-full bg-transparent text-[13.5px] text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none"
+                                    placeholder="Masukkan kata sandi">
+                                <button type="button" onclick="togglePassword()" aria-label="Tampilkan kata sandi" class="text-[#9CA3AF] hover:text-[#4B5563] transition-colors ml-2 flex items-center">
+                                    <span id="password-eye" class="material-symbols-outlined text-[18px]">visibility</span>
+                                </button>
+                            </div>
+                            <p id="password-error" class="{{ $errors->has('password') ? '' : 'hidden' }} mt-1.5 text-[11.5px] font-medium text-[#DC2626] flex items-center gap-1">
                                 <span class="material-symbols-outlined text-[14px]">info</span>
                                 <span id="password-error-text">{{ $errors->first('password') }}</span>
                             </p>
                         </div>
 
-                        <div class="flex items-center justify-between text-xs pt-1 px-1">
-                            <label class="flex items-center gap-2 cursor-pointer text-on-surface-variant">
-                                <input type="checkbox" name="remember" class="w-4 h-4 rounded accent-primary-container">
+                        <div class="flex items-center justify-between pt-0.5">
+                            <label class="inline-flex items-center gap-2 cursor-pointer text-[12.5px] text-[#4B5563]">
+                                <input type="checkbox" name="remember" class="w-4 h-4 rounded border-[#D1D5DB] text-[#16A34A] focus:ring-[#16A34A] accent-[#16A34A]">
                                 <span>Ingat saya</span>
                             </label>
-                            <a href="{{ route('public.cara-kerja') }}" class="font-semibold text-primary-container hover:underline">Butuh bantuan?</a>
                         </div>
 
-                        <div class="pt-2">
-                            <button type="submit" class="w-full neu-btn-primary py-3.5 px-6 text-label-lg gap-2">
-                                <span class="material-symbols-outlined text-[19px]">login</span>
-                                <span>Masuk Sekarang</span>
-                            </button>
-                        </div>
+                        <button type="submit" class="w-full py-3 px-5 rounded-xl bg-[#16A34A] hover:bg-[#15803D] text-white text-[13.5px] font-semibold shadow-[0_6px_16px_rgba(22,163,74,0.22)] active:scale-[0.99] transition-all inline-flex items-center justify-center gap-2">
+                            <span>Masuk</span>
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
                     </form>
 
-                    <!-- Optional Quick-Fill Demo Credentials -->
-                    <div class="mt-6 pt-5 border-t border-outline-variant/40">
-                        <span class="block text-[11px] font-semibold text-outline text-center mb-2.5">Isi Cepat Akun Demo:</span>
-                        <div class="flex flex-wrap items-center justify-center gap-2">
-                            <button type="button" onclick="fillDemo('customer@fixhome.com')" class="neu-pill px-3.5 py-1.5 text-xs font-semibold text-primary hover:-translate-y-0.5 transition-all">
-                                <span class="material-symbols-outlined text-[14px] text-secondary">person</span>
-                                <span>Customer</span>
+                    <!-- Clean Minimal Demo Quick-Fill -->
+                    <div class="mt-6 pt-5 border-t border-[#F3F4F6]">
+                        <span class="block text-[11px] font-medium text-[#9CA3AF] text-center mb-2.5">Isi cepat akun demo</span>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <button type="button" onclick="fillDemo('customer@fixhome.com')" class="py-2 px-3 rounded-xl bg-[#F8FAFC] hover:bg-[#F0FDF4] border border-[#E5E7EB] hover:border-[#BBF7D0] text-[12px] font-semibold text-[#374151] hover:text-[#15803D] transition-all inline-flex items-center justify-center gap-1.5">
+                                <span class="material-symbols-outlined text-[15px] text-[#16A34A]">person</span>
+                                <span>Akun Customer</span>
                             </button>
-                            <button type="button" onclick="fillDemo('budi.teknisi@fixhome.com')" class="neu-pill px-3.5 py-1.5 text-xs font-semibold text-primary hover:-translate-y-0.5 transition-all">
-                                <span class="material-symbols-outlined text-[14px] text-tertiary">engineering</span>
-                                <span>Teknisi</span>
+                            <button type="button" onclick="fillDemo('budi.teknisi@fixhome.com')" class="py-2 px-3 rounded-xl bg-[#F8FAFC] hover:bg-[#F0FDF4] border border-[#E5E7EB] hover:border-[#BBF7D0] text-[12px] font-semibold text-[#374151] hover:text-[#15803D] transition-all inline-flex items-center justify-center gap-1.5">
+                                <span class="material-symbols-outlined text-[15px] text-[#16A34A]">engineering</span>
+                                <span>Akun Teknisi</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="pt-5 text-center text-xs text-on-surface-variant">
+                <div class="pt-6 text-center text-[12.5px] text-[#6B7280]">
                     Belum punya akun?
-                    <a href="{{ route('register') }}" class="font-bold text-primary-container hover:underline ml-1">Daftar Akun Baru</a>
+                    <a href="{{ route('register') }}" class="font-semibold text-[#16A34A] hover:underline ml-1">Daftar sekarang</a>
                 </div>
             </div>
         </div>
@@ -238,6 +233,13 @@
                 }
             }
         });
+
+        function togglePassword() {
+            const eye = document.getElementById('password-eye');
+            const isHidden = passwordInput.type === 'password';
+            passwordInput.type = isHidden ? 'text' : 'password';
+            if (eye) eye.textContent = isHidden ? 'visibility_off' : 'visibility';
+        }
 
         function fillDemo(email) {
             clearAllErrors();
