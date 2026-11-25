@@ -26,7 +26,7 @@
 }
 
 ::selection {
-    background-color: #f57d44;
+    background-color: #d02618;
     color: #ffffff;
 }
 
@@ -113,14 +113,14 @@
 
 .fh-plus .stitch-surface-card {
     background-color: #ffffff !important;
-    border: 1px solid #e8dab2 !important;
-    box-shadow: 0 4px 16px rgba(179, 0, 8, 0.05), 0 1px 3px rgba(245, 125, 68, 0.08) !important;
+    border: 1px solid #f5de8f !important;
+    box-shadow: 0 4px 16px rgba(145, 6, 8, 0.05), 0 1px 3px rgba(208, 38, 24, 0.07) !important;
 }
 
 .fh-plus .stitch-surface-inset {
-    background-color: #fff8e0 !important;
-    border: 1px solid #e8dab2 !important;
-    box-shadow: inset 2px 2px 5px rgba(179, 0, 8, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.8) !important;
+    background-color: #fcf8e8 !important;
+    border: 1px solid #f5de8f !important;
+    box-shadow: inset 2px 2px 5px rgba(145, 6, 8, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.85) !important;
 }
 
 .fh-plus .material-symbols-outlined {
@@ -294,89 +294,89 @@
 }
 
 @layer components {
-    /* Clean tactile surface tokens harmonized with Vanilla Cream / Mandarin / Senga Sengana / Kiwi / Tropicana palette */
+    /* Clean tactile surface tokens harmonized with Limelight / Granny Smith / Oat / Ketchup / Red Wine palette */
     .neu-card {
-        @apply bg-white rounded-[24px] border border-[#E8DAB2];
-        box-shadow: 0 4px 16px rgba(179, 0, 8, 0.05), 0 1px 3px rgba(245, 125, 68, 0.08);
+        @apply bg-white rounded-[24px] border border-[#F5DE8F];
+        box-shadow: 0 4px 16px rgba(145, 6, 8, 0.05), 0 1px 3px rgba(208, 38, 24, 0.07);
     }
 
     .neu-card-sm {
-        @apply bg-white rounded-[18px] border border-[#E8DAB2];
-        box-shadow: 0 3px 12px rgba(179, 0, 8, 0.04), 0 1px 2px rgba(245, 125, 68, 0.07);
+        @apply bg-white rounded-[18px] border border-[#F5DE8F];
+        box-shadow: 0 3px 12px rgba(145, 6, 8, 0.04), 0 1px 2px rgba(208, 38, 24, 0.06);
     }
 
     .neu-card-lg {
-        @apply bg-white rounded-[28px] border border-[#E8DAB2];
-        box-shadow: 0 8px 24px rgba(179, 0, 8, 0.06), 0 2px 6px rgba(245, 125, 68, 0.08);
+        @apply bg-white rounded-[28px] border border-[#F5DE8F];
+        box-shadow: 0 8px 24px rgba(145, 6, 8, 0.06), 0 2px 6px rgba(208, 38, 24, 0.08);
     }
 
     .neu-inset {
-        @apply bg-[#FFF8E0] rounded-[16px] border border-[#E8DAB2];
-        box-shadow: inset 2px 2px 5px rgba(179, 0, 8, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+        @apply bg-[#FCF8E8] rounded-[16px] border border-[#F5DE8F];
+        box-shadow: inset 2px 2px 5px rgba(145, 6, 8, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.85);
     }
 
     .neu-inset-sm {
-        @apply bg-[#FFF8E0] rounded-full border border-[#E8DAB2];
-        box-shadow: inset 2px 2px 4px rgba(179, 0, 8, 0.05), inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+        @apply bg-[#FCF8E8] rounded-full border border-[#F5DE8F];
+        box-shadow: inset 2px 2px 4px rgba(145, 6, 8, 0.05), inset -2px -2px 4px rgba(255, 255, 255, 0.85);
     }
 
     .neu-input {
-        @apply w-full bg-white text-on-surface placeholder:text-outline rounded-2xl border border-[#E8DAB2] focus:outline-none focus:border-[#F57D44] focus:ring-2 focus:ring-[#F57D44]/25 transition-all;
+        @apply w-full bg-white text-on-surface placeholder:text-outline rounded-2xl border border-[#F5DE8F] focus:outline-none focus:border-[#D02618] focus:ring-2 focus:ring-[#D02618]/20 transition-all;
         box-shadow: none;
     }
 
     .neu-btn-primary {
-        @apply inline-flex items-center justify-center rounded-full bg-[#F57D44] hover:bg-[#E06830] text-white font-label-lg font-semibold transition-all active:scale-[0.98];
-        box-shadow: 0 6px 16px rgba(245, 125, 68, 0.3);
+        @apply inline-flex items-center justify-center rounded-full bg-[#D02618] hover:bg-[#910608] text-white font-label-lg font-semibold transition-all active:scale-[0.98];
+        box-shadow: 0 6px 16px rgba(208, 38, 24, 0.28);
     }
 
     .neu-btn-primary:active {
-        box-shadow: inset 2px 2px 5px rgba(179, 0, 8, 0.25);
+        box-shadow: inset 2px 2px 5px rgba(145, 6, 8, 0.35);
     }
 
     .neu-btn-secondary {
-        @apply inline-flex items-center justify-center rounded-full bg-white text-[#B30008] font-label-lg font-semibold border border-[#E8DAB2] transition-all hover:bg-[#FFF8E0] active:scale-[0.98];
-        box-shadow: 0 2px 8px rgba(179, 0, 8, 0.06);
+        @apply inline-flex items-center justify-center rounded-full bg-white text-[#910608] font-label-lg font-semibold border border-[#F5DE8F] transition-all hover:bg-[#FCF8E8] active:scale-[0.98];
+        box-shadow: 0 2px 8px rgba(145, 6, 8, 0.06);
     }
 
     .neu-btn-secondary:hover {
-        box-shadow: 0 4px 12px rgba(245, 125, 68, 0.14);
+        box-shadow: 0 4px 12px rgba(208, 38, 24, 0.14);
     }
 
     .neu-btn-secondary:active {
-        box-shadow: inset 2px 2px 4px rgba(179, 0, 8, 0.08);
+        box-shadow: inset 2px 2px 4px rgba(145, 6, 8, 0.1);
     }
 
     .neu-pill {
-        @apply inline-flex items-center gap-1.5 rounded-full bg-white border border-[#E8DAB2];
-        box-shadow: 0 2px 6px rgba(179, 0, 8, 0.05);
+        @apply inline-flex items-center gap-1.5 rounded-full bg-white border border-[#F5DE8F];
+        box-shadow: 0 2px 6px rgba(145, 6, 8, 0.05);
     }
 
     .neu-icon-teal {
-        @apply bg-[#C1D653] text-[#2F4205] flex items-center justify-center;
-        box-shadow: inset 2px 2px 5px rgba(118, 159, 19, 0.22), inset -2px -2px 5px rgba(255, 255, 255, 0.45);
+        @apply bg-[#B5D14C] text-[#263304] flex items-center justify-center;
+        box-shadow: inset 2px 2px 5px rgba(90, 120, 12, 0.22), inset -2px -2px 5px rgba(255, 255, 255, 0.45);
     }
 
     .neu-icon-gold {
-        @apply bg-[#FEE08E] text-[#B30008] flex items-center justify-center;
-        box-shadow: inset 2px 2px 5px rgba(245, 125, 68, 0.18), inset -2px -2px 5px rgba(255, 255, 255, 0.55);
+        @apply bg-[#DFEF00] text-[#910608] flex items-center justify-center;
+        box-shadow: inset 2px 2px 5px rgba(145, 160, 0, 0.2), inset -2px -2px 5px rgba(255, 255, 255, 0.55);
     }
 
     .neu-icon-primary {
-        @apply bg-[#B30008] text-white flex items-center justify-center;
-        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2), inset -2px -2px 5px rgba(255, 255, 255, 0.15);
+        @apply bg-[#910608] text-white flex items-center justify-center;
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.25), inset -2px -2px 5px rgba(255, 255, 255, 0.15);
     }
 
     .hero-banner-overlay {
         background: linear-gradient(
             90deg,
-            rgba(255, 248, 224, 0.96) 0%,
-            rgba(255, 248, 224, 0.86) 54%,
-            rgba(255, 248, 224, 0.25) 100%
+            rgba(252, 248, 232, 0.96) 0%,
+            rgba(252, 248, 232, 0.86) 54%,
+            rgba(252, 248, 232, 0.25) 100%
         );
     }
 
     .hero-headline-shadow {
-        text-shadow: 0 1px 0 rgba(255, 248, 224, 0.8);
+        text-shadow: 0 1px 0 rgba(252, 248, 232, 0.85);
     }
 }

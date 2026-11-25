@@ -22,12 +22,12 @@ class OrderStatusChartWidget extends ChartWidget
             ->pluck('total', 'status_order');
 
         $statuses = [
-            'pending_payment' => ['label' => 'Menunggu Bayar', 'color' => '#FEE08E'],
-            'paid' => ['label' => 'Lunas (Siap OTW)', 'color' => '#C1D653'],
-            'otw' => ['label' => 'Teknisi OTW', 'color' => '#F57D44'],
-            'working' => ['label' => 'Sedang Dikerjakan', 'color' => '#F57D44'],
-            'completed' => ['label' => 'Selesai', 'color' => '#769F13'],
-            'cancelled' => ['label' => 'Dibatalkan', 'color' => '#B30008'],
+            'pending_payment' => ['label' => 'Menunggu Bayar', 'color' => '#F5DE8F'],
+            'paid' => ['label' => 'Lunas (Siap OTW)', 'color' => '#DFEF00'],
+            'otw' => ['label' => 'Teknisi OTW', 'color' => '#D02618'],
+            'working' => ['label' => 'Sedang Dikerjakan', 'color' => '#D02618'],
+            'completed' => ['label' => 'Selesai', 'color' => '#B5D14C'],
+            'cancelled' => ['label' => 'Dibatalkan', 'color' => '#910608'],
         ];
 
         $labels = [];

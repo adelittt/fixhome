@@ -44,12 +44,12 @@ class AdminPanelProvider extends PanelProvider
             ->darkMode(false)
             ->font('Plus Jakarta Sans')
             ->colors([
-                'primary' => Color::hex('#F57D44'),
+                'primary' => Color::hex('#D02618'),
                 'gray' => Color::Stone,
-                'info' => Color::hex('#769F13'),
-                'success' => Color::hex('#769F13'),
-                'warning' => Color::hex('#E5A50A'),
-                'danger' => Color::hex('#B30008'),
+                'info' => Color::hex('#7C9418'),
+                'success' => Color::hex('#7C9418'),
+                'warning' => Color::hex('#D4A610'),
+                'danger' => Color::hex('#910608'),
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
@@ -106,7 +106,7 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 2,
                         'lg' => 3,
                     ]),
-                \Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin::make()->color('#F57D44'),
+                \Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin::make()->color('#D02618'),
                 \Awcodes\Overlook\OverlookPlugin::make()
                     ->includes([
                         \App\Filament\Admin\Resources\UserResource::class,
