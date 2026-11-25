@@ -141,55 +141,86 @@
             {{ $slot }}
         </main>
 
-        <!-- GLOBAL FOOTER -->
-        <footer class="w-full bg-primary-container text-inverse-on-surface pt-space-xl pb-space-lg mt-space-xl">
+        <!-- GLOBAL FOOTER (Clean Minimalist Editorial) -->
+        <footer class="w-full bg-[#F8FAFC] border-t border-[#E5E7EB] text-[#374151] pt-12 pb-8 mt-14">
             <div class="max-w-[1140px] mx-auto px-gutter lg:px-margin">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl">
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs">Pelanggan</h3>
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('public.layanan') }}">Kategori Layanan</a>
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('public.teknisi') }}">Daftar Teknisi</a>
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('public.cara-kerja') }}">Cara Pemesanan &amp; Biaya</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ $techniciansUrl }}">Mulai Pesan Sekarang</a>
-                    </div>
-
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs">Mitra Teknisi</h3>
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('public.jadi-mitra') }}">Gabung Jadi Mitra</a>
-                        <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('register') }}">Daftar Akun Teknisi</a>
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('public.cara-kerja') }}">Komisi Transparan (5%)</a>
-                    </div>
-
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs">Akun</h3>
-                        @auth
-                            <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ $dashboardUrl }}">Dashboard Saya</a>
-                        @else
-                            <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('login') }}">Masuk</a>
-                            <a class="font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('register') }}">Daftar Gratis</a>
-                        @endauth
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors" href="{{ route('public.tentang-kami') }}">Tentang Kami</a>
-                    </div>
-
-                    <div class="flex flex-col gap-space-sm">
-                        <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs">Kontak &amp; Bantuan</h3>
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors flex items-center gap-space-xs" href="{{ route('public.cara-kerja') }}">
-                            <span class="material-symbols-outlined text-[16px]">chat</span>
-                            Live Chat di Aplikasi
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-10">
+                    <!-- Brand Column -->
+                    <div class="lg:col-span-4 space-y-3.5">
+                        <a class="fh-page-link inline-flex items-center" href="{{ route('splash') }}">
+                            <img alt="FixHome" class="h-8 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                         </a>
-                        <a class="fh-page-link font-body-sm text-body-sm text-inverse-on-surface/80 hover:text-inverse-on-surface transition-colors flex items-center gap-space-xs" href="{{ route('public.tentang-kami') }}">
-                            <span class="material-symbols-outlined text-[16px]">support_agent</span>
-                            Bantuan 24/7
-                        </a>
-                        <span class="font-body-sm text-body-sm text-tertiary-fixed/85 mt-1">Wilayah operasional: Jabodetabek</span>
+                        <p class="text-[13px] leading-relaxed text-[#4B5563] max-w-xs">
+                            Platform layanan perbaikan rumah terverifikasi dengan tarif transparan, live chat teknisi, dan garansi pengerjaan resmi 14 hari.
+                        </p>
+                        <div class="flex flex-wrap items-center gap-2 pt-1">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[#E5E7EB] text-[11.5px] font-medium text-[#374151]">
+                                <span class="material-symbols-outlined text-[14px] text-[#16A34A]">location_on</span>
+                                Jabodetabek
+                            </span>
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] text-[11.5px] font-semibold text-[#15803D]">
+                                <span class="material-symbols-outlined text-[14px]">verified_user</span>
+                                Garansi 14 Hari
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Columns -->
+                    <div class="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
+                        <div>
+                            <h3 class="text-[11px] font-bold uppercase tracking-[0.08em] text-[#6B7280] mb-3.5">Layanan</h3>
+                            <ul class="space-y-2.5 text-[13px]">
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.layanan', ['kategori' => 'pipa-air']) }}">Pipa &amp; Saluran Air</a></li>
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.layanan', ['kategori' => 'listrik']) }}">Instalasi Listrik</a></li>
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.layanan', ['kategori' => 'ac-pendingin']) }}">Perawatan AC</a></li>
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.layanan', ['kategori' => 'atap-plafon']) }}">Atap &amp; Plafon</a></li>
+                                <li><a class="fh-page-link font-semibold text-[#15803D] hover:text-[#16A34A] transition-colors" href="{{ route('public.layanan') }}">Semua Layanan &rarr;</a></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-[11px] font-bold uppercase tracking-[0.08em] text-[#6B7280] mb-3.5">Jelajahi</h3>
+                            <ul class="space-y-2.5 text-[13px]">
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('splash') }}">Beranda</a></li>
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.teknisi') }}">Daftar Teknisi</a></li>
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.cara-kerja') }}">Cara Kerja &amp; Biaya</a></li>
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.jadi-mitra') }}">Jadi Mitra Teknisi</a></li>
+                                <li><a class="fh-page-link text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.tentang-kami') }}">Tentang Kami</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-span-2 sm:col-span-1">
+                            <h3 class="text-[11px] font-bold uppercase tracking-[0.08em] text-[#6B7280] mb-3.5">Akun &amp; Bantuan</h3>
+                            <ul class="space-y-2.5 text-[13px]">
+                                @auth
+                                    <li><a class="text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ $dashboardUrl }}">Dashboard Saya</a></li>
+                                @else
+                                    <li><a class="text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('login') }}">Masuk ke Akun</a></li>
+                                    <li><a class="text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('register') }}">Daftar Gratis</a></li>
+                                @endauth
+                                <li>
+                                    <a class="fh-page-link inline-flex items-center gap-1.5 text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.cara-kerja') }}">
+                                        <span class="material-symbols-outlined text-[15px] text-[#16A34A]">chat</span>
+                                        Live Chat di Aplikasi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="fh-page-link inline-flex items-center gap-1.5 text-[#374151] hover:text-[#16A34A] transition-colors" href="{{ route('public.tentang-kami') }}">
+                                        <span class="material-symbols-outlined text-[15px] text-[#16A34A]">support_agent</span>
+                                        Bantuan 24/7
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="pt-space-lg border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-space-md text-inverse-on-surface/75">
-                    <p class="font-body-sm text-body-sm text-center md:text-left">&copy; {{ date('Y') }} FixHome Indonesia. Solusi Perbaikan Rumah Terpercaya.</p>
-                    <div class="flex items-center gap-space-sm font-label-sm text-label-sm text-tertiary-fixed">
-                        <span class="material-symbols-outlined text-[16px]">verified</span>
-                        <span>Garansi Resmi &amp; Teknisi Terverifikasi</span>
+                <!-- Bottom Copyright Strip -->
+                <div class="pt-6 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-[#6B7280]">
+                    <p>&copy; {{ date('Y') }} FixHome Indonesia. Solusi Perbaikan Rumah Terpercaya.</p>
+                    <div class="inline-flex items-center gap-1.5 text-[#15803D] font-semibold">
+                        <span class="material-symbols-outlined text-[16px] text-[#16A34A]">verified</span>
+                        <span>Teknisi Terverifikasi &amp; Transparansi 95 / 5</span>
                     </div>
                 </div>
             </div>
