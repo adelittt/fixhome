@@ -4,6 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@view-transition {
+    navigation: auto;
+}
+
+/* Smooth Multi-Page Stage Transition */
+.fh-page-stage {
+    transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1), transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.fh-page-stage.is-leaving {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fh-page-stage {
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
 @layer base {
     html,
     body {

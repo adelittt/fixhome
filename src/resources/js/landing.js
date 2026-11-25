@@ -134,10 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Re-align sliding nav pill smoothly once expanded back from compact mode
         if (wasCompact && !shouldCompact) {
-            setTimeout(() => {
-                const activeLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-target') === currentActiveId);
-                if (activeLink) moveNavPillTo(activeLink, { animate: false });
-            }, 340);
+            setTimeout(() => alignActiveNavPill(false), 340);
         }
     };
 
@@ -215,19 +212,15 @@ document.addEventListener('DOMContentLoaded', () => {
         recalc();
     }
 
-    // 3. Responsive Active Header State (Sliding Spring Pill + Instant Click + Scrollspy)
+    // 3. Multi-Page Active Pill Indicator & Smooth Page Transitions
     const desktopNav = document.getElementById('desktop-nav');
     const navPill = document.getElementById('nav-active-pill');
+    const pageStage = document.querySelector('.fh-page-stage');
     const desktopNavLinks = desktopNav
-        ? Array.from(desktopNav.querySelectorAll('.fh-nav-link[data-nav-target]'))
+        ? Array.from(desktopNav.querySelectorAll('.fh-nav-link'))
         : [];
-    const mobileNavLinks = mobileMenu
-        ? Array.from(mobileMenu.querySelectorAll('.fh-nav-link[data-nav-target]'))
-        : [];
-    const bottomLinks = Array.from(document.querySelectorAll('.fh-bottom-link[data-nav-target]'));
-    const allTargetTriggers = Array.from(document.querySelectorAll('a[data-nav-target]'));
-
-    let currentActiveId = 'beranda';
+    const activePageKey = document.body.getAttribute('data-active-page') || 'beranda';
+    let currentActiveId = activePageKey;
 
     const moveNavPillTo = (targetLink, { animate = true, pop = false } = {}) => {
         if (!navPill || !desktopNav || !targetLink) return;
@@ -245,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navPill.style.opacity = '1';
 
         if (!animate) {
-            // Force reflow then re-enable spring transition
             void navPill.offsetWidth;
             navPill.classList.remove('is-no-anim');
         } else if (pop) {
@@ -255,121 +247,74 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const setActiveSection = (targetId, { animatePill = true, popPill = false } = {}) => {
-        currentActiveId = targetId;
-        if (compactLabelEl && sectionTitles[targetId]) {
-            compactLabelEl.textContent = sectionTitles[targetId];
+    const alignActiveNavPill = (animate = false) => {
+        const activeLink =
+            desktopNavLinks.find((l) => l.getAttribute('data-nav-key') === currentActiveId) ||
+            desktopNavLinks.find((l) => l.getAttribute('aria-current') === 'page');
+        if (activeLink) {
+            moveNavPillTo(activeLink, { animate });
         }
-
-        let activeDesktopLink = null;
-        desktopNavLinks.forEach((link) => {
-            const isActive = link.getAttribute('data-nav-target') === targetId;
-            if (isActive) {
-                activeDesktopLink = link;
-                link.setAttribute('aria-current', 'page');
-                link.classList.add('text-[#15803D]', 'font-semibold');
-                link.classList.remove('text-[#4B5563]', 'hover:text-[#111827]');
-            } else {
-                link.removeAttribute('aria-current');
-                link.classList.remove('text-[#15803D]', 'font-semibold');
-                link.classList.add('text-[#4B5563]', 'hover:text-[#111827]');
-            }
-        });
-
-        if (activeDesktopLink) {
-            moveNavPillTo(activeDesktopLink, { animate: animatePill, pop: popPill });
-        }
-
-        mobileNavLinks.forEach((link) => {
-            const isActive = link.getAttribute('data-nav-target') === targetId;
-            if (isActive) {
-                link.setAttribute('aria-current', 'page');
-                link.classList.add('bg-[#DCFCE7]', 'text-[#15803D]', 'font-semibold');
-                link.classList.remove('text-[#4B5563]', 'font-medium', 'hover:text-[#111827]', 'hover:bg-[#F3F4F6]');
-            } else {
-                link.removeAttribute('aria-current');
-                link.classList.remove('bg-[#DCFCE7]', 'text-[#15803D]', 'font-semibold');
-                link.classList.add('text-[#4B5563]', 'hover:text-[#111827]', 'hover:bg-[#F3F4F6]');
-            }
-        });
-
-        bottomLinks.forEach((link) => {
-            const isActive = link.getAttribute('data-nav-target') === targetId;
-            if (isActive) {
-                link.classList.add('bg-[#DCFCE7]', 'text-[#15803D]', 'font-bold');
-                link.classList.remove('text-[#4B5563]');
-            } else {
-                link.classList.remove('bg-[#DCFCE7]', 'text-[#15803D]', 'font-bold');
-                link.classList.add('text-[#4B5563]');
-            }
-        });
     };
 
-    let clickLockUntil = 0;
+    // Smooth page transition on multi-page navbar/footer links
+    document.querySelectorAll('a.fh-page-link').forEach((link) => {
+        link.addEventListener('click', (e) => {
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('#')) return;
 
-    allTargetTriggers.forEach((trigger) => {
-        trigger.addEventListener('click', (e) => {
-            const targetId = trigger.getAttribute('data-nav-target');
-            const targetEl = targetId ? document.getElementById(targetId) : null;
-            if (!targetEl) return;
+            const destUrl = new URL(href, window.location.origin);
+            if (destUrl.origin !== window.location.origin) return;
+
+            // Clicking the current page scrolls smoothly to top & replays hero entrance
+            if (destUrl.pathname === window.location.pathname && destUrl.search === window.location.search) {
+                e.preventDefault();
+                setMobileMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => playHeroEntrance(), 200);
+                return;
+            }
+
+            if (prefersReducedMotion) return;
 
             e.preventDefault();
-            clickLockUntil = Date.now() + 750;
-            setActiveSection(targetId, { animatePill: true, popPill: true });
             setMobileMenuOpen(false);
 
-            const headerOffset = headerEl ? headerEl.offsetHeight + 8 : 72;
-            const topPos = targetId === 'beranda'
-                ? 0
-                : Math.max(0, targetEl.getBoundingClientRect().top + window.scrollY - headerOffset);
+            // Immediately glide the desktop pill to the clicked nav item for tactile feedback
+            const clickedKey = link.getAttribute('data-nav-key');
+            if (clickedKey) {
+                const targetDesktopLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-key') === clickedKey);
+                if (targetDesktopLink) {
+                    desktopNavLinks.forEach((l) => {
+                        const match = l === targetDesktopLink;
+                        l.classList.toggle('text-[#15803D]', match);
+                        l.classList.toggle('font-semibold', match);
+                        l.classList.toggle('text-[#4B5563]', !match);
+                    });
+                    moveNavPillTo(targetDesktopLink, { animate: true, pop: true });
+                }
+            }
 
-            window.scrollTo({ top: topPos, behavior: 'smooth' });
-            if (targetId === 'beranda') {
-                setTimeout(() => playHeroEntrance(), 220);
+            if (pageStage) {
+                pageStage.classList.add('is-leaving');
             }
-            if (history.replaceState) {
-                history.replaceState(null, '', `#${targetId}`);
-            }
+
+            setTimeout(() => {
+                window.location.href = destUrl.href;
+            }, 190);
         });
     });
 
-    const uniqueTargetIds = Array.from(new Set(desktopNavLinks.map((l) => l.getAttribute('data-nav-target')).filter(Boolean)));
-    const trackedSections = uniqueTargetIds
-        .map((id) => ({ id, el: document.getElementById(id) }))
-        .filter((x) => x.el);
+    window.addEventListener('pageshow', () => {
+        if (pageStage) pageStage.classList.remove('is-leaving');
+        alignActiveNavPill(false);
+    });
 
-    if (trackedSections.length > 0) {
-        const syncScrollSpy = (animatePill = true) => {
-            if (Date.now() < clickLockUntil) return;
-            const scrollY = window.scrollY;
-            if (scrollY < 120) {
-                setActiveSection('beranda', { animatePill });
-                return;
-            }
-            const probe = scrollY + (headerEl ? headerEl.offsetHeight + 40 : 104);
-            let currentId = trackedSections[0].id;
-            for (const sec of trackedSections) {
-                if (sec.el.offsetTop <= probe) {
-                    currentId = sec.id;
-                }
-            }
-            setActiveSection(currentId, { animatePill });
-        };
+    window.addEventListener('resize', () => alignActiveNavPill(false));
 
-        window.addEventListener('scroll', () => syncScrollSpy(true), { passive: true });
-        window.addEventListener('resize', () => {
-            const activeLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-target') === currentActiveId);
-            if (activeLink) moveNavPillTo(activeLink, { animate: false });
-        });
-
-        // Initial pill placement (snap without flash) + re-align once web fonts finish loading
-        syncScrollSpy(false);
-        syncHeaderCompactState();
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(() => {
-                const activeLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-target') === currentActiveId);
-                if (activeLink) moveNavPillTo(activeLink, { animate: false });
-            });
-        }
+    alignActiveNavPill(false);
+    syncHeaderCompactState();
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => alignActiveNavPill(false));
     }
 });

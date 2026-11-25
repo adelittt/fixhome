@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\TeknisiController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -22,8 +23,13 @@ Livewire::setScriptRoute(function ($handle) {
 / END
 */
 
-// Splash Screen & Guest Authentication (Customer & Teknisi; Admin uses /admin/login)
+// Public Multi-Page Marketing & Guest Authentication (Customer & Teknisi; Admin uses /admin/login)
 Route::get('/', [AuthController::class, 'showSplash'])->name('splash');
+Route::get('/layanan', [PublicPageController::class, 'layanan'])->name('public.layanan');
+Route::get('/teknisi', [PublicPageController::class, 'teknisi'])->name('public.teknisi');
+Route::get('/cara-kerja', [PublicPageController::class, 'caraKerja'])->name('public.cara-kerja');
+Route::get('/jadi-mitra', [PublicPageController::class, 'jadiMitra'])->name('public.jadi-mitra');
+Route::get('/tentang-kami', [PublicPageController::class, 'tentangKami'])->name('public.tentang-kami');
 Route::view('/demo-ui', 'pages.demo-ui')->name('demo-ui');
 Route::redirect('/login/admin', '/admin/login');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
