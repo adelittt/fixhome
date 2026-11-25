@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="Pesan teknisi perbaikan rumah terverifikasi untuk AC, listrik, pipa, atap, hingga pengecatan. Biaya jelas, live chat, dan garansi resmi 14 hari." name="description" />
-    <meta content="#775537" name="theme-color" />
+    <meta content="#16A34A" name="theme-color" />
     <link href="{{ asset('images/fixhome-icon.png') }}" rel="icon" type="image/png" />
     <title>FixHome - Layanan Perbaikan Rumah Terverifikasi &amp; Bergaransi</title>
 
@@ -89,85 +89,87 @@
 <body class="fh-plus bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col overscroll-none" id="top">
 
     <div class="flex-1 flex flex-col pb-16 sm:pb-0">
-        <!-- HEADER NAVIGATION (FixHome Plus Stitch Minimalist Nav) -->
-        <header class="sticky top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md px-gutter lg:px-margin border-b border-white/60">
+        <!-- HEADER NAVIGATION (FixHome Clean Minimalist Responsive Nav) -->
+        <header class="sticky top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md px-gutter lg:px-margin border-b border-[#E5E7EB]/80 transition-shadow" id="site-header">
             <div class="h-20 max-w-[1280px] mx-auto flex items-center justify-between gap-gutter">
                 <!-- Brand Logo -->
-                <a aria-label="Beranda FixHome" class="flex items-center shrink-0 group" href="{{ route('splash') }}">
+                <a aria-label="Beranda FixHome" class="flex items-center shrink-0 group active:scale-[0.98] transition-transform" href="#beranda" data-nav-target="beranda">
                     <img alt="FixHome" class="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
                 </a>
 
                 <!-- Center Navigation Links -->
-                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-space-lg">
-                    <a class="font-body-md text-body-md text-primary-container font-semibold transition-colors py-space-xs px-space-sm" href="#top">Beranda</a>
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#layanan-populer">Layanan</a>
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#katalog-teknisi">Teknisi</a>
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#cara-kerja">Cara Kerja</a>
+                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 bg-[#DCFCE7] text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
+                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
+                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
+                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
                     @guest
-                        <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#jadi-mitra">Jadi Mitra</a>
+                        <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
                     @endguest
-                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm" href="#tentang-kami">Tentang Kami</a>
+                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
                     @auth
                         @if (Auth::user()->role === 'admin')
-                            <a class="font-label-md text-label-md text-primary-container bg-surface rounded-full px-3.5 py-1.5 shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] hover:opacity-90 transition" href="{{ url('/admin') }}">Panel Admin</a>
+                            <a class="font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3.5 py-1.5 hover:bg-[#DCFCE7] active:scale-95 transition-all" href="{{ url('/admin') }}">Panel Admin</a>
                         @endif
                     @endauth
                 </nav>
 
                 <!-- Right Controls -->
-                <div class="hidden sm:flex items-center gap-3">
-                    @auth
-                        <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] text-sm font-semibold text-primary transition-all hover:opacity-90" href="{{ $dashboardUrl }}">
-                            <span class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold">
-                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                            </span>
-                            <span class="max-w-[110px] truncate">{{ Auth::user()->name }}</span>
-                            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">dashboard</span>
-                        </a>
-                    @else
-                        <div class="flex items-center gap-space-sm">
-                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-primary-container bg-surface rounded-full px-space-lg py-space-sm shadow-[-4px_-4px_10px_#FFFFFF,4px_4px_10px_#D2D2D2] hover:shadow-[-2px_-2px_6px_#FFFFFF,2px_2px_6px_#D2D2D2] transition-all" href="{{ route('login') }}">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="hidden sm:flex items-center gap-space-sm">
+                        @auth
+                            <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E5E7EB] shadow-sm text-sm font-semibold text-[#111827] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ $dashboardUrl }}">
+                                <span class="w-7 h-7 rounded-full bg-[#16A34A] text-white flex items-center justify-center text-xs font-bold">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </span>
+                                <span class="max-w-[110px] truncate">{{ Auth::user()->name }}</span>
+                                <span class="material-symbols-outlined text-[18px] text-[#4B5563]">dashboard</span>
+                            </a>
+                        @else
+                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-[#16A34A] bg-white border border-[#E5E7EB] rounded-full px-5 py-2 hover:bg-[#F0FDF4] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ route('login') }}">
                                 Masuk
                             </a>
-                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-on-primary bg-primary-container rounded-full px-space-lg py-space-sm shadow-[0_8px_18px_rgba(119,85,55,0.28),-4px_-4px_10px_#FFFFFF] hover:opacity-95 transition-all" href="{{ route('register') }}">
+                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-white bg-[#16A34A] hover:bg-[#15803D] rounded-full px-5 py-2 shadow-[0_4px_12px_rgba(22,163,74,0.25)] active:scale-95 transition-all" href="{{ route('register') }}">
                                 Daftar
                             </a>
-                            <a aria-label="Portal Akun" class="w-8 h-8 rounded-full bg-primary flex items-center justify-center hover:opacity-90 transition" href="{{ route('login') }}">
-                                <span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+                            <a aria-label="Portal Akun" class="w-9 h-9 rounded-full bg-[#16A34A] hover:bg-[#15803D] flex items-center justify-center active:scale-95 transition-all" href="{{ route('login') }}">
+                                <span class="material-symbols-outlined text-white text-[18px]">person</span>
                             </a>
-                        </div>
-                    @endauth
-                </div>
+                        @endauth
+                    </div>
 
-                <!-- Mobile Menu Trigger -->
-                <div class="flex items-center sm:hidden gap-2">
+                    <!-- Mobile & Tablet Menu Trigger -->
                     <button
                         aria-controls="mobile-menu"
                         aria-expanded="false"
                         aria-label="Buka menu navigasi"
-                        class="w-9 h-9 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2] flex items-center justify-center text-primary"
+                        class="md:hidden w-10 h-10 rounded-full bg-white border border-[#E5E7EB] hover:border-[#16A34A] flex items-center justify-center text-[#111827] active:scale-95 transition-all"
                         id="mobile-menu-toggle"
                         type="button"
                     >
-                        <span aria-hidden="true" class="material-symbols-outlined text-[20px]" id="mobile-menu-icon">menu</span>
+                        <span aria-hidden="true" class="material-symbols-outlined text-[22px]" id="mobile-menu-icon">menu</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Dropdown Menu -->
-            <div class="hidden sm:hidden bg-surface border-t border-outline-variant/40 -mx-gutter px-4 pt-3 pb-4 space-y-2" id="mobile-menu">
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#top">Beranda</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#layanan-populer">Layanan Perbaikan</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#katalog-teknisi">Daftar Teknisi</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#cara-kerja">Cara Kerja</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#transparansi">Garansi &amp; Biaya</a>
-                <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="#tentang-kami">Tentang Kami</a>
+            <!-- Mobile & Tablet Dropdown Menu -->
+            <div class="hidden md:hidden bg-white border-t border-[#E5E7EB] -mx-gutter lg:-mx-margin px-4 pt-3 pb-4 space-y-1.5 shadow-lg" id="mobile-menu">
+                <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all active:scale-[0.99] bg-[#DCFCE7] text-[#15803D]" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
+                <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-[0.99] text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
+                <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-[0.99] text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
+                <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-[0.99] text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
+                @guest
+                    <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-[0.99] text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
+                @endguest
+                <a class="fh-nav-link block px-4 py-2.5 rounded-xl text-sm font-medium transition-all active:scale-[0.99] text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
                 @auth
-                    <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-on-primary bg-primary-container text-center" href="{{ $dashboardUrl }}">Buka Dashboard</a>
+                    <div class="pt-2">
+                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] text-center active:scale-[0.98] transition-all" href="{{ $dashboardUrl }}">Buka Dashboard</a>
+                    </div>
                 @else
-                    <div class="grid grid-cols-2 gap-2 pt-2">
-                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-primary bg-surface text-center shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]" href="{{ route('login') }}">Masuk</a>
-                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-on-primary bg-primary-container text-center" href="{{ route('register') }}">Daftar</a>
+                    <div class="grid grid-cols-2 gap-2 pt-2 sm:hidden">
+                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-[#16A34A] bg-white border border-[#E5E7EB] text-center hover:bg-[#F0FDF4] active:scale-[0.98] transition-all" href="{{ route('login') }}">Masuk</a>
+                        <a class="block px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] text-center active:scale-[0.98] transition-all" href="{{ route('register') }}">Daftar</a>
                     </div>
                 @endauth
             </div>
@@ -183,7 +185,7 @@
                 </div>
 
                 <!-- 1. HERO SECTION -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-lg lg:pt-space-xl pb-space-xl relative z-10" id="beranda">
+                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-lg lg:pt-space-xl pb-space-xl relative z-10 scroll-mt-24" id="beranda">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
                         <!-- Left Column: Copy & Tactile Search Engine -->
                         <div class="lg:col-span-7 flex flex-col gap-space-md">
@@ -575,27 +577,8 @@
                     </div>
                 </section>
 
-                <!-- 5. STATS & CALLOUT BANNER -->
+                <!-- 5. PARTNERSHIP CALLOUT BANNER -->
                 <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-md pb-space-xl scroll-mt-24" id="jadi-mitra">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-space-md mb-space-xl">
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-primary font-bold block font-butler">15.000+</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Perbaikan Sukses</span>
-                        </div>
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-secondary font-bold block font-butler">98.4%</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Kepuasan Pelanggan</span>
-                        </div>
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-tertiary font-bold block font-butler">14 Hari</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Garansi Resmi</span>
-                        </div>
-                        <div class="stitch-surface-card p-space-md rounded-[20px] bg-surface shadow-[-5px_-5px_12px_#FFFFFF,5px_5px_12px_#D2D2D2] text-center transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2]">
-                            <span class="font-headline-lg text-headline-lg text-primary font-bold block font-butler">1.200+</span>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Teknisi Tersertifikasi</span>
-                        </div>
-                    </div>
-
                     <!-- Partnership Invitation Card -->
                     <div class="stitch-surface-card rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col md:flex-row items-center justify-between gap-space-lg">
                         <div class="max-w-xl text-center md:text-left">
@@ -779,27 +762,27 @@
     </div>
 
     <!-- Mobile Bottom Navigation (Hidden on desktop, touch target >= 44px) -->
-    <nav aria-label="Navigasi Bawah" class="sm:hidden fixed bottom-0 inset-x-0 z-40 px-2 py-1.5 bg-surface/95 backdrop-blur-md border-t border-white/70 shadow-[0_-6px_16px_rgba(119,85,55,0.10)]">
+    <nav aria-label="Navigasi Bawah" class="sm:hidden fixed bottom-0 inset-x-0 z-40 px-2 py-1.5 bg-white/95 backdrop-blur-md border-t border-[#E5E7EB] shadow-[0_-4px_14px_rgba(17,24,39,0.06)]">
         <div class="grid grid-cols-4 gap-1.5 h-14">
-            <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition bg-surface shadow-[inset_3px_3px_6px_#D2D2D2,inset_-3px_-3px_6px_#FFFFFF] text-[#775537] font-bold" href="#beranda">
+            <a class="fh-bottom-link flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition-all active:scale-95 bg-[#DCFCE7] text-[#15803D] font-bold" data-nav-target="beranda" href="#beranda">
                 <span class="material-symbols-outlined text-[20px] mb-0.5">home</span>
                 <span>Beranda</span>
             </a>
-            <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="#layanan-populer">
+            <a class="fh-bottom-link flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition-all active:scale-95 text-[#4B5563]" data-nav-target="layanan-populer" href="#layanan-populer">
                 <span class="material-symbols-outlined text-[20px] mb-0.5">home_repair_service</span>
                 <span>Layanan</span>
             </a>
-            <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="#katalog-teknisi">
+            <a class="fh-bottom-link flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition-all active:scale-95 text-[#4B5563]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">
                 <span class="material-symbols-outlined text-[20px] mb-0.5">engineering</span>
                 <span>Teknisi</span>
             </a>
             @auth
-                <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="{{ $dashboardUrl }}">
+                <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition-all active:scale-95 text-[#4B5563]" href="{{ $dashboardUrl }}">
                     <span class="material-symbols-outlined text-[20px] mb-0.5">dashboard</span>
                     <span>Dasbor</span>
                 </a>
             @else
-                <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition text-[#635850]" href="{{ route('login') }}">
+                <a class="flex flex-col items-center justify-center min-h-[44px] rounded-2xl text-xs transition-all active:scale-95 text-[#4B5563]" href="{{ route('login') }}">
                     <span class="material-symbols-outlined text-[20px] mb-0.5">person</span>
                     <span>Masuk</span>
                 </a>

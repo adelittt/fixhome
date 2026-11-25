@@ -1,26 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Navigation Menu
+    // 1. Mobile & Tablet Navigation Menu
+    const headerEl = document.getElementById('site-header');
     const toggleBtn = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const menuIcon = document.getElementById('mobile-menu-icon');
 
+    let setMobileMenuOpen = () => {};
+
     if (toggleBtn && mobileMenu) {
-        const setOpen = (open) => {
+        setMobileMenuOpen = (open) => {
             mobileMenu.classList.toggle('hidden', !open);
             toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
             toggleBtn.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
-            document.body.classList.toggle('overflow-hidden', open);
             if (menuIcon) menuIcon.textContent = open ? 'close' : 'menu';
         };
 
-        toggleBtn.addEventListener('click', () => setOpen(mobileMenu.classList.contains('hidden')));
-        mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setMobileMenuOpen(mobileMenu.classList.contains('hidden'));
+        });
+
+        mobileMenu.querySelectorAll('a').forEach((a) => {
+            a.addEventListener('click', () => setMobileMenuOpen(false));
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.classList.contains('hidden') && headerEl && !headerEl.contains(e.target)) {
+                setMobileMenuOpen(false);
+            }
+        });
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
-                setOpen(false);
+                setMobileMenuOpen(false);
                 toggleBtn.focus();
             }
         });
+    }
+
+    // Subtle header shadow on scroll
+    if (headerEl) {
+        const updateHeaderShadow = () => {
+            headerEl.classList.toggle('shadow-sm', window.scrollY > 8);
+        };
+        updateHeaderShadow();
+        window.addEventListener('scroll', updateHeaderShadow, { passive: true });
     }
 
     // 2. Interactive Pricing & 95/5 Split Simulator (matches Transaksi::calculateSplit)
@@ -63,35 +87,86 @@ document.addEventListener('DOMContentLoaded', () => {
         recalc();
     }
 
-    // 3. Active Section Underline on Scroll
-    const navLinks = Array.from(document.querySelectorAll('header nav a.fh-link[href^="#"]'));
-    const sections = navLinks
-        .map((link) => {
-            const id = link.getAttribute('href')?.slice(1);
-            return id ? { link, el: document.getElementById(id) } : null;
-        })
-        .filter((x) => x && x.el);
+    // 3. Responsive Active Header State (Instant on Click + Scrollspy)
+    const navLinks = Array.from(document.querySelectorAll('.fh-nav-link[data-nav-target]'));
+    const bottomLinks = Array.from(document.querySelectorAll('.fh-bottom-link[data-nav-target]'));
+    const allTargetTriggers = Array.from(document.querySelectorAll('a[data-nav-target]'));
 
-    if (sections.length > 0 && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-                    sections.forEach(({ link, el }) => {
-                        if (el === entry.target) {
-                            link.setAttribute('aria-current', 'page');
-                            link.classList.add('text-[#1A1C1C]', 'font-semibold');
-                            link.classList.remove('text-[#50453C]');
-                        } else {
-                            link.removeAttribute('aria-current');
-                            link.classList.remove('text-[#1A1C1C]', 'font-semibold');
-                            link.classList.add('text-[#50453C]');
-                        }
-                    });
-                });
-            },
-            { rootMargin: '-30% 0px -55% 0px' },
-        );
-        sections.forEach(({ el }) => observer.observe(el));
+    const setActiveSection = (targetId) => {
+        navLinks.forEach((link) => {
+            const isActive = link.getAttribute('data-nav-target') === targetId;
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+                link.classList.add('bg-[#DCFCE7]', 'text-[#15803D]', 'font-semibold');
+                link.classList.remove('text-[#4B5563]', 'font-medium', 'hover:text-[#111827]', 'hover:bg-[#F3F4F6]');
+            } else {
+                link.removeAttribute('aria-current');
+                link.classList.remove('bg-[#DCFCE7]', 'text-[#15803D]', 'font-semibold');
+                link.classList.add('text-[#4B5563]', 'hover:text-[#111827]', 'hover:bg-[#F3F4F6]');
+            }
+        });
+
+        bottomLinks.forEach((link) => {
+            const isActive = link.getAttribute('data-nav-target') === targetId;
+            if (isActive) {
+                link.classList.add('bg-[#DCFCE7]', 'text-[#15803D]', 'font-bold');
+                link.classList.remove('text-[#4B5563]');
+            } else {
+                link.classList.remove('bg-[#DCFCE7]', 'text-[#15803D]', 'font-bold');
+                link.classList.add('text-[#4B5563]');
+            }
+        });
+    };
+
+    let clickLockUntil = 0;
+
+    allTargetTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', (e) => {
+            const targetId = trigger.getAttribute('data-nav-target');
+            const targetEl = targetId ? document.getElementById(targetId) : null;
+            if (!targetEl) return;
+
+            e.preventDefault();
+            clickLockUntil = Date.now() + 750;
+            setActiveSection(targetId);
+            setMobileMenuOpen(false);
+
+            const headerOffset = headerEl ? headerEl.offsetHeight + 8 : 88;
+            const topPos = targetId === 'beranda'
+                ? 0
+                : Math.max(0, targetEl.getBoundingClientRect().top + window.scrollY - headerOffset);
+
+            window.scrollTo({ top: topPos, behavior: 'smooth' });
+            if (history.replaceState) {
+                history.replaceState(null, '', `#${targetId}`);
+            }
+        });
+    });
+
+    const uniqueTargetIds = Array.from(new Set(navLinks.map((l) => l.getAttribute('data-nav-target')).filter(Boolean)));
+    const trackedSections = uniqueTargetIds
+        .map((id) => ({ id, el: document.getElementById(id) }))
+        .filter((x) => x.el);
+
+    if (trackedSections.length > 0) {
+        const syncScrollSpy = () => {
+            if (Date.now() < clickLockUntil) return;
+            const scrollY = window.scrollY;
+            if (scrollY < 120) {
+                setActiveSection('beranda');
+                return;
+            }
+            const probe = scrollY + (headerEl ? headerEl.offsetHeight + 40 : 120);
+            let currentId = trackedSections[0].id;
+            for (const sec of trackedSections) {
+                if (sec.el.offsetTop <= probe) {
+                    currentId = sec.id;
+                }
+            }
+            setActiveSection(currentId);
+        };
+
+        window.addEventListener('scroll', syncScrollSpy, { passive: true });
+        syncScrollSpy();
     }
 });
