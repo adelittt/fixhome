@@ -91,49 +91,49 @@
     <div class="flex-1 flex flex-col pb-16 sm:pb-0">
         <!-- HEADER NAVIGATION (FixHome Clean Minimalist Responsive Nav) -->
         <header class="sticky top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md px-gutter lg:px-margin border-b border-[#E5E7EB]/80 transition-shadow" id="site-header">
-            <div class="h-20 max-w-[1280px] mx-auto flex items-center justify-between gap-gutter">
+            <div class="h-16 max-w-[1140px] mx-auto flex items-center justify-between gap-gutter">
                 <!-- Brand Logo -->
                 <a aria-label="Beranda FixHome" class="flex items-center shrink-0 group active:scale-[0.98] transition-transform" href="#beranda" data-nav-target="beranda">
-                    <img alt="FixHome" class="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
+                    <img alt="FixHome" class="h-7 sm:h-8 w-auto object-contain group-hover:opacity-90 transition-opacity" src="{{ asset('images/fixhome-logo-full.png') }}" />
                 </a>
 
                 <!-- Center Navigation Links -->
-                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-1 lg:gap-2">
-                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 bg-[#DCFCE7] text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
-                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
-                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
-                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
+                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-0.5 lg:gap-1">
+                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 bg-[#DCFCE7] text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
+                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
+                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
+                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
                     @guest
-                        <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
+                        <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
                     @endguest
-                    <a class="fh-nav-link font-body-md text-body-md rounded-full px-3.5 py-2 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
+                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
                     @auth
                         @if (Auth::user()->role === 'admin')
-                            <a class="font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3.5 py-1.5 hover:bg-[#DCFCE7] active:scale-95 transition-all" href="{{ url('/admin') }}">Panel Admin</a>
+                            <a class="font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1 hover:bg-[#DCFCE7] active:scale-95 transition-all" href="{{ url('/admin') }}">Panel Admin</a>
                         @endif
                     @endauth
                 </nav>
 
                 <!-- Right Controls -->
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <div class="hidden sm:flex items-center gap-space-sm">
+                <div class="flex items-center gap-2">
+                    <div class="hidden sm:flex items-center gap-2">
                         @auth
-                            <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E5E7EB] shadow-sm text-sm font-semibold text-[#111827] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ $dashboardUrl }}">
-                                <span class="w-7 h-7 rounded-full bg-[#16A34A] text-white flex items-center justify-center text-xs font-bold">
+                            <a class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white border border-[#E5E7EB] shadow-sm text-xs font-semibold text-[#111827] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ $dashboardUrl }}">
+                                <span class="w-6 h-6 rounded-full bg-[#16A34A] text-white flex items-center justify-center text-[11px] font-bold">
                                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                 </span>
-                                <span class="max-w-[110px] truncate">{{ Auth::user()->name }}</span>
-                                <span class="material-symbols-outlined text-[18px] text-[#4B5563]">dashboard</span>
+                                <span class="max-w-[100px] truncate">{{ Auth::user()->name }}</span>
+                                <span class="material-symbols-outlined text-[16px] text-[#4B5563]">dashboard</span>
                             </a>
                         @else
-                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-[#16A34A] bg-white border border-[#E5E7EB] rounded-full px-5 py-2 hover:bg-[#F0FDF4] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ route('login') }}">
+                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-[#16A34A] bg-white border border-[#E5E7EB] rounded-full px-4 py-1.5 hover:bg-[#F0FDF4] hover:border-[#16A34A] active:scale-95 transition-all" href="{{ route('login') }}">
                                 Masuk
                             </a>
-                            <a class="inline-flex items-center justify-center font-label-lg text-label-lg text-white bg-[#16A34A] hover:bg-[#15803D] rounded-full px-5 py-2 shadow-[0_4px_12px_rgba(22,163,74,0.25)] active:scale-95 transition-all" href="{{ route('register') }}">
+                            <a class="inline-flex items-center justify-center font-label-lg text-[13px] text-white bg-[#16A34A] hover:bg-[#15803D] rounded-full px-4 py-1.5 shadow-[0_3px_10px_rgba(22,163,74,0.22)] active:scale-95 transition-all" href="{{ route('register') }}">
                                 Daftar
                             </a>
-                            <a aria-label="Portal Akun" class="w-9 h-9 rounded-full bg-[#16A34A] hover:bg-[#15803D] flex items-center justify-center active:scale-95 transition-all" href="{{ route('login') }}">
-                                <span class="material-symbols-outlined text-white text-[18px]">person</span>
+                            <a aria-label="Portal Akun" class="w-8 h-8 rounded-full bg-[#16A34A] hover:bg-[#15803D] flex items-center justify-center active:scale-95 transition-all" href="{{ route('login') }}">
+                                <span class="material-symbols-outlined text-white text-[16px]">person</span>
                             </a>
                         @endauth
                     </div>
@@ -143,11 +143,11 @@
                         aria-controls="mobile-menu"
                         aria-expanded="false"
                         aria-label="Buka menu navigasi"
-                        class="md:hidden w-10 h-10 rounded-full bg-white border border-[#E5E7EB] hover:border-[#16A34A] flex items-center justify-center text-[#111827] active:scale-95 transition-all"
+                        class="md:hidden w-9 h-9 rounded-full bg-white border border-[#E5E7EB] hover:border-[#16A34A] flex items-center justify-center text-[#111827] active:scale-95 transition-all"
                         id="mobile-menu-toggle"
                         type="button"
                     >
-                        <span aria-hidden="true" class="material-symbols-outlined text-[22px]" id="mobile-menu-icon">menu</span>
+                        <span aria-hidden="true" class="material-symbols-outlined text-[20px]" id="mobile-menu-icon">menu</span>
                     </button>
                 </div>
             </div>
@@ -179,13 +179,13 @@
         <main class="flex-1 w-full bg-surface" id="konten-utama">
             <div class="flex flex-col w-full bg-surface text-on-surface min-h-screen relative overflow-x-clip">
                 <!-- Top Decorative Ambient Light Wells -->
-                <div class="relative w-full max-w-[1280px] mx-auto px-gutter lg:px-margin overflow-visible pointer-events-none">
+                <div class="relative w-full max-w-[1140px] mx-auto px-gutter lg:px-margin overflow-visible pointer-events-none">
                     <div class="absolute -top-24 -left-20 w-96 h-96 rounded-full bg-secondary-container/40 blur-3xl"></div>
                     <div class="absolute -top-12 -right-16 w-80 h-80 rounded-full bg-tertiary-fixed/35 blur-3xl"></div>
                 </div>
 
                 <!-- 1. HERO SECTION -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-lg lg:pt-space-xl pb-space-xl relative z-10 scroll-mt-24" id="beranda">
+                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin pt-space-lg lg:pt-space-xl pb-space-xl relative z-10 scroll-mt-24" id="beranda">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
                         <!-- Left Column: Copy & Tactile Search Engine -->
                         <div class="lg:col-span-7 flex flex-col gap-space-md">
@@ -238,7 +238,7 @@
 
                         <!-- Right Column: Tactile Staged Physical Card Composition -->
                         <div class="lg:col-span-5 relative flex justify-center py-space-md">
-                            <div class="stitch-surface-card w-full max-w-[460px] rounded-[28px] p-space-md lg:p-space-lg bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] flex flex-col items-center relative overflow-visible">
+                            <div class="stitch-surface-card w-full max-w-[400px] rounded-[22px] p-space-md bg-surface flex flex-col items-center relative overflow-visible">
                                 <div class="relative w-full rounded-[20px] bg-surface p-1.5 shadow-[inset_3px_3px_7px_#D2D2D2,inset_-3px_-3px_7px_#FFFFFF] overflow-hidden">
                                     <img
                                         alt="Ilustrasi 3D rumah dan peralatan perbaikan FixHome"
@@ -260,7 +260,7 @@
                 </section>
 
                 <!-- 2. SERVICE CATEGORIES SECTION -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="layanan-populer">
+                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="layanan-populer">
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm mb-space-lg">
                         <div>
                             <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-secondary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
@@ -292,8 +292,8 @@
                             >
                                 <div>
                                     <div class="flex items-center justify-between mb-space-md">
-                                        <div class="w-14 h-14 rounded-2xl bg-secondary-container flex items-center justify-center shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] group-hover:scale-105 transition-transform">
-                                            <span class="material-symbols-outlined text-primary text-[28px]">{{ $svc['icon'] }}</span>
+                                        <div class="w-11 h-11 rounded-xl bg-secondary-container flex items-center justify-center shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] group-hover:scale-105 transition-transform">
+                                            <span class="material-symbols-outlined text-primary text-[22px]">{{ $svc['icon'] }}</span>
                                         </div>
                                         <span class="stitch-surface-inset px-space-sm py-1 rounded-full bg-surface shadow-[inset_2px_2px_4px_#D2D2D2,inset_-2px_-2px_4px_#FFFFFF] font-label-sm text-label-sm font-semibold text-primary">
                                             {{ $svc['price'] }}
@@ -320,7 +320,7 @@
                 </section>
 
                 <!-- 2B. KATALOG TEKNISI -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="katalog-teknisi">
+                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="katalog-teknisi">
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
                         <div>
                             <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
@@ -347,9 +347,9 @@
                     </div>
 
                     @if ($featuredTechnicians->isEmpty())
-                        <div class="stitch-surface-card rounded-[26px] p-space-xl bg-surface shadow-[-6px_-6px_16px_#FFFFFF,6px_6px_16px_#D2D2D2] text-center">
+                        <div class="stitch-surface-card rounded-[20px] p-space-xl bg-surface shadow-[-6px_-6px_16px_#FFFFFF,6px_6px_16px_#D2D2D2] text-center">
                             <div class="w-14 h-14 mx-auto rounded-2xl bg-secondary-container flex items-center justify-center mb-space-md">
-                                <span class="material-symbols-outlined text-primary text-[28px]">engineering</span>
+                                <span class="material-symbols-outlined text-primary text-[22px]">engineering</span>
                             </div>
                             <h3 class="font-title-md text-title-md text-primary font-bold font-butler">Teknisi Sedang Disiapkan</h3>
                             <p class="font-body-md text-body-md text-on-surface-variant mt-1 mb-space-md">
@@ -371,7 +371,7 @@
                                     <div>
                                         <div class="flex items-start justify-between gap-space-sm mb-space-md">
                                             <div class="flex items-center gap-space-sm min-w-0">
-                                                <div class="w-14 h-14 rounded-2xl bg-secondary-container flex items-center justify-center shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] font-headline-sm text-headline-sm text-primary font-bold shrink-0">
+                                                <div class="w-11 h-11 rounded-xl bg-secondary-container flex items-center justify-center shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] font-headline-sm text-headline-sm text-primary font-bold shrink-0">
                                                     {{ $initials ?: 'T' }}
                                                 </div>
                                                 <div class="min-w-0">
@@ -409,8 +409,8 @@
                 </section>
 
                 <!-- 3. KEY FEATURE HIGHLIGHT SECTION (CARA KERJA & TRANSPARANSI BIAYA) -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="cara-kerja">
-                    <div class="stitch-surface-card rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] relative">
+                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="cara-kerja">
+                    <div class="stitch-surface-card rounded-[24px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] relative">
                         <div class="max-w-3xl mb-space-xl">
                             <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-2px_-2px_6px_#FFFFFF,2px_2px_6px_#D2D2D2] text-tertiary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
                                 <span class="material-symbols-outlined text-[16px]">lock_open</span>
@@ -460,7 +460,7 @@
 
                             <!-- Right: Live Cost Breakdown Box -->
                             <div class="lg:col-span-6">
-                                <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col gap-space-md transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
+                                <div class="stitch-surface-card p-space-lg rounded-[20px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col gap-space-md transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
                                     <div class="flex items-center justify-between gap-2">
                                         <div class="flex items-center gap-2">
                                             <span class="w-3 h-3 rounded-full bg-tertiary-fixed"></span>
@@ -530,7 +530,7 @@
                 </section>
 
                 <!-- 4. TRUST & TRANSPARENCY SECTION -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="transparansi">
+                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="transparansi">
                     <div class="text-center max-w-2xl mx-auto mb-space-xl">
                         <div class="stitch-surface-card inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#DCDCDC] text-primary font-label-md text-label-md font-semibold mb-space-xs font-lucy-rose">
                             <span class="material-symbols-outlined text-[16px]">verified</span>
@@ -545,8 +545,8 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
-                        <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
-                            <div class="w-14 h-14 rounded-2xl bg-secondary-container shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] flex items-center justify-center text-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
+                        <div class="stitch-surface-card p-space-lg rounded-[20px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
+                            <div class="w-11 h-11 rounded-xl bg-secondary-container shadow-[inset_3px_3px_6px_#B2CED0,inset_-3px_-3px_6px_#E6FAFC] flex items-center justify-center text-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
                                 <span class="material-symbols-outlined text-[26px]">shield_person</span>
                             </div>
                             <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-space-xs font-butler">Verifikasi Ketat</h3>
@@ -555,8 +555,8 @@
                             </p>
                         </div>
 
-                        <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
-                            <div class="w-14 h-14 rounded-2xl bg-tertiary-fixed shadow-[inset_3px_3px_6px_#DCC582,inset_-3px_-3px_6px_#FFF9E6] flex items-center justify-center text-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
+                        <div class="stitch-surface-card p-space-lg rounded-[20px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
+                            <div class="w-11 h-11 rounded-xl bg-tertiary-fixed shadow-[inset_3px_3px_6px_#DCC582,inset_-3px_-3px_6px_#FFF9E6] flex items-center justify-center text-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
                                 <span class="material-symbols-outlined text-[26px]">route</span>
                             </div>
                             <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-space-xs font-butler">Biaya Jarak Jelas &amp; Terukur</h3>
@@ -565,8 +565,8 @@
                             </p>
                         </div>
 
-                        <div class="stitch-surface-card p-space-lg rounded-[26px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
-                            <div class="w-14 h-14 rounded-2xl bg-primary shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35),inset_-3px_-3px_6px_rgba(255,255,255,0.2)] flex items-center justify-center text-on-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
+                        <div class="stitch-surface-card p-space-lg rounded-[20px] bg-surface shadow-[-8px_-8px_18px_#FFFFFF,8px_8px_18px_#D2D2D2] flex flex-col items-start group transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[-12px_-12px_26px_#FFFFFF,12px_12px_26px_#C8C8C8]">
+                            <div class="w-11 h-11 rounded-xl bg-primary shadow-[inset_3px_3px_6px_rgba(0,0,0,0.35),inset_-3px_-3px_6px_rgba(255,255,255,0.2)] flex items-center justify-center text-on-primary mb-space-md group-hover:scale-110 transition-transform duration-300">
                                 <span class="material-symbols-outlined text-[26px]">receipt_long</span>
                             </div>
                             <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-space-xs font-butler">Komisi Terpisah &amp; Adil</h3>
@@ -578,9 +578,9 @@
                 </section>
 
                 <!-- 5. PARTNERSHIP CALLOUT BANNER -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin pt-space-md pb-space-xl scroll-mt-24" id="jadi-mitra">
+                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin pt-space-md pb-space-xl scroll-mt-24" id="jadi-mitra">
                     <!-- Partnership Invitation Card -->
-                    <div class="stitch-surface-card rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col md:flex-row items-center justify-between gap-space-lg">
+                    <div class="stitch-surface-card rounded-[24px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_22px_#FFFFFF,10px_10px_22px_#C8C8C8] flex flex-col md:flex-row items-center justify-between gap-space-lg">
                         <div class="max-w-xl text-center md:text-left">
                             <h3 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">
                                 Punya Keahlian Pertukangan?
@@ -607,7 +607,7 @@
                 </section>
 
                 <!-- 6. TENTANG KAMI -->
-                <section class="w-full max-w-[1280px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="tentang-kami">
+                <section class="w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl scroll-mt-24" id="tentang-kami">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
                         <!-- Left: Story -->
                         <div class="lg:col-span-6 flex flex-col gap-space-md">
@@ -649,7 +649,7 @@
 
                         <!-- Right: Values Card -->
                         <div class="lg:col-span-6">
-                            <div class="stitch-surface-card rounded-[32px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] flex flex-col gap-space-md">
+                            <div class="stitch-surface-card rounded-[24px] p-space-lg lg:p-space-xl bg-surface shadow-[-10px_-10px_24px_#FFFFFF,10px_10px_24px_#C8C8C8] flex flex-col gap-space-md">
                                 <div class="flex items-center gap-space-sm">
                                     <img alt="" aria-hidden="true" class="w-12 h-12 object-contain" src="{{ asset('images/fixhome-icon.png') }}" />
                                     <div>
@@ -707,7 +707,7 @@
 
         <!-- GLOBAL FOOTER (Old Copper #775537) -->
         <footer class="w-full bg-primary-container text-inverse-on-surface pt-space-xl pb-space-lg mt-space-xl">
-            <div class="max-w-[1280px] mx-auto px-gutter lg:px-margin">
+            <div class="max-w-[1140px] mx-auto px-gutter lg:px-margin">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl">
                     <div class="flex flex-col gap-space-sm">
                         <h3 class="font-title-md text-title-md text-tertiary-fixed font-semibold mb-space-xs font-recoleta">Pelanggan</h3>
