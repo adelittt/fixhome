@@ -1,6 +1,6 @@
-<x-layouts.auth title="Masuk - FixHome">
-    <div class="w-full flex items-center justify-center py-5 sm:py-8 px-4 sm:px-6">
-        <div class="w-full max-w-[440px] lg:max-w-[920px] bg-white rounded-[24px] border border-[#E5E7EB] shadow-[0_12px_40px_rgba(17,24,39,0.06)] overflow-hidden lg:grid lg:grid-cols-12">
+<x-layouts.auth title="Masuk - FixHome" :noScroll="true">
+    <div class="w-full flex items-center justify-center py-2 px-4 sm:px-6">
+        <div class="w-full max-w-[440px] lg:max-w-[900px] bg-white rounded-[24px] border border-[#E5E7EB] shadow-[0_12px_40px_rgba(17,24,39,0.06)] overflow-hidden lg:grid lg:grid-cols-12">
 
             <!-- Left Visual Photographic Panel (Desktop) -->
             <div class="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-7 overflow-hidden bg-[#111827]">
@@ -34,11 +34,11 @@
             </div>
 
             <!-- Right Minimalist Form Column -->
-            <div class="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-between bg-white">
+            <div class="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between bg-white">
                 <div>
-                    <div class="mb-6">
-                        <h1 class="text-[24px] font-extrabold text-[#111827] tracking-[-0.02em]">Masuk ke FixHome</h1>
-                        <p class="text-[13.5px] text-[#6B7280] mt-1">
+                    <div class="mb-5">
+                        <h1 class="text-[22px] sm:text-[24px] font-extrabold text-[#111827] tracking-[-0.02em]">Masuk ke FixHome</h1>
+                        <p class="text-[13px] text-[#6B7280] mt-1">
                             Masuk menggunakan akun Customer atau Mitra Teknisi Anda.
                         </p>
                     </div>
@@ -112,8 +112,8 @@
                     </form>
 
                     <!-- Clean Minimal Demo Quick-Fill -->
-                    <div class="mt-6 pt-5 border-t border-[#F3F4F6]">
-                        <span class="block text-[11px] font-medium text-[#9CA3AF] text-center mb-2.5">Isi cepat akun demo</span>
+                    <div class="mt-5 pt-4 border-t border-[#F3F4F6]">
+                        <span class="block text-[11px] font-medium text-[#9CA3AF] text-center mb-2">Isi cepat akun demo</span>
                         <div class="grid grid-cols-2 gap-2.5">
                             <button type="button" onclick="fillDemo('customer@fixhome.com')" class="py-2 px-3 rounded-xl bg-[#F8FAFC] hover:bg-[#F0FDF4] border border-[#E5E7EB] hover:border-[#BBF7D0] text-[12px] font-semibold text-[#374151] hover:text-[#15803D] transition-all inline-flex items-center justify-center gap-1.5">
                                 <span class="material-symbols-outlined text-[15px] text-[#16A34A]">person</span>
@@ -127,7 +127,7 @@
                     </div>
                 </div>
 
-                <div class="pt-6 text-center text-[12.5px] text-[#6B7280]">
+                <div class="pt-4 text-center text-[12.5px] text-[#6B7280]">
                     Belum punya akun?
                     <a href="{{ route('register') }}" class="font-semibold text-[#16A34A] hover:underline ml-1">Daftar sekarang</a>
                 </div>

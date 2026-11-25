@@ -1,8 +1,9 @@
 @props([
     'title' => 'Masuk — FixHome',
+    'noScroll' => false,
 ])
 <!DOCTYPE html>
-<html lang="id" class="h-full bg-[#F8FAFC] scroll-smooth">
+<html lang="id" class="{{ $noScroll ? 'h-dvh overflow-hidden' : 'h-full scroll-smooth' }} bg-[#F8FAFC]">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,10 +18,10 @@
 
     @vite(['resources/css/landing.css'])
 </head>
-<body class="min-h-screen bg-[#F8FAFC] font-body-md text-[#111827] antialiased flex flex-col justify-between relative overflow-x-hidden">
+<body class="{{ $noScroll ? 'h-dvh overflow-hidden' : 'min-h-screen overflow-x-hidden' }} bg-[#F8FAFC] font-body-md text-[#111827] antialiased flex flex-col justify-between relative">
 
     <!-- Minimal Standalone Top Bar (Only Back to Home) -->
-    <div class="w-full max-w-[960px] mx-auto px-4 sm:px-6 pt-5 sm:pt-7 flex items-center justify-between">
+    <div class="w-full max-w-[960px] mx-auto px-4 sm:px-6 {{ $noScroll ? 'pt-4' : 'pt-5 sm:pt-7' }} flex items-center justify-between shrink-0">
         <a href="{{ route('splash') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E5E7EB] text-[12.5px] font-semibold text-[#374151] hover:text-[#15803D] hover:border-[#16A34A] shadow-xs transition-all">
             <span class="material-symbols-outlined text-[16px]">arrow_back</span>
             <span>Kembali ke Beranda</span>
@@ -56,12 +57,12 @@
     @endif
 
     <!-- Standalone Centered Content -->
-    <main class="flex-1 flex items-center justify-center w-full">
+    <main class="flex-1 min-h-0 flex items-center justify-center w-full">
         {{ $slot }}
     </main>
 
     <!-- Minimal Standalone Copyright -->
-    <div class="w-full text-center py-5 px-4 text-[11.5px] text-[#9CA3AF]">
+    <div class="w-full text-center {{ $noScroll ? 'py-3' : 'py-5' }} px-4 text-[11.5px] text-[#9CA3AF] shrink-0">
         &copy; {{ date('Y') }} FixHome Indonesia &middot; Layanan Perbaikan Rumah Terverifikasi
     </div>
 
