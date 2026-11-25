@@ -95,18 +95,19 @@
                 </a>
 
                 <!-- Center Navigation Links -->
-                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-0.5 lg:gap-1">
-                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 bg-[#DCFCE7] text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
-                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
-                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
-                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
+                <nav aria-label="Navigasi utama" class="hidden md:flex items-center gap-0.5 lg:gap-1 relative" id="desktop-nav">
+                    <span aria-hidden="true" class="fh-nav-pill pointer-events-none absolute top-0 bottom-0 left-0 rounded-full bg-[#DCFCE7] z-0 opacity-0" id="nav-active-pill"></span>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#15803D] font-semibold" data-nav-target="beranda" href="#beranda" aria-current="page">Beranda</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="layanan-populer" href="#layanan-populer">Layanan</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="katalog-teknisi" href="#katalog-teknisi">Teknisi</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="cara-kerja" href="#cara-kerja">Cara Kerja</a>
                     @guest
-                        <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
+                        <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="jadi-mitra" href="#jadi-mitra">Jadi Mitra</a>
                     @endguest
-                    <a class="fh-nav-link font-body-md text-[13px] rounded-full px-3 py-1.5 transition-all duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
+                    <a class="fh-nav-link relative z-10 font-body-md text-[13px] rounded-full px-3 py-1.5 transition-colors duration-200 active:scale-95 text-[#4B5563] hover:text-[#111827]" data-nav-target="tentang-kami" href="#tentang-kami">Tentang Kami</a>
                     @auth
                         @if (Auth::user()->role === 'admin')
-                            <a class="font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1 hover:bg-[#DCFCE7] active:scale-95 transition-all" href="{{ url('/admin') }}">Panel Admin</a>
+                            <a class="relative z-10 font-label-md text-label-md text-[#15803D] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1 hover:bg-[#DCFCE7] active:scale-95 transition-all" href="{{ url('/admin') }}">Panel Admin</a>
                         @endif
                     @endauth
                 </nav>

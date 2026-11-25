@@ -87,13 +87,69 @@ document.addEventListener('DOMContentLoaded', () => {
         recalc();
     }
 
-    // 3. Responsive Active Header State (Instant on Click + Scrollspy)
-    const navLinks = Array.from(document.querySelectorAll('.fh-nav-link[data-nav-target]'));
+    // 3. Responsive Active Header State (Sliding Spring Pill + Instant Click + Scrollspy)
+    const desktopNav = document.getElementById('desktop-nav');
+    const navPill = document.getElementById('nav-active-pill');
+    const desktopNavLinks = desktopNav
+        ? Array.from(desktopNav.querySelectorAll('.fh-nav-link[data-nav-target]'))
+        : [];
+    const mobileNavLinks = mobileMenu
+        ? Array.from(mobileMenu.querySelectorAll('.fh-nav-link[data-nav-target]'))
+        : [];
     const bottomLinks = Array.from(document.querySelectorAll('.fh-bottom-link[data-nav-target]'));
     const allTargetTriggers = Array.from(document.querySelectorAll('a[data-nav-target]'));
 
-    const setActiveSection = (targetId) => {
-        navLinks.forEach((link) => {
+    let currentActiveId = 'beranda';
+
+    const moveNavPillTo = (targetLink, { animate = true, pop = false } = {}) => {
+        if (!navPill || !desktopNav || !targetLink) return;
+        const navRect = desktopNav.getBoundingClientRect();
+        const linkRect = targetLink.getBoundingClientRect();
+        if (linkRect.width === 0) return;
+
+        if (!animate) {
+            navPill.classList.add('is-no-anim');
+        }
+
+        const offsetX = linkRect.left - navRect.left;
+        navPill.style.width = `${linkRect.width}px`;
+        navPill.style.transform = `translate3d(${offsetX}px, 0, 0)`;
+        navPill.style.opacity = '1';
+
+        if (!animate) {
+            // Force reflow then re-enable spring transition
+            void navPill.offsetWidth;
+            navPill.classList.remove('is-no-anim');
+        } else if (pop) {
+            navPill.classList.remove('is-popping');
+            void navPill.offsetWidth;
+            navPill.classList.add('is-popping');
+        }
+    };
+
+    const setActiveSection = (targetId, { animatePill = true, popPill = false } = {}) => {
+        currentActiveId = targetId;
+
+        let activeDesktopLink = null;
+        desktopNavLinks.forEach((link) => {
+            const isActive = link.getAttribute('data-nav-target') === targetId;
+            if (isActive) {
+                activeDesktopLink = link;
+                link.setAttribute('aria-current', 'page');
+                link.classList.add('text-[#15803D]', 'font-semibold');
+                link.classList.remove('text-[#4B5563]', 'hover:text-[#111827]');
+            } else {
+                link.removeAttribute('aria-current');
+                link.classList.remove('text-[#15803D]', 'font-semibold');
+                link.classList.add('text-[#4B5563]', 'hover:text-[#111827]');
+            }
+        });
+
+        if (activeDesktopLink) {
+            moveNavPillTo(activeDesktopLink, { animate: animatePill, pop: popPill });
+        }
+
+        mobileNavLinks.forEach((link) => {
             const isActive = link.getAttribute('data-nav-target') === targetId;
             if (isActive) {
                 link.setAttribute('aria-current', 'page');
@@ -128,10 +184,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             e.preventDefault();
             clickLockUntil = Date.now() + 750;
-            setActiveSection(targetId);
+            setActiveSection(targetId, { animatePill: true, popPill: true });
             setMobileMenuOpen(false);
 
-            const headerOffset = headerEl ? headerEl.offsetHeight + 8 : 88;
+            const headerOffset = headerEl ? headerEl.offsetHeight + 8 : 72;
             const topPos = targetId === 'beranda'
                 ? 0
                 : Math.max(0, targetEl.getBoundingClientRect().top + window.scrollY - headerOffset);
@@ -143,30 +199,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const uniqueTargetIds = Array.from(new Set(navLinks.map((l) => l.getAttribute('data-nav-target')).filter(Boolean)));
+    const uniqueTargetIds = Array.from(new Set(desktopNavLinks.map((l) => l.getAttribute('data-nav-target')).filter(Boolean)));
     const trackedSections = uniqueTargetIds
         .map((id) => ({ id, el: document.getElementById(id) }))
         .filter((x) => x.el);
 
     if (trackedSections.length > 0) {
-        const syncScrollSpy = () => {
+        const syncScrollSpy = (animatePill = true) => {
             if (Date.now() < clickLockUntil) return;
             const scrollY = window.scrollY;
             if (scrollY < 120) {
-                setActiveSection('beranda');
+                setActiveSection('beranda', { animatePill });
                 return;
             }
-            const probe = scrollY + (headerEl ? headerEl.offsetHeight + 40 : 120);
+            const probe = scrollY + (headerEl ? headerEl.offsetHeight + 40 : 104);
             let currentId = trackedSections[0].id;
             for (const sec of trackedSections) {
                 if (sec.el.offsetTop <= probe) {
                     currentId = sec.id;
                 }
             }
-            setActiveSection(currentId);
+            setActiveSection(currentId, { animatePill });
         };
 
-        window.addEventListener('scroll', syncScrollSpy, { passive: true });
-        syncScrollSpy();
+        window.addEventListener('scroll', () => syncScrollSpy(true), { passive: true });
+        window.addEventListener('resize', () => {
+            const activeLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-target') === currentActiveId);
+            if (activeLink) moveNavPillTo(activeLink, { animate: false });
+        });
+
+        // Initial pill placement (snap without flash) + re-align once web fonts finish loading
+        syncScrollSpy(false);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                const activeLink = desktopNavLinks.find((l) => l.getAttribute('data-nav-target') === currentActiveId);
+                if (activeLink) moveNavPillTo(activeLink, { animate: false });
+            });
+        }
     }
 });
