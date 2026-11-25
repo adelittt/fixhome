@@ -157,17 +157,17 @@ body.fh-sidebar-resizing {
     box-shadow: none !important;
 }
 
-/* Clean Typography */
+/* Clean Typography: Plus Jakarta Sans (Headings) + Inter (Body) */
 .fi-header-heading {
-    font-family: 'Fraunces', Georgia, serif !important;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif !important;
     color: var(--fh-primary) !important;
     letter-spacing: -0.02em !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
 }
 
 .fi-section-header-heading,
 .fi-ta-header-heading {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif !important;
     color: var(--fh-on-surface) !important;
     font-weight: 700 !important;
     letter-spacing: -0.01em !important;

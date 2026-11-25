@@ -56,7 +56,7 @@ class AdminPanelProvider extends PanelProvider
                 fn (): HtmlString => new HtmlString(
                     '<link rel="preconnect" href="https://fonts.googleapis.com" />'
                     . '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />'
-                    . '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />'
+                    . '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />'
                     . '<script>(function(){try{var w=parseInt(localStorage.getItem("fixhome_admin_sidebar_width"),10);if(!isNaN(w)&&w>=220&&w<=440){document.documentElement.style.setProperty("--sidebar-width",w+"px");}}catch(e){}})();</script>'
                 ),
             )

@@ -8,13 +8,10 @@
     <link href="{{ asset('images/fixhome-icon.png') }}" rel="icon" type="image/png" />
     <title>FixHome - Layanan Perbaikan Rumah Terverifikasi &amp; Bergaransi</title>
 
-    <!-- Fonts: Recoleta, Butler, Lucy Rose (fallbacks Fraunces, Playfair Display, Cinzel Decorative) + Plus Jakarta Sans & Material Symbols -->
+    <!-- Fonts: Plus Jakarta Sans (Headings) + Inter (Body & UI) + Material Symbols -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.cdnfonts.com/css/recoleta" rel="stylesheet" />
-    <link href="https://fonts.cdnfonts.com/css/butler" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400..800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/landing.css', 'resources/js/landing.js'])
 </head>

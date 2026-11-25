@@ -73,8 +73,7 @@
 }
 
 .fh-editorial .fh-serif {
-    font-family: 'Fraunces', Georgia, serif;
-    font-variation-settings: 'SOFT' 50, 'WONK' 0;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .fh-skip {
@@ -277,20 +276,20 @@
     box-shadow: 0 1px 3px rgba(93, 62, 34, 0.1);
 }
 
-/* Legacy font & tactile utilities kept for internal app pages (auth, customer, teknisi) */
+/* Display & heading utilities mapped to Plus Jakarta Sans + Inter */
 .font-recoleta {
-    font-family: 'Recoleta', 'Fraunces', Georgia, serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
     letter-spacing: -0.02em;
 }
 
 .font-butler {
-    font-family: 'Butler', 'Playfair Display', Didot, serif;
-    letter-spacing: -0.01em;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.015em;
 }
 
 .font-lucy-rose {
-    font-family: 'Lucy Rose', 'Cinzel Decorative', 'Cormorant Garamond', serif;
-    letter-spacing: 0.04em;
+    font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: 0.01em;
 }
 
 @layer components {
