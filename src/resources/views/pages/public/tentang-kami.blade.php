@@ -106,4 +106,30 @@
             </div>
         </div>
     </section>
+    <!-- Visual Gallery Strip -->
+    <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin pb-10" data-reveal>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="stitch-surface-card rounded-[20px] overflow-hidden bg-white">
+                <img alt="Standar kerja teknisi FixHome" class="w-full h-40 object-cover" loading="lazy" src="{{ asset('images/fixhome-hero-bg.webp') }}" />
+                <div class="p-4">
+                    <h3 class="text-[14.5px] font-bold text-[#111827]">Pengerjaan Rapi &amp; Teliti</h3>
+                    <p class="text-[12.5px] text-[#4B5563] mt-1">Setiap teknisi membawa peralatan kerja standar dan memastikan area rumah tetap bersih setelah selesai.</p>
+                </div>
+            </div>
+            <div class="stitch-surface-card rounded-[20px] overflow-hidden bg-white">
+                <img alt="Tim layanan kebersihan & perawatan rumah FixHome" class="w-full h-40 object-cover" loading="lazy" src="{{ asset('images/fixhome-hero-tactile.jpg') }}" />
+                <div class="p-4">
+                    <h3 class="text-[14.5px] font-bold text-[#111827]">Tim Ramah &amp; Terlatih</h3>
+                    <p class="text-[12.5px] text-[#4B5563] mt-1">Komunikasi transparan sebelum dan selama pengerjaan agar pemilik rumah merasa aman dan nyaman.</p>
+                </div>
+            </div>
+            <div class="stitch-surface-card rounded-[20px] overflow-hidden bg-white">
+                <img alt="Perawatan AC & kelistrikan bergaransi" class="w-full h-40 object-cover" loading="lazy" src="{{ asset('images/services/ac-pendingin.jpg') }}" />
+                <div class="p-4">
+                    <h3 class="text-[14.5px] font-bold text-[#111827]">Bergaransi Resmi 14 Hari</h3>
+                    <p class="text-[12.5px] text-[#4B5563] mt-1">Setiap transaksi tercatat di sistem untuk memastikan perlindungan garansi penuh tanpa ribet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </x-layouts.public>

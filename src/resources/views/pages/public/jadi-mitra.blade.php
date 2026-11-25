@@ -88,15 +88,16 @@
         <div class="stitch-surface-card rounded-[24px] p-6 sm:p-8 bg-white">
             <h2 class="font-headline-sm text-[18px] font-bold text-[#111827]">Keahlian yang Sedang Dibutuhkan</h2>
             <p class="text-[13.5px] text-[#4B5563] mt-1">Kami membuka pendaftaran untuk seluruh bidang perbaikan dan perawatan rumah berikut:</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
                 @foreach ($services as $svc)
-                    <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E5E7EB]">
-                        <div class="w-10 h-10 rounded-xl bg-[#DCFCE7] text-[#15803D] flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[20px]">{{ $svc['icon'] }}</span>
+                    <div class="group rounded-[18px] overflow-hidden bg-white border border-[#E5E7EB] hover:border-[#16A34A] transition-all">
+                        <div class="h-32 overflow-hidden bg-[#F3F4F6]">
+                            <img alt="{{ $svc['title'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" src="{{ asset($svc['image']) }}" />
                         </div>
-                        <div class="min-w-0">
-                            <p class="text-[13.5px] font-bold text-[#111827] truncate">{{ $svc['title'] }}</p>
-                            <p class="text-[11.5px] text-[#4B5563]">{{ $svc['price'] }}</p>
+                        <div class="p-3.5">
+                            <p class="text-[14px] font-bold text-[#111827] truncate">{{ $svc['title'] }}</p>
+                            <p class="text-[12px] text-[#4B5563] mt-0.5 line-clamp-2">{{ $svc['desc'] }}</p>
+                            <p class="text-[12px] font-bold text-[#16A34A] mt-2">{{ $svc['price'] }}</p>
                         </div>
                     </div>
                 @endforeach
