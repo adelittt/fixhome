@@ -15,16 +15,16 @@
    ========================================================================== */
 
 :root {
-    --fh-bg: #fefee2;
+    --fh-bg: #ffffff;
     --fh-surface: #ffffff;
-    --fh-surface-muted: #f5f6d4;
-    --fh-border: #e0e2bd;
+    --fh-surface-muted: #f8f9f5;
+    --fh-border: #e5e8dc;
     --fh-primary: #4e5e24;
     --fh-primary-container: #7f8f3c;
     --fh-secondary: #9caa52;
     --fh-secondary-container: #b1ba67;
     --fh-tertiary-fixed: #f9c744;
-    --fh-on-surface: #272d16;
+    --fh-on-surface: #1f2512;
     --fh-on-surface-variant: #555d3b;
 }
 
