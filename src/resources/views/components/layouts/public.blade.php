@@ -55,7 +55,7 @@
                         <img alt="FixHome" class="fh-header-logo h-7 sm:h-[30px] w-auto object-contain group-hover:opacity-90 transition-all duration-300" src="{{ asset('images/fixhome-logo-full.png') }}" />
                     </a>
                     <span class="fh-compact-badge hidden md:inline-flex items-center pl-2.5 border-l border-[#E5E7EB] text-[12px] font-semibold text-[#15803D] whitespace-nowrap" id="header-compact-badge">
-                        <span class="border-b-2 border-[#16A34A] pb-0.5 leading-none" id="header-compact-label">{{ $activeLabel }}</span>
+                        <span class="leading-none" id="header-compact-label">{{ $activeLabel }}</span>
                     </span>
                 </div>
 
