@@ -25,6 +25,7 @@ Livewire::setScriptRoute(function ($handle) {
 // Splash Screen & Guest Authentication (Customer & Teknisi; Admin uses /admin/login)
 Route::get('/', [AuthController::class, 'showSplash'])->name('splash');
 Route::view('/demo-ui', 'pages.demo-ui')->name('demo-ui');
+Route::redirect('/login/admin', '/admin/login');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
