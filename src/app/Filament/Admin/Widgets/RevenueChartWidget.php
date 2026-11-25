@@ -45,8 +45,8 @@ class RevenueChartWidget extends ChartWidget
                 [
                     'label' => 'Total Transaksi (Rp)',
                     'data' => $grossSeries,
-                    'backgroundColor' => 'rgba(156, 170, 82, 0.22)',
-                    'borderColor' => '#7F8F3C',
+                    'backgroundColor' => 'rgba(22, 163, 74, 0.16)',
+                    'borderColor' => '#16A34A',
                     'borderWidth' => 2,
                     'fill' => true,
                     'tension' => 0.35,
@@ -54,8 +54,8 @@ class RevenueChartWidget extends ChartWidget
                 [
                     'label' => 'Komisi Platform 5% (Rp)',
                     'data' => $komisiSeries,
-                    'backgroundColor' => 'rgba(249, 199, 68, 0.28)',
-                    'borderColor' => '#E5A910',
+                    'backgroundColor' => 'rgba(250, 204, 21, 0.25)',
+                    'borderColor' => '#CA8A04',
                     'borderWidth' => 2,
                     'fill' => true,
                     'tension' => 0.35,

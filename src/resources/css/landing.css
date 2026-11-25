@@ -26,7 +26,7 @@
 }
 
 ::selection {
-    background-color: #9caa52;
+    background-color: #16a34a;
     color: #ffffff;
 }
 
@@ -108,18 +108,18 @@
    FixHome Plus-style Tactile Landing (ported from fixhome-plus service-catalog)
    ========================================================================== */
 .fh-plus {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 .fh-plus .stitch-surface-card {
     background-color: #ffffff !important;
-    border: 1px solid #e5e8dc !important;
-    box-shadow: 0 2px 12px rgba(31, 37, 18, 0.04), 0 1px 2px rgba(31, 37, 18, 0.03) !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 2px 10px rgba(17, 24, 39, 0.04), 0 1px 2px rgba(17, 24, 39, 0.03) !important;
 }
 
 .fh-plus .stitch-surface-inset {
-    background-color: #f8f9f5 !important;
-    border: 1px solid #e5e8dc !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #e5e7eb !important;
     box-shadow: none !important;
 }
 
@@ -294,76 +294,76 @@
 }
 
 @layer components {
-    /* Minimalist Clean White Canvas + Sunlight / Green Fields / Weeping Willow accents */
+    /* FixHome Platform Design System: Primary #16A34A, Secondary #FACC15, Tertiary #EF4444, Neutral #111827 */
     .neu-card {
-        @apply bg-white rounded-[24px] border border-[#E5E8DC];
-        box-shadow: 0 2px 12px rgba(31, 37, 18, 0.04), 0 1px 2px rgba(31, 37, 18, 0.03);
+        @apply bg-white rounded-[24px] border border-[#E5E7EB];
+        box-shadow: 0 2px 10px rgba(17, 24, 39, 0.04), 0 1px 2px rgba(17, 24, 39, 0.03);
     }
 
     .neu-card-sm {
-        @apply bg-white rounded-[18px] border border-[#E5E8DC];
-        box-shadow: 0 2px 8px rgba(31, 37, 18, 0.04), 0 1px 2px rgba(31, 37, 18, 0.02);
+        @apply bg-white rounded-[18px] border border-[#E5E7EB];
+        box-shadow: 0 1px 6px rgba(17, 24, 39, 0.04), 0 1px 2px rgba(17, 24, 39, 0.02);
     }
 
     .neu-card-lg {
-        @apply bg-white rounded-[28px] border border-[#E5E8DC];
-        box-shadow: 0 6px 20px rgba(31, 37, 18, 0.05), 0 1px 3px rgba(31, 37, 18, 0.03);
+        @apply bg-white rounded-[28px] border border-[#E5E7EB];
+        box-shadow: 0 6px 20px rgba(17, 24, 39, 0.05), 0 1px 3px rgba(17, 24, 39, 0.03);
     }
 
     .neu-inset {
-        @apply bg-[#F8F9F5] rounded-[16px] border border-[#E5E8DC];
+        @apply bg-[#F8FAFC] rounded-[16px] border border-[#E5E7EB];
         box-shadow: none;
     }
 
     .neu-inset-sm {
-        @apply bg-[#F8F9F5] rounded-full border border-[#E5E8DC];
+        @apply bg-[#F8FAFC] rounded-full border border-[#E5E7EB];
         box-shadow: none;
     }
 
     .neu-input {
-        @apply w-full bg-white text-on-surface placeholder:text-outline rounded-2xl border border-[#E5E8DC] focus:outline-none focus:border-[#9CAA52] focus:ring-2 focus:ring-[#9CAA52]/20 transition-all;
+        @apply w-full bg-white text-[#111827] placeholder:text-[#6B7280] rounded-2xl border border-[#D1D5DB] focus:outline-none focus:border-[#16A34A] focus:ring-2 focus:ring-[#16A34A]/20 transition-all;
         box-shadow: none;
     }
 
     .neu-btn-primary {
-        @apply inline-flex items-center justify-center rounded-full bg-[#7F8F3C] hover:bg-[#4E5E24] text-white font-label-lg font-semibold transition-all active:scale-[0.98];
-        box-shadow: 0 4px 12px rgba(127, 143, 60, 0.22);
+        @apply inline-flex items-center justify-center rounded-full bg-[#16A34A] hover:bg-[#15803D] text-white font-label-lg font-semibold transition-all active:scale-[0.98];
+        box-shadow: 0 4px 12px rgba(22, 163, 74, 0.24);
     }
 
     .neu-btn-primary:active {
-        box-shadow: inset 2px 2px 5px rgba(50, 62, 20, 0.3);
+        box-shadow: inset 2px 2px 5px rgba(20, 83, 45, 0.3);
     }
 
     .neu-btn-secondary {
-        @apply inline-flex items-center justify-center rounded-full bg-white text-[#4E5E24] font-label-lg font-semibold border border-[#E5E8DC] transition-all hover:bg-[#F8F9F5] active:scale-[0.98];
-        box-shadow: 0 1px 4px rgba(31, 37, 18, 0.04);
+        @apply inline-flex items-center justify-center rounded-full bg-white text-[#111827] font-label-lg font-semibold border border-[#D1D5DB] transition-all hover:bg-[#F8FAFC] hover:border-[#16A34A] active:scale-[0.98];
+        box-shadow: 0 1px 3px rgba(17, 24, 39, 0.04);
     }
 
     .neu-btn-secondary:hover {
-        box-shadow: 0 3px 10px rgba(156, 170, 82, 0.14);
+        box-shadow: 0 3px 8px rgba(17, 24, 39, 0.06);
     }
 
     .neu-btn-secondary:active {
-        box-shadow: inset 2px 2px 4px rgba(31, 37, 18, 0.06);
+        box-shadow: inset 2px 2px 4px rgba(17, 24, 39, 0.06);
     }
 
     .neu-pill {
-        @apply inline-flex items-center gap-1.5 rounded-full bg-white border border-[#E5E8DC];
-        box-shadow: 0 1px 4px rgba(31, 37, 18, 0.04);
+        @apply inline-flex items-center gap-1.5 rounded-full bg-white border border-[#E5E7EB];
+        box-shadow: 0 1px 3px rgba(17, 24, 39, 0.04);
     }
 
     .neu-icon-teal {
-        @apply bg-[#B1BA67]/30 text-[#4E5E24] flex items-center justify-center;
+        @apply bg-[#DCFCE7] text-[#15803D] flex items-center justify-center;
         box-shadow: none;
     }
 
     .neu-icon-gold {
-        @apply bg-[#F9C744] text-[#3B2C00] flex items-center justify-center;
+        @apply bg-[#FACC15] text-[#422006] flex items-center justify-center;
         box-shadow: none;
     }
 
     .neu-icon-primary {
-        @apply bg-[#7F8F3C] text-white flex items-center justify-center;
+        @apply bg-[#16A34A] text-white flex items-center justify-center;
         box-shadow: none;
     }
 
