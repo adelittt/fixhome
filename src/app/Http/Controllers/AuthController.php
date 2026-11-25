@@ -39,6 +39,16 @@ class AuthController extends Controller
         $remember = $request->boolean('remember');
 
         if (Auth::attempt($credentials, $remember)) {
+            if (Auth::user()->isAdmin()) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'auth' => 'Akun Administrator menggunakan halaman login terpisah. Silakan masuk melalui /admin.',
+                ])->onlyInput('email');
+            }
+
             $request->session()->regenerate();
             return $this->redirectBasedOnRole(Auth::user());
         }

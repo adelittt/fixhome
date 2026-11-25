@@ -32,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->login()
             ->spa()
             ->brandName('FixHome')
             ->brandLogo(fn () => view('filament.brand-logo'))

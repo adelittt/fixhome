@@ -16,7 +16,7 @@
                         Satu Pintu Masuk untuk Seluruh Ekosistem FixHome.
                     </h2>
                     <p class="font-body-md text-body-md text-inverse-on-surface/80 leading-relaxed">
-                        Masuk menggunakan akun Customer, Mitra Teknisi, maupun Administrator. Sistem otomatis mengarahkan Anda ke halaman yang sesuai dengan hak akses akun.
+                        Masuk menggunakan akun Customer atau Mitra Teknisi. Sistem otomatis mengarahkan Anda ke halaman yang sesuai dengan peran akun Anda.
                     </p>
 
                     <div class="space-y-2.5 pt-2 text-xs text-inverse-on-surface/90">
@@ -27,10 +27,6 @@
                         <div class="flex items-center gap-2.5">
                             <span class="material-symbols-outlined text-tertiary-fixed text-[18px]">engineering</span>
                             <span>Mitra Teknisi — Kelola pesanan &amp; dompet 95%</span>
-                        </div>
-                        <div class="flex items-center gap-2.5">
-                            <span class="material-symbols-outlined text-tertiary-fixed text-[18px]">admin_panel_settings</span>
-                            <span>Administrator — Panel operasional &amp; verifikasi</span>
                         </div>
                     </div>
                 </div>
@@ -62,7 +58,7 @@
                         </div>
                         <h1 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">Masuk ke Akun Anda</h1>
                         <p class="font-body-md text-body-md text-on-surface-variant mt-1">
-                            Berlaku untuk <strong class="text-primary">Customer</strong>, <strong class="text-primary">Teknisi Mitra</strong>, dan <strong class="text-primary">Admin</strong>.
+                            Berlaku untuk <strong class="text-primary">Customer</strong> dan <strong class="text-primary">Teknisi Mitra</strong>.
                         </p>
                     </div>
 
@@ -142,10 +138,6 @@
                             <button type="button" onclick="fillDemo('budi.teknisi@fixhome.com')" class="neu-pill px-3.5 py-1.5 text-xs font-semibold text-primary hover:-translate-y-0.5 transition-all">
                                 <span class="material-symbols-outlined text-[14px] text-tertiary">engineering</span>
                                 <span>Teknisi</span>
-                            </button>
-                            <button type="button" onclick="fillDemo('admin@fixhome.com')" class="neu-pill px-3.5 py-1.5 text-xs font-semibold text-primary hover:-translate-y-0.5 transition-all">
-                                <span class="material-symbols-outlined text-[14px] text-primary-container">admin_panel_settings</span>
-                                <span>Admin</span>
                             </button>
                         </div>
                     </div>
