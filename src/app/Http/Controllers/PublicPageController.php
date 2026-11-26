@@ -140,7 +140,7 @@ class PublicPageController extends Controller
         $selectedCategory = $request->query('category');
 
         try {
-            \Database\Seeders\TeknisiCatalogSeeder::ensureSeeded();
+            \App\Services\TeknisiCatalogService::ensureSeeded();
             $query = Teknisi::ready()->orderByDesc('rating');
             $likeOperator = $query->getConnection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';
             if ($selectedCategory) {

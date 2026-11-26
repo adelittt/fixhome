@@ -188,7 +188,11 @@ class CustomerController extends Controller
         }
 
         // Pastikan katalog 10 teknisi tersedia jika database baru/kosong
-        \Database\Seeders\TeknisiCatalogSeeder::ensureSeeded();
+        try {
+            \App\Services\TeknisiCatalogService::ensureSeeded();
+        } catch (\Throwable) {
+            // Jangan gagalkan render beranda jika auto-seed terkendala
+        }
 
         // Ambil teknisi dengan status Ready (BR-02) yang berada dalam jangkauan maksimal 35 km
         $technicians = Teknisi::ready()->with('user')->get()->map(function ($tek) use ($customer) {
@@ -229,7 +233,11 @@ class CustomerController extends Controller
         $category = $request->query('category');
         $search = $request->query('search');
 
-        \Database\Seeders\TeknisiCatalogSeeder::ensureSeeded();
+        try {
+            \App\Services\TeknisiCatalogService::ensureSeeded();
+        } catch (\Throwable) {
+            // Jangan gagalkan halaman daftar teknisi jika auto-seed terkendala
+        }
 
         $query = Teknisi::ready()->with('user');
         $likeOperator = $query->getConnection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';

@@ -21,7 +21,7 @@ class SafeEncrypted implements CastsAttributes
 
         try {
             return Crypt::decryptString((string) $value);
-        } catch (DecryptException) {
+        } catch (\Throwable) {
             return (string) $value;
         }
     }
@@ -38,8 +38,12 @@ class SafeEncrypted implements CastsAttributes
         try {
             Crypt::decryptString($stringValue);
             return $stringValue;
-        } catch (DecryptException) {
-            return Crypt::encryptString($stringValue);
+        } catch (\Throwable) {
+            try {
+                return Crypt::encryptString($stringValue);
+            } catch (\Throwable) {
+                return $stringValue;
+            }
         }
     }
 }
