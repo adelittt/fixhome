@@ -77,9 +77,6 @@
                 </div>
 
                 <div class="relative z-10 max-w-xl space-y-3.5">
-                    <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-[#DCFCE7] text-[#15803D] font-label-sm text-[11.5px] font-semibold">
-                        Radius Terdekat &amp; Transparansi 95% / 5%
-                    </div>
                     <h1 class="font-headline-lg text-[24px] sm:text-[30px] font-extrabold leading-tight">
                         <span class="text-[#16A34A]">Butuh Teknisi Rumah?</span>
                         <span class="block text-[#111827]">Temukan yang Terdekat dari Rumah Anda.</span>
@@ -109,9 +106,6 @@
             <div class="space-y-4">
                 <div class="flex items-end justify-between gap-4">
                     <div>
-                        <span class="inline-flex items-center px-3 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] font-label-sm font-semibold mb-1.5">
-                            Keahlian Terstandar
-                        </span>
                         <h2 class="font-headline-md text-[20px] text-[#111827] font-bold">Kategori Layanan Utama</h2>
                         <p class="font-body-sm text-[#4B5563]">Pilih kategori servis spesialis yang Anda perlukan</p>
                     </div>
