@@ -104,22 +104,6 @@
                                     </td>
                                 </tr>
                             </table>
-
-                            <!-- Warranty Note -->
-                            <div style="background-color:#F0FDF4; border:1px solid #BBF7D0; border-radius:12px; padding:12px 16px; font-size:12.5px; color:#15803D; margin-bottom:24px;">
-                                <strong>Garansi Resmi 14 Hari:</strong> Simpan invoice ini sebagai bukti perlindungan garansi pengerjaan resmi FixHome.
-                            </div>
-
-                            <!-- Action CTA -->
-                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td align="center">
-                                        <a href="{{ route('booking.invoice', $booking->id) }}" style="display:inline-block; background-color:#16A34A; color:#FFFFFF; text-decoration:none; font-size:13.5px; font-weight:700; padding:12px 26px; border-radius:999px;">
-                                            Lihat Invoice &amp; Lacak Teknisi
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
                         </td>
                     </tr>
 
