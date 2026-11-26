@@ -37,6 +37,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register/send-otp', [AuthController::class, 'sendTeknisiOtp'])->name('register.send-otp');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

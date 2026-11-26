@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TeknisiOtpMail;
 use App\Models\Customer;
 use App\Models\Teknisi;
 use App\Models\User;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
@@ -204,6 +206,66 @@ class AuthController extends Controller
         ]);
     }
 
+    public function sendTeknisiOtp(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255', 'regex:/^[A-Za-z0-9._%+-]+@gmail\.com$/i', 'unique:users,email'],
+            'name' => ['nullable', 'string', 'max:255'],
+        ], [
+            'email.required' => 'Isi alamat Gmail Anda terlebih dahulu sebelum meminta kode OTP.',
+            'email.email' => 'Format alamat Gmail tidak valid.',
+            'email.regex' => 'Hanya alamat Gmail aktif (@gmail.com) yang dapat menerima kode verifikasi.',
+            'email.unique' => 'Alamat Gmail ini sudah terdaftar. Silakan masuk melalui halaman Login.',
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+        $existing = $request->session()->get('teknisi_otp');
+
+        if (is_array($existing) && ($existing['email'] ?? '') === $email) {
+            $elapsed = now()->timestamp - (int) ($existing['sent_at'] ?? 0);
+            if ($elapsed < 45) {
+                $wait = 45 - $elapsed;
+                return response()->json([
+                    'ok' => false,
+                    'message' => "Tunggu {$wait} detik sebelum meminta kode OTP baru.",
+                ], 429);
+            }
+        }
+
+        $otpCode = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+        $recipientName = trim((string) ($validated['name'] ?? '')) ?: 'Calon Mitra Teknisi';
+
+        try {
+            if (config('mail.default') === 'log') {
+                return response()->json([
+                    'ok' => false,
+                    'message' => 'MAIL_MAILER masih disetel ke "log". Konfigurasikan SMTP Gmail terlebih dahulu.',
+                ], 500);
+            }
+
+            Mail::to($email)->send(new TeknisiOtpMail($otpCode, $recipientName));
+
+            $request->session()->put('teknisi_otp', [
+                'email' => $email,
+                'code_hash' => Hash::make($otpCode),
+                'expires_at' => now()->addMinutes(10)->timestamp,
+                'sent_at' => now()->timestamp,
+            ]);
+
+            return response()->json([
+                'ok' => true,
+                'message' => "Kode OTP 6 digit telah dikirim ke {$email}. Cek Inbox atau folder Spam/Promosi (berlaku 10 menit).",
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Failed to send teknisi OTP email', ['email' => $email, 'error' => $e->getMessage()]);
+
+            return response()->json([
+                'ok' => false,
+                'message' => 'Gagal mengirim kode OTP ke Gmail: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -216,22 +278,55 @@ class AuthController extends Controller
             'tarif_dasar' => ['required_if:role,teknisi', 'nullable', 'numeric', 'min:10000'],
             'no_ktp' => ['nullable', 'string', 'max:30'],
             'sertifikasi' => ['nullable', 'string', 'max:255'],
+            'otp_code' => ['required_if:role,teknisi', 'nullable', 'digits:6'],
             'privacy_consent' => ['accepted'],
         ], [
             'email.regex' => 'Hanya alamat Gmail (@gmail.com) yang diperbolehkan untuk mendaftar.',
             'tarif_dasar.required_if' => 'Tarif dasar jasa wajib diisi untuk Mitra Teknisi.',
             'tarif_dasar.min' => 'Tarif dasar jasa minimal Rp 10.000 (tidak boleh Rp 0).',
+            'otp_code.required_if' => 'Kode verifikasi OTP 6 digit dari Gmail wajib diisi untuk pendaftaran Mitra Teknisi.',
+            'otp_code.digits' => 'Kode verifikasi OTP harus berupa 6 digit angka.',
             'privacy_consent.accepted' => 'Anda wajib menyetujui Kebijakan Privasi & Pelindungan Data Pribadi (UU PDP) untuk mendaftar.',
         ]);
 
+        $emailNormalized = strtolower(trim($validated['email']));
+
+        if ($validated['role'] === 'teknisi') {
+            $otpSession = $request->session()->get('teknisi_otp');
+
+            if (!is_array($otpSession) || ($otpSession['email'] ?? '') !== $emailNormalized) {
+                return back()->withErrors([
+                    'otp_code' => 'Belum ada kode OTP untuk Gmail ini. Klik tombol "Kirim Kode" terlebih dahulu.',
+                ])->withInput();
+            }
+
+            if (now()->timestamp > (int) ($otpSession['expires_at'] ?? 0)) {
+                $request->session()->forget('teknisi_otp');
+                return back()->withErrors([
+                    'otp_code' => 'Kode OTP sudah kedaluwarsa (lebih dari 10 menit). Silakan kirim ulang kode baru.',
+                ])->withInput();
+            }
+
+            if (!Hash::check((string) ($validated['otp_code'] ?? ''), (string) ($otpSession['code_hash'] ?? ''))) {
+                return back()->withErrors([
+                    'otp_code' => 'Kode OTP tidak sesuai. Periksa kembali 6 digit angka yang dikirim ke Gmail Anda.',
+                ])->withInput();
+            }
+        }
+
         $user = User::create([
             'name' => $validated['name'],
-            'email' => $validated['email'],
+            'email' => $emailNormalized,
             'no_telepon' => $validated['no_telepon'],
             'role' => $validated['role'],
             'password' => Hash::make($validated['password']),
+            'email_verified_at' => $validated['role'] === 'teknisi' ? now() : null,
             'privacy_consent_at' => now(),
         ]);
+
+        if ($validated['role'] === 'teknisi') {
+            $request->session()->forget('teknisi_otp');
+        }
 
         $user->assignRole($validated['role']);
 
