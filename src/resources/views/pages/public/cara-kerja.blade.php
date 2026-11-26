@@ -1,6 +1,6 @@
 <x-layouts.public
     activeNav="cara-kerja"
-    description="Pelajari cara memesan teknisi di FixHome, rincian biaya jarak dan komisi 5% yang transparan, serta simulator estimasi biaya."
+    description="Pelajari cara memesan teknisi di FixHome, rincian biaya jarak dan komisi 5% yang transparan, simulator estimasi biaya, dan garansi resmi 14 hari."
     title="Cara Kerja & Transparansi Biaya — FixHome"
 >
     <!-- Page Hero Header -->
@@ -15,7 +15,7 @@
                     Cara Kerja FixHome: <span class="text-[#16A34A]">Pesan, Diskusi, Beres</span>
                 </h1>
                 <p class="fh-hero-anim font-body-lg text-[14.5px] text-[#4B5563] mt-3" data-hero-step="3">
-                    Dari pemilihan teknisi hingga pembayaran QRIS dan pelacakan langsung, seluruh proses tercatat rapi di dashboard Anda.
+                    Dari pemilihan teknisi hingga pembayaran QRIS dan garansi 14 hari, seluruh proses tercatat rapi di dashboard Anda.
                 </p>
             </div>
         </div>
@@ -45,8 +45,8 @@
                 <div class="stitch-surface-card p-5 rounded-[20px] bg-white flex items-start gap-4">
                     <div class="w-10 h-10 rounded-full bg-[#16A34A] text-white flex items-center justify-center font-extrabold text-[15px] shrink-0">3</div>
                     <div>
-                        <h2 class="font-title-md text-[16px] font-bold text-[#111827]">Pekerjaan Tuntas &amp; Beri Ulasan</h2>
-                        <p class="text-[13.5px] text-[#4B5563] mt-1">Setelah perbaikan selesai, periksa hasil pekerjaan dan berikan rating serta ulasan jujur untuk mitra teknisi.</p>
+                        <h2 class="font-title-md text-[16px] font-bold text-[#111827]">Pekerjaan Tuntas &amp; Garansi 14 Hari</h2>
+                        <p class="text-[13.5px] text-[#4B5563] mt-1">Setelah perbaikan selesai, berikan ulasan jujur untuk teknisi. Setiap pesanan otomatis dilindungi garansi resmi pengerjaan selama 14 hari.</p>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                                 <span class="font-semibold text-[#15803D]" id="calc-tech">Rp71.250</span>
                             </div>
                             <div class="flex items-center justify-between text-[12px] text-[#4B5563]">
-                                <span>Komisi Platform (5%)</span>
+                                <span>Komisi Platform &amp; Garansi (5%)</span>
                                 <span class="font-semibold text-[#111827]" id="calc-fee">Rp3.750</span>
                             </div>
                         </div>
@@ -138,8 +138,8 @@
                 <div class="w-11 h-11 rounded-xl bg-[#16A34A] text-white flex items-center justify-center mb-3">
                     <span class="material-symbols-outlined text-[22px]">receipt_long</span>
                 </div>
-                <h3 class="font-title-md text-[15.5px] font-bold text-[#111827]">Invoice Digital Otomatis</h3>
-                <p class="text-[13px] text-[#4B5563] mt-1">Setiap pembayaran lunas langsung menghasilkan invoice resmi yang dikirim otomatis ke Gmail Anda.</p>
+                <h3 class="font-title-md text-[15.5px] font-bold text-[#111827]">Garansi Resmi 14 Hari</h3>
+                <p class="text-[13px] text-[#4B5563] mt-1">Jika masalah yang sama muncul kembali dalam 14 hari, tim kami siap menindaklanjuti perbaikan ulang.</p>
             </div>
         </div>
     </section>

@@ -82,7 +82,7 @@
                         <span class="block text-[#111827]">Temukan yang Terdekat dari Rumah Anda.</span>
                     </h1>
                     <p class="font-body-md text-[13.5px] text-[#4B5563] leading-relaxed">
-                        Layanan cepat perbaikan AC, instalasi listrik, perbaikan saluran air, hingga atap rumah dengan tarif transparan dan teknisi terverifikasi.
+                        Layanan cepat perbaikan AC, instalasi listrik, perbaikan saluran air, hingga atap rumah dengan tarif transparan dan bergaransi 14 hari.
                     </p>
 
                     <!-- Clean Pill Search Bar -->
