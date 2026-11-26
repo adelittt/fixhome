@@ -218,10 +218,6 @@
                 <!-- Bottom Copyright Strip -->
                 <div class="pt-6 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-[#6B7280]">
                     <p>&copy; {{ date('Y') }} FixHome Indonesia. Solusi Perbaikan Rumah Terpercaya.</p>
-                    <div class="inline-flex items-center gap-1.5 text-[#15803D] font-semibold">
-                        <span class="material-symbols-outlined text-[16px] text-[#16A34A]">verified</span>
-                        <span>Teknisi Terverifikasi &amp; Transparansi 95 / 5</span>
-                    </div>
                 </div>
             </div>
         </footer>
