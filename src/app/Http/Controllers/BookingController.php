@@ -72,6 +72,10 @@ class BookingController extends Controller
 
         // Hitung biaya layanan (tarif dasar + addon)
         $biayaLayanan = (float) $technician->tarif_dasar;
+        if ($biayaLayanan < 10000) {
+            return redirect()->route('customer.technicians')
+                ->with('error', 'Tarif dasar teknisi tidak valid (minimal Rp 10.000). Silakan pilih teknisi lain.');
+        }
         if ($request->has('addon_outdoor')) {
             $biayaLayanan += 25000;
         }

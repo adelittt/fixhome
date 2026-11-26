@@ -72,9 +72,12 @@ class AuthController extends Controller
             'role' => ['required', 'in:customer,teknisi'],
             'password' => ['required', 'confirmed', Password::min(6)],
             'keahlian' => ['nullable', 'string', 'max:255'],
-            'tarif_dasar' => ['nullable', 'numeric', 'min:0'],
+            'tarif_dasar' => ['required_if:role,teknisi', 'nullable', 'numeric', 'min:10000'],
             'no_ktp' => ['nullable', 'string', 'max:30'],
             'sertifikasi' => ['nullable', 'string', 'max:255'],
+        ], [
+            'tarif_dasar.required_if' => 'Tarif dasar jasa wajib diisi untuk Mitra Teknisi.',
+            'tarif_dasar.min' => 'Tarif dasar jasa minimal Rp 10.000 (tidak boleh Rp 0).',
         ]);
 
         $user = User::create([

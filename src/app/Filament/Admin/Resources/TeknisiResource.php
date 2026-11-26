@@ -91,7 +91,10 @@ class TeknisiResource extends Resource
                         Forms\Components\TextInput::make('tarif_dasar')
                             ->required()
                             ->numeric()
+                            ->minValue(10000)
+                            ->rule('min:10000')
                             ->prefix('Rp')
+                            ->helperText('Minimal Rp 10.000 (tidak boleh Rp 0).')
                             ->label('Tarif Dasar Kunjungan'),
                         Forms\Components\Select::make('status_kesiapan')
                             ->options([

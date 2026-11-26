@@ -107,8 +107,9 @@
                                 </div>
                                 <div>
                                     <label class="block text-[11.5px] text-[#4B5563] font-semibold mb-1">Tarif Dasar Jasa (Rp)</label>
-                                    <input type="number" name="tarif_dasar" value="75000"
+                                    <input type="number" id="tarif-dasar-input" name="tarif_dasar" value="{{ old('tarif_dasar', 75000) }}" min="10000" step="1000" {{ $selectedRole === 'teknisi' ? 'required' : '' }}
                                         class="w-full px-3.5 py-2 text-xs rounded-xl bg-white border border-[#D1D5DB] text-[#111827] focus:border-[#16A34A] focus:ring-2 focus:ring-[#16A34A]/20 focus:outline-none">
+                                    <p class="mt-1 text-[10.5px] text-[#6B7280]">Minimal Rp 10.000 (tidak boleh Rp 0)</p>
                                 </div>
                             </div>
                             <div>
@@ -153,10 +154,13 @@
     <script>
         function toggleKeahlian(show) {
             const extra = document.getElementById('teknisi-extra-field');
+            const tarifInput = document.getElementById('tarif-dasar-input');
             if (show) {
                 extra.classList.remove('hidden');
+                if (tarifInput) tarifInput.required = true;
             } else {
                 extra.classList.add('hidden');
+                if (tarifInput) tarifInput.required = false;
             }
         }
     </script>
