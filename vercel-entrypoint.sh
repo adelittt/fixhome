@@ -18,6 +18,9 @@ if [ -z "${DATABASE_URL:-}" ] && [ -z "${POSTGRES_URL:-}" ] && [ "${DB_CONNECTIO
         cp /var/www/html/database/seed-template.sqlite "${DB_FILE}"
         chown www-data:www-data "${DB_FILE}"
     fi
+else
+    # Ensure schema migrations and idempotent 10-technician catalog are synced on live Postgres
+    (php /var/www/html/artisan migrate --force && php /var/www/html/artisan db:seed --class=TeknisiCatalogSeeder --force) || true
 fi
 
 # Honor dynamic PORT if provided by platform (default 80 for Vercel Containers)

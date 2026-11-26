@@ -190,7 +190,7 @@ class CustomerController extends Controller
         })->filter(function ($tek) {
             // Batas jangkauan maksimal: di atas 35 km teknisi tidak dapat ditemukan
             return $tek->distance <= 35.0;
-        })->sortBy('distance')->values()->take(5);
+        })->sortBy('distance')->values()->take(6);
 
         // Kategori servis sesuai Dokumen Bab 1 & 2
         $categories = [
@@ -245,7 +245,9 @@ class CustomerController extends Controller
             return $tek->distance <= 35.0;
         })->sortBy('distance')->values();
 
-        return view('pages.customer.technicians', compact('technicians', 'category', 'search'));
+        $categories = Teknisi::ready()->orderBy('id')->pluck('keahlian')->filter()->unique()->values();
+
+        return view('pages.customer.technicians', compact('technicians', 'category', 'search', 'categories'));
     }
 
     public function technicianDetail(int $id)

@@ -74,7 +74,7 @@
                                     class="cat-filter-btn px-3.5 py-2.5 rounded-full text-xs font-bold text-left shrink-0 transition-all bg-primary-container text-on-primary shadow-[0_6px_14px_rgba(22,163,74,0.24)]">
                                     Semua Kategori
                                 </button>
-                                @foreach(['AC & Pendingin', 'Instalasi Listrik', 'Pipa & Saluran Air', 'Atap & Plafon Bocor', 'Pengecatan & Tembok', 'Kunci & Pintu Rusak'] as $catName)
+                                @foreach($categories as $catName)
                                     <button type="button" onclick="selectCategory('{{ $catName }}')" id="cat-btn-{{ Str::slug($catName) }}"
                                         class="cat-filter-btn px-3.5 py-2.5 rounded-full text-xs font-semibold text-left shrink-0 transition-all bg-surface text-on-surface-variant hover:text-primary shadow-[-3px_-3px_8px_#FFFFFF,3px_3px_8px_#D2D2D2]">
                                         {{ $catName }}
@@ -97,9 +97,12 @@
                                 <div class="space-y-3">
                                     <div class="flex items-start justify-between gap-3">
                                         <div class="flex items-start gap-3">
-                                            <div class="w-14 h-14 rounded-2xl neu-icon-primary font-extrabold text-xl font-recoleta shrink-0">
-                                                {{ substr($tek->nama_lengkap, 0, 1) }}
-                                            </div>
+                                            <img
+                                                alt="{{ $tek->nama_lengkap }}"
+                                                class="w-14 h-14 rounded-2xl object-cover border border-[#E5E7EB] shadow-xs shrink-0"
+                                                loading="lazy"
+                                                src="{{ $tek->foto_url }}"
+                                            />
                                             <div>
                                                 <div class="flex items-center gap-1.5 flex-wrap">
                                                     <h3 class="font-title-sm font-bold text-primary font-butler">{{ $tek->nama_lengkap }}</h3>

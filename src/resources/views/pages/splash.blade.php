@@ -183,9 +183,12 @@
                             <div>
                                 <div class="flex items-start justify-between gap-2 mb-3">
                                     <div class="flex items-center gap-3 min-w-0">
-                                        <div class="w-11 h-11 rounded-xl bg-[#DCFCE7] text-[#15803D] flex items-center justify-center font-bold text-[15px] shrink-0">
-                                            {{ $initials ?: 'T' }}
-                                        </div>
+                                        <img
+                                            alt="{{ $tech->nama_lengkap }}"
+                                            class="w-12 h-12 rounded-xl object-cover border border-[#E5E7EB] shrink-0"
+                                            loading="lazy"
+                                            src="{{ $tech->foto_url }}"
+                                        />
                                         <div class="min-w-0">
                                             <h3 class="text-[15px] font-bold text-[#111827] truncate">{{ $tech->nama_lengkap }}</h3>
                                             <span class="inline-flex items-center gap-1 text-[11.5px] text-[#4B5563]">

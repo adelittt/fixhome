@@ -20,9 +20,11 @@
                     <!-- Profile Card -->
                     <div class="neu-card p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
                         <div class="relative shrink-0">
-                            <div class="w-24 h-24 rounded-3xl neu-icon-primary font-extrabold text-4xl font-recoleta">
-                                {{ substr($technician->nama_lengkap, 0, 1) }}
-                            </div>
+                            <img
+                                alt="{{ $technician->nama_lengkap }}"
+                                class="w-24 h-24 rounded-3xl object-cover border-2 border-white shadow-md"
+                                src="{{ $technician->foto_url }}"
+                            />
                             <span class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-secondary-container border-2 border-surface flex items-center justify-center shadow text-primary" title="Ready Siap Kerja">
                                 <span class="material-symbols-outlined text-[16px]">check</span>
                             </span>

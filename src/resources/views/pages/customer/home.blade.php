@@ -164,9 +164,12 @@
                             <div class="space-y-3">
                                 <div class="flex items-start justify-between gap-3">
                                     <div class="flex items-start gap-3">
-                                        <div class="w-14 h-14 rounded-2xl neu-icon-primary font-extrabold text-xl font-recoleta shrink-0">
-                                            {{ substr($tek->nama_lengkap, 0, 1) }}
-                                        </div>
+                                        <img
+                                            alt="{{ $tek->nama_lengkap }}"
+                                            class="w-14 h-14 rounded-2xl object-cover border border-[#E5E7EB] shadow-xs shrink-0"
+                                            loading="lazy"
+                                            src="{{ $tek->foto_url }}"
+                                        />
                                         <div>
                                             <div class="flex items-center gap-1.5">
                                                 <h4 class="font-title-md text-base font-bold text-primary font-butler">{{ $tek->nama_lengkap }}</h4>

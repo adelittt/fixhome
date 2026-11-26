@@ -24,12 +24,10 @@
                 <a class="px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-all {{ !$selectedCategory ? 'bg-[#16A34A] text-white shadow-sm' : 'bg-white border border-[#E5E7EB] text-[#4B5563] hover:border-[#16A34A] hover:text-[#15803D]' }}" href="{{ route('public.teknisi') }}">
                     Semua Keahlian
                 </a>
-                @foreach ($services as $svc)
-                    @if ($svc['category'])
-                        <a class="px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-all {{ $selectedCategory === $svc['category'] ? 'bg-[#16A34A] text-white shadow-sm' : 'bg-white border border-[#E5E7EB] text-[#4B5563] hover:border-[#16A34A] hover:text-[#15803D]' }}" href="{{ route('public.teknisi', ['category' => $svc['category']]) }}">
-                            {{ $svc['category'] }}
-                        </a>
-                    @endif
+                @foreach ($categories as $catName)
+                    <a class="px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-all {{ $selectedCategory === $catName ? 'bg-[#16A34A] text-white shadow-sm' : 'bg-white border border-[#E5E7EB] text-[#4B5563] hover:border-[#16A34A] hover:text-[#15803D]' }}" href="{{ route('public.teknisi', ['category' => $catName]) }}">
+                        {{ $catName }}
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -59,9 +57,12 @@
                         <div>
                             <div class="flex items-start justify-between gap-2.5 mb-3.5">
                                 <div class="flex items-center gap-3 min-w-0">
-                                    <div class="w-12 h-12 rounded-2xl bg-[#DCFCE7] text-[#15803D] flex items-center justify-center font-bold text-[16px] shrink-0">
-                                        {{ $initials ?: 'T' }}
-                                    </div>
+                                    <img
+                                        alt="{{ $tech->nama_lengkap }}"
+                                        class="w-14 h-14 rounded-2xl object-cover border border-[#E5E7EB] shadow-xs shrink-0"
+                                        loading="lazy"
+                                        src="{{ $tech->foto_url }}"
+                                    />
                                     <div class="min-w-0">
                                         <h2 class="font-title-md text-[15.5px] font-bold text-[#111827] truncate">{{ $tech->nama_lengkap }}</h2>
                                         <span class="inline-flex items-center gap-1 text-[12px] text-[#4B5563]">

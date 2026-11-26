@@ -18,6 +18,7 @@ class Teknisi extends Model
     protected $fillable = [
         'user_id',
         'nama_lengkap',
+        'foto',
         'keahlian',
         'tarif_dasar',
         'status_kesiapan',
@@ -30,6 +31,25 @@ class Teknisi extends Model
         'sertifikasi',
         'status_verifikasi',
     ];
+
+    protected $appends = [
+        'foto_url',
+    ];
+
+    public function getFotoUrlAttribute(): string
+    {
+        if (!empty($this->foto)) {
+            if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
+                return $this->foto;
+            }
+
+            return asset(ltrim($this->foto, '/'));
+        }
+
+        $index = ((max(1, (int) ($this->id ?? 1)) - 1) % 10) + 1;
+
+        return asset("images/technicians/teknisi-{$index}.jpg");
+    }
 
     protected $casts = [
         'tarif_dasar' => 'decimal:2',

@@ -141,16 +141,20 @@ class PublicPageController extends Controller
 
         try {
             $query = Teknisi::ready()->orderByDesc('rating');
+            $likeOperator = $query->getConnection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';
             if ($selectedCategory) {
-                $query->where('keahlian', 'like', '%' . $selectedCategory . '%');
+                $query->where('keahlian', $likeOperator, '%' . $selectedCategory . '%');
             }
             $technicians = $query->get();
+            $categories = Teknisi::ready()->orderBy('id')->pluck('keahlian')->filter()->unique()->values();
         } catch (\Throwable $e) {
             $technicians = collect();
+            $categories = collect();
         }
 
         return view('pages.public.teknisi', [
             'services' => self::serviceCatalog(),
+            'categories' => $categories,
             'technicians' => $technicians,
             'selectedCategory' => $selectedCategory,
         ]);
