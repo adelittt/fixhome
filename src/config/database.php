@@ -97,6 +97,9 @@ return [
             'prefix_indexes' => true,
             'search_path' => env('DB_SCHEMA', 'fixhome'),
             'sslmode' => env('DB_SSLMODE', (env('DATABASE_URL') || env('POSTGRES_URL') || env('PGHOST')) ? 'require' : 'prefer'),
+            'options' => extension_loaded('pdo_pgsql') ? [
+                PDO::ATTR_EMULATE_PREPARES => true,
+            ] : [],
         ],
 
         'sqlsrv' => [

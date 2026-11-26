@@ -176,22 +176,6 @@ class TeknisiCatalogService
                 return;
             }
 
-            if (DB::getDriverName() === 'pgsql') {
-                foreach ([
-                    'ALTER TABLE teknisi ADD COLUMN IF NOT EXISTS foto VARCHAR(255) NULL',
-                    'ALTER TABLE users ADD COLUMN IF NOT EXISTS privacy_consent_at TIMESTAMP NULL',
-                    'ALTER TABLE users ALTER COLUMN no_telepon TYPE TEXT',
-                    'ALTER TABLE customers ALTER COLUMN alamat_lengkap TYPE TEXT',
-                    'ALTER TABLE teknisi ALTER COLUMN no_ktp TYPE TEXT',
-                ] as $sql) {
-                    try {
-                        DB::statement($sql);
-                    } catch (\Throwable $e) {
-                        Log::warning('TeknisiCatalogService schema sync skipped', ['sql' => $sql, 'error' => $e->getMessage()]);
-                    }
-                }
-            }
-
             self::seed();
         } catch (\Throwable $e) {
             Log::error('TeknisiCatalogService::ensureSeeded failed', ['error' => $e->getMessage()]);
