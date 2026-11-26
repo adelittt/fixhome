@@ -47,9 +47,6 @@
                     </div>
                     <div>
                         <div class="flex items-center gap-2 flex-wrap">
-                            <span class="px-3 py-0.5 rounded-full neu-pill text-secondary font-label-sm font-semibold font-lucy-rose">
-                                Portal Mitra Teknisi Resmi
-                            </span>
                             <span class="text-xs text-outline font-mono">ID: #TK-{{ str_pad($teknisi->id, 4, '0', STR_PAD_LEFT) }}</span>
                         </div>
                         <h1 class="font-headline-md text-headline-md text-primary font-bold font-recoleta mt-1">{{ $teknisi->nama_lengkap }}</h1>
