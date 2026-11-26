@@ -6,11 +6,34 @@ use App\Models\Teknisi;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Role;
 
 class TeknisiCatalogSeeder extends Seeder
 {
+    public static function ensureSeeded(): void
+    {
+        try {
+            if (Teknisi::ready()->count() >= 10) {
+                return;
+            }
+
+            if (DB::getDriverName() === 'pgsql') {
+                DB::statement('ALTER TABLE teknisi ADD COLUMN IF NOT EXISTS foto VARCHAR(255) NULL');
+                DB::statement('ALTER TABLE users ADD COLUMN IF NOT EXISTS privacy_consent_at TIMESTAMP NULL');
+                DB::statement('ALTER TABLE users ALTER COLUMN no_telepon TYPE TEXT');
+                DB::statement('ALTER TABLE customers ALTER COLUMN alamat_lengkap TYPE TEXT');
+                DB::statement('ALTER TABLE teknisi ALTER COLUMN no_ktp TYPE TEXT');
+            }
+
+            (new self())->run();
+        } catch (\Throwable $e) {
+            Log::error('TeknisiCatalogSeeder::ensureSeeded failed', ['error' => $e->getMessage()]);
+        }
+    }
     public static function techniciansData(): array
     {
         return [

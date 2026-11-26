@@ -20,7 +20,8 @@ if [ -z "${DATABASE_URL:-}" ] && [ -z "${POSTGRES_URL:-}" ] && [ "${DB_CONNECTIO
     fi
 else
     # Ensure schema migrations and idempotent 10-technician catalog are synced on live Postgres
-    (php /var/www/html/artisan migrate --force && php /var/www/html/artisan db:seed --class=TeknisiCatalogSeeder --force) || true
+    php /var/www/html/artisan migrate --force || true
+    php /var/www/html/artisan db:seed --class=TeknisiCatalogSeeder --force || true
 fi
 
 # Honor dynamic PORT if provided by platform (default 80 for Vercel Containers)

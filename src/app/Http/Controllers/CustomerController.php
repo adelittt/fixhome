@@ -187,6 +187,9 @@ class CustomerController extends Controller
             return redirect()->route('customer.set-address');
         }
 
+        // Pastikan katalog 10 teknisi tersedia jika database baru/kosong
+        \Database\Seeders\TeknisiCatalogSeeder::ensureSeeded();
+
         // Ambil teknisi dengan status Ready (BR-02) yang berada dalam jangkauan maksimal 35 km
         $technicians = Teknisi::ready()->with('user')->get()->map(function ($tek) use ($customer) {
             $tek->distance = self::calculateDistance(
@@ -225,6 +228,8 @@ class CustomerController extends Controller
         $customer = Auth::user()->customer;
         $category = $request->query('category');
         $search = $request->query('search');
+
+        \Database\Seeders\TeknisiCatalogSeeder::ensureSeeded();
 
         $query = Teknisi::ready()->with('user');
         $likeOperator = $query->getConnection()->getDriverName() === 'pgsql' ? 'ilike' : 'like';
