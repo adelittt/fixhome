@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\TeknisiController;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +50,8 @@ Route::middleware(['auth'])->name('customer.')->group(function () {
     Route::get('/k3d9f1', [CustomerController::class, 'technicians'])->name('technicians');
     Route::get('/t6b4e2/{teknisiId}', [CustomerController::class, 'technicianDetail'])->name('technician-detail');
     Route::get('/m8c1a4', [CustomerController::class, 'orders'])->name('orders');
-    Route::get('/u2f7d5', [CustomerController::class, 'profile'])->name('profile');
+    Route::get('/u2f7d5', [ProfileController::class, 'show'])->name('profile');
+    Route::post('/u2f7d5', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/x4b9e3', [CustomerController::class, 'searchLocation'])->name('api.geocode');
     Route::get('/x4b9e3/r', [CustomerController::class, 'reverseGeocode'])->name('api.reverse-geocode');
 });

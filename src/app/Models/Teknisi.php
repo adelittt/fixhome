@@ -40,7 +40,11 @@ class Teknisi extends Model
     public function getFotoUrlAttribute(): string
     {
         if (!empty($this->foto)) {
-            if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
+            if (
+                str_starts_with($this->foto, 'data:image/')
+                || str_starts_with($this->foto, 'http://')
+                || str_starts_with($this->foto, 'https://')
+            ) {
                 return $this->foto;
             }
 

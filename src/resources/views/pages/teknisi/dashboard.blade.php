@@ -42,9 +42,13 @@
             <!-- Welcome Header Bar -->
             <div class="neu-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 rounded-2xl neu-icon-primary font-extrabold text-2xl font-recoleta shrink-0">
-                        {{ substr($teknisi->nama_lengkap, 0, 1) }}
-                    </div>
+                    <a href="{{ route('customer.profile') }}" class="shrink-0 group relative" title="Edit Profil & Foto">
+                        <img
+                            src="{{ $teknisi->foto_url }}"
+                            alt="{{ $teknisi->nama_lengkap }}"
+                            class="w-16 h-16 rounded-2xl object-cover border border-[#E5E7EB] shadow-xs group-hover:opacity-90 transition-opacity"
+                        />
+                    </a>
                     <div>
                         <div class="flex items-center gap-2 flex-wrap">
                             <span class="text-xs text-outline font-mono">ID: #TK-{{ str_pad($teknisi->id, 4, '0', STR_PAD_LEFT) }}</span>

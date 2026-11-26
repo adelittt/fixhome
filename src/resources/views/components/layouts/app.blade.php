@@ -39,6 +39,9 @@
                         <a href="{{ route('teknisi.wallet') }}" class="font-body-md text-[13px] py-1.5 px-3.5 rounded-full transition-all {{ request()->routeIs('teknisi.wallet') ? 'bg-[#DCFCE7] text-[#15803D] font-semibold' : 'text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]' }}">
                             Dompet Pendapatan
                         </a>
+                        <a href="{{ route('customer.profile') }}" class="font-body-md text-[13px] py-1.5 px-3.5 rounded-full transition-all {{ request()->routeIs('customer.profile') ? 'bg-[#DCFCE7] text-[#15803D] font-semibold' : 'text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]' }}">
+                            Profil
+                        </a>
                     @else
                         <a href="{{ route('customer.home') }}" class="font-body-md text-[13px] py-1.5 px-3.5 rounded-full transition-all {{ request()->routeIs('customer.home') ? 'bg-[#DCFCE7] text-[#15803D] font-semibold' : 'text-[#4B5563] hover:text-[#111827] hover:bg-[#F3F4F6]' }}">
                             Beranda
@@ -80,8 +83,12 @@
                             <span class="text-xs font-bold text-[#111827] block leading-tight">{{ Auth::user()->name }}</span>
                             <span class="text-[10px] font-label-sm font-semibold text-[#15803D] uppercase tracking-wider">{{ Auth::user()->role }}</span>
                         </div>
-                        <a href="{{ Auth::user()->role === 'teknisi' ? route('teknisi.dashboard') : route('customer.profile') }}" class="w-8 h-8 rounded-full bg-[#16A34A] text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        <a href="{{ route('customer.profile') }}" class="w-8 h-8 rounded-full bg-[#16A34A] text-white flex items-center justify-center font-bold text-xs shadow-sm overflow-hidden border border-[#E5E7EB]" title="Edit Profil & Foto">
+                            @if(Auth::user()->avatar_display_url)
+                                <img src="{{ Auth::user()->avatar_display_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover" />
+                            @else
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                            @endif
                         </a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf

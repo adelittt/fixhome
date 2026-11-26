@@ -59,15 +59,40 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         ];
     }
 
+    public function getAvatarDisplayUrlAttribute(): ?string
+    {
+        if (!empty($this->avatar_url)) {
+            if (
+                str_starts_with($this->avatar_url, 'data:image/')
+                || str_starts_with($this->avatar_url, 'http://')
+                || str_starts_with($this->avatar_url, 'https://')
+            ) {
+                return $this->avatar_url;
+            }
+
+            if (str_starts_with($this->avatar_url, 'images/')) {
+                return asset($this->avatar_url);
+            }
+
+            return asset('storage/' . ltrim($this->avatar_url, '/'));
+        }
+
+        if ($this->isTeknisi() && $this->teknisi && !empty($this->teknisi->foto)) {
+            return $this->teknisi->foto_url;
+        }
+
+        return null;
+    }
+
     public function getFilamentAvatarUrl(): ?string
     {
-        if ($this->avatar_url) {
-            return asset('storage/' . $this->avatar_url);
-        } else {
-            $hash = md5(strtolower(trim($this->email)));
-
-            return 'https://www.gravatar.com/avatar/' . $hash . '?d=mp&r=g&s=250';
+        if ($this->avatar_display_url) {
+            return $this->avatar_display_url;
         }
+
+        $hash = md5(strtolower(trim($this->email)));
+
+        return 'https://www.gravatar.com/avatar/' . $hash . '?d=mp&r=g&s=250';
     }
 
     public function canAccessPanel(Panel $panel): bool
