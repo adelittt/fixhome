@@ -17,26 +17,55 @@
                 </a>
             </div>
 
-            <!-- Active Order Banner (If Any) -->
+            <!-- Active Order Banner (Clean Minimalist Card) -->
             @if($activeBooking)
-                <div class="rounded-[22px] bg-[#16A34A] text-white p-6 shadow-[0_10px_24px_rgba(22,163,74,0.22)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden">
-                    <div class="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-tertiary-fixed/15 blur-2xl pointer-events-none"></div>
-                    <div class="space-y-1.5 relative z-10">
-                        <div class="flex items-center gap-2.5">
-                            <span class="text-[10px] font-bold uppercase tracking-wider bg-tertiary-fixed text-on-tertiary-fixed px-3 py-0.5 rounded-full">
-                                Pesanan Aktif
-                            </span>
-                            <span class="text-xs font-semibold text-on-primary-container">
-                                Status: {{ ucfirst($activeBooking->status_order) }}
-                            </span>
+                @php
+                    $isPendingPayment = $activeBooking->status_order === 'pending_payment';
+                    $statusLabel = match ($activeBooking->status_order) {
+                        'pending_payment' => 'Menunggu Pembayaran',
+                        'paid' => 'Lunas · Menunggu Teknisi',
+                        'otw' => 'Teknisi Sedang OTW',
+                        'working' => 'Sedang Dikerjakan',
+                        default => ucfirst(str_replace('_', ' ', $activeBooking->status_order)),
+                    };
+                @endphp
+                <div class="rounded-[18px] bg-white border border-[#E5E7EB] {{ $isPendingPayment ? 'border-l-4 border-l-[#F59E0B]' : 'border-l-4 border-l-[#16A34A]' }} shadow-[0_2px_12px_rgba(17,24,39,0.04)] px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-start gap-3.5 min-w-0">
+                        <div class="w-10 h-10 rounded-xl {{ $isPendingPayment ? 'bg-[#FEF3C7] text-[#B45309]' : 'bg-[#F0FDF4] text-[#16A34A]' }} flex items-center justify-center shrink-0 mt-0.5">
+                            <span class="material-symbols-outlined text-[20px]">{{ $isPendingPayment ? 'payments' : 'engineering' }}</span>
                         </div>
-                        <h3 class="font-headline-sm text-on-primary font-bold font-butler">{{ $activeBooking->teknisi->nama_lengkap }} &bull; {{ $activeBooking->teknisi->keahlian }}</h3>
-                        <p class="text-xs text-inverse-on-surface/85 truncate max-w-xl">"{{ $activeBooking->deskripsi_kerusakan }}"</p>
+                        <div class="min-w-0">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#6B7280]">Pesanan Aktif</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold {{ $isPendingPayment ? 'bg-[#FEF3C7] text-[#92400E]' : 'bg-[#DCFCE7] text-[#15803D]' }}">
+                                    {{ $statusLabel }}
+                                </span>
+                            </div>
+                            <h3 class="text-[15px] font-bold text-[#111827] mt-1 truncate">
+                                {{ $activeBooking->teknisi->nama_lengkap }}
+                                <span class="font-normal text-[#6B7280]">&middot; {{ $activeBooking->teknisi->keahlian }}</span>
+                            </h3>
+                            <p class="text-[12.5px] text-[#6B7280] truncate max-w-xl mt-0.5">{{ $activeBooking->deskripsi_kerusakan }}</p>
+                        </div>
                     </div>
-                    <a href="{{ route('tracking.chat', $activeBooking->id) }}" class="relative z-10 px-5 py-3 bg-surface text-primary hover:opacity-95 rounded-full text-xs font-bold transition-all inline-flex items-center justify-center gap-2 shadow-md shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">map</span>
-                        <span>Buka Peta GPS &amp; Chat</span>
-                    </a>
+
+                    <div class="flex items-center gap-2 shrink-0">
+                        @if($isPendingPayment)
+                            <a href="{{ route('booking.payment', $activeBooking->id) }}" class="px-4 py-2.5 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-xl text-xs font-semibold transition-all inline-flex items-center justify-center gap-1.5 shadow-xs">
+                                <span class="material-symbols-outlined text-[16px]">qr_code_2</span>
+                                <span>Bayar Sekarang</span>
+                            </a>
+                        @else
+                            <a href="{{ route('booking.invoice', $activeBooking->id) }}" class="px-3.5 py-2.5 bg-white border border-[#E5E7EB] hover:border-[#16A34A] text-[#374151] hover:text-[#15803D] rounded-xl text-xs font-semibold transition-all inline-flex items-center justify-center gap-1.5">
+                                <span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                                <span>Invoice</span>
+                            </a>
+                            <a href="{{ route('tracking.chat', $activeBooking->id) }}" class="px-4 py-2.5 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-xl text-xs font-semibold transition-all inline-flex items-center justify-center gap-1.5 shadow-xs">
+                                <span class="material-symbols-outlined text-[16px]">map</span>
+                                <span>Peta GPS &amp; Chat</span>
+                            </a>
+                        @endif
+                    </div>
                 </div>
             @endif
 
