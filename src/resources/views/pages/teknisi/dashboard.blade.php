@@ -146,7 +146,7 @@
 
                     <div id="active-orders-container" class="space-y-4">
                         @forelse($activeOrders as $order)
-                            <div id="order-card-{{ $order->id }}" class="order-card neu-card p-6 space-y-4 transition-all hover:-translate-y-0.5" data-total="{{ $order->total_biaya }}">
+                            <div id="order-card-{{ $order->id }}" class="order-card neu-card p-6 space-y-4 transition-all hover:-translate-y-0.5" data-total="{{ $order->total_biaya }}" data-status-url="{{ route('teknisi.order-status', $order->id) }}">
                                 <div class="flex items-center justify-between pb-3 border-b border-outline-variant/40 text-xs">
                                     <span class="font-mono text-primary font-bold">#BK-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</span>
                                     <span id="status-badge-{{ $order->id }}" class="px-3 py-1 rounded-full text-xs font-bold {{ $order->status_order === 'paid' ? 'bg-tertiary-fixed text-on-tertiary-fixed animate-pulse' : ($order->status_order === 'otw' ? 'bg-secondary-container text-primary animate-pulse' : ($order->status_order === 'working' ? 'bg-primary-fixed text-on-primary-fixed' : 'neu-inset-sm text-primary')) }}">
@@ -326,7 +326,11 @@
             const formData = new FormData();
             formData.append('status_order', status);
 
-            fetch(`/teknisi/order/${bookingId}/status`, {
+            const cardEl = document.getElementById(`order-card-${bookingId}`);
+            const statusUrl = cardEl ? cardEl.getAttribute('data-status-url') : '';
+            if (!statusUrl) return;
+
+            fetch(statusUrl, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken

@@ -40,45 +40,45 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Customer Routes (Protected)
-Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(function () {
-    Route::get('/set-address', [CustomerController::class, 'showSetAddress'])->name('set-address');
-    Route::post('/set-address', [CustomerController::class, 'storeAddress'])->name('store-address');
-    Route::get('/home', [CustomerController::class, 'home'])->name('home');
-    Route::get('/technicians', [CustomerController::class, 'technicians'])->name('technicians');
-    Route::get('/technicians/{id}', [CustomerController::class, 'technicianDetail'])->name('technician-detail');
-    Route::get('/orders', [CustomerController::class, 'orders'])->name('orders');
-    Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
-    Route::get('/api/geocode', [CustomerController::class, 'searchLocation'])->name('api.geocode');
-    Route::get('/api/reverse-geocode', [CustomerController::class, 'reverseGeocode'])->name('api.reverse-geocode');
+// Customer Routes (Protected — Opaque Hashed Paths)
+Route::middleware(['auth'])->name('customer.')->group(function () {
+    Route::get('/a7f3c9', [CustomerController::class, 'showSetAddress'])->name('set-address');
+    Route::post('/a7f3c9', [CustomerController::class, 'storeAddress'])->name('store-address');
+    Route::get('/h5e2b8', [CustomerController::class, 'home'])->name('home');
+    Route::get('/k3d9f1', [CustomerController::class, 'technicians'])->name('technicians');
+    Route::get('/t6b4e2/{teknisiId}', [CustomerController::class, 'technicianDetail'])->name('technician-detail');
+    Route::get('/m8c1a4', [CustomerController::class, 'orders'])->name('orders');
+    Route::get('/u2f7d5', [CustomerController::class, 'profile'])->name('profile');
+    Route::get('/x4b9e3', [CustomerController::class, 'searchLocation'])->name('api.geocode');
+    Route::get('/x4b9e3/r', [CustomerController::class, 'reverseGeocode'])->name('api.reverse-geocode');
 });
 
-// Booking & Payment
+// Booking, Payment, Invoice & Live Session (Protected — Opaque Hashed Paths + HMAC Token IDs)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/booking/{teknisiId}', [BookingController::class, 'showBookingForm'])->name('booking.form');
-    Route::post('/booking', [BookingController::class, 'storeBooking'])->name('booking.store');
-    Route::get('/payment/{bookingId}', [BookingController::class, 'showPayment'])->name('booking.payment');
-    Route::post('/payment/{bookingId}', [BookingController::class, 'processPayment'])->name('booking.process-payment');
-    Route::post('/payment/{bookingId}/midtrans/snap', [BookingController::class, 'createMidtransSnap'])->name('booking.midtrans-snap');
-    Route::get('/payment/{bookingId}/midtrans/status', [BookingController::class, 'checkMidtransStatus'])->name('booking.midtrans-status');
-    Route::get('/invoice/{bookingId}', [BookingController::class, 'showInvoice'])->name('booking.invoice');
-    Route::post('/invoice/{bookingId}/resend', [BookingController::class, 'resendInvoiceEmail'])->name('booking.invoice-resend');
-    Route::post('/review/{bookingId}', [FieldController::class, 'submitReview'])->name('review.submit');
+    Route::get('/b9d4e1/{teknisiId}', [BookingController::class, 'showBookingForm'])->name('booking.form');
+    Route::post('/b9d4e1', [BookingController::class, 'storeBooking'])->name('booking.store');
+    Route::get('/p3f8c2/{bookingId}', [BookingController::class, 'showPayment'])->name('booking.payment');
+    Route::post('/p3f8c2/{bookingId}', [BookingController::class, 'processPayment'])->name('booking.process-payment');
+    Route::post('/p3f8c2/{bookingId}/s', [BookingController::class, 'createMidtransSnap'])->name('booking.midtrans-snap');
+    Route::get('/p3f8c2/{bookingId}/c', [BookingController::class, 'checkMidtransStatus'])->name('booking.midtrans-status');
+    Route::get('/r7a2e6/{bookingId}', [BookingController::class, 'showInvoice'])->name('booking.invoice');
+    Route::post('/r7a2e6/{bookingId}/m', [BookingController::class, 'resendInvoiceEmail'])->name('booking.invoice-resend');
+    Route::post('/v5c8d3/{bookingId}', [FieldController::class, 'submitReview'])->name('review.submit');
 
-    // Field Tracking & Chat
-    Route::get('/tracking-chat/{bookingId}', [FieldController::class, 'showTrackingChat'])->name('tracking.chat');
-    Route::post('/chat/{bookingId}', [FieldController::class, 'sendChatMessage'])->name('chat.send');
-    Route::get('/api/chat/{bookingId}', [FieldController::class, 'fetchChatMessages'])->name('api.chat.fetch');
-    Route::get('/api/gps/{bookingId}', [FieldController::class, 'fetchGpsLocation'])->name('api.gps.fetch');
-    Route::post('/api/gps/{bookingId}', [FieldController::class, 'updateGpsLocation'])->name('api.gps.update');
-    Route::get('/api/route/{bookingId}', [FieldController::class, 'fetchNavigationRoute'])->name('api.route.fetch');
+    // Field Tracking & Chat (Opaque Hashed URL)
+    Route::get('/c4f9b2/{bookingId}', [FieldController::class, 'showTrackingChat'])->name('tracking.chat');
+    Route::post('/q2e7a5/{bookingId}', [FieldController::class, 'sendChatMessage'])->name('chat.send');
+    Route::get('/q2e7a5/{bookingId}/f', [FieldController::class, 'fetchChatMessages'])->name('api.chat.fetch');
+    Route::get('/g6d3f8/{bookingId}', [FieldController::class, 'fetchGpsLocation'])->name('api.gps.fetch');
+    Route::post('/g6d3f8/{bookingId}', [FieldController::class, 'updateGpsLocation'])->name('api.gps.update');
+    Route::get('/n8b1c4/{bookingId}', [FieldController::class, 'fetchNavigationRoute'])->name('api.route.fetch');
 });
 
-// Teknisi Portal (Protected)
-Route::middleware(['auth'])->prefix('teknisi')->name('teknisi.')->group(function () {
-    Route::get('/dashboard', [TeknisiController::class, 'dashboard'])->name('dashboard');
-    Route::post('/toggle-status', [TeknisiController::class, 'toggleStatus'])->name('toggle-status');
-    Route::post('/job-status/{bookingId}', [TeknisiController::class, 'updateJobStatus'])->name('job-status');
-    Route::post('/order/{bookingId}/status', [TeknisiController::class, 'updateJobStatus'])->name('order-status');
-    Route::get('/wallet', [TeknisiController::class, 'wallet'])->name('wallet');
+// Teknisi Portal (Protected — Opaque Hashed Paths)
+Route::middleware(['auth'])->name('teknisi.')->group(function () {
+    Route::get('/d1e5a9', [TeknisiController::class, 'dashboard'])->name('dashboard');
+    Route::post('/d1e5a9/t', [TeknisiController::class, 'toggleStatus'])->name('toggle-status');
+    Route::post('/j3c6f2/{bookingId}', [TeknisiController::class, 'updateJobStatus'])->name('job-status');
+    Route::post('/o9a4b7/{bookingId}', [TeknisiController::class, 'updateJobStatus'])->name('order-status');
+    Route::get('/w7f2d6', [TeknisiController::class, 'wallet'])->name('wallet');
 });

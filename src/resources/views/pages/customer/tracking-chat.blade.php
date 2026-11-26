@@ -426,7 +426,7 @@
             input.value = '';
 
             try {
-                const response = await fetch(`/chat/${bookingId}`, {
+                const response = await fetch(@json(route('chat.send', $booking->id)), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -483,7 +483,7 @@
 
         async function pollChatMessages() {
             try {
-                const res = await fetch(`/api/chat/${bookingId}`);
+                const res = await fetch(@json(route('api.chat.fetch', $booking->id)));
                 if (!res.ok) return;
                 const data = await res.json();
 
@@ -511,7 +511,7 @@
             formData.append('status_order', newStatus);
 
             try {
-                await fetch(`/teknisi/job-status/${bookingId}`, {
+                await fetch(@json(route('teknisi.job-status', $booking->id)), {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
@@ -594,7 +594,7 @@
 
         async function pollGpsStatus() {
             try {
-                const res = await fetch(`/api/gps/${bookingId}`);
+                const res = await fetch(@json(route('api.gps.fetch', $booking->id)));
                 if (!res.ok) return;
                 const data = await res.json();
                 if (data.status_order && data.status_order !== currentOrderStatus) {
@@ -872,7 +872,7 @@
             btn.textContent = 'Mengirim Ulasan...';
 
             try {
-                const response = await fetch(`/review/${bookingId}`, {
+                const response = await fetch(@json(route('review.submit', $booking->id)), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
