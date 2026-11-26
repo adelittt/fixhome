@@ -604,15 +604,15 @@ class BookingController extends Controller
         }
 
         $customerEmail = $booking->customer?->user?->email ?? $user->email;
-        $sent = $this->sendInvoiceEmail($booking, $transaksi);
+        $result = $this->sendInvoiceEmail($booking, $transaksi);
 
-        if ($sent) {
+        if ($result['ok']) {
             return redirect()->route('booking.invoice', $booking->id)
                 ->with('success', "Invoice resmi berhasil dikirim ulang ke Gmail kamu ({$customerEmail}).");
         }
 
         return redirect()->route('booking.invoice', $booking->id)
-            ->with('error', 'Gagal mengirim email invoice. Pastikan konfigurasi SMTP Gmail (MAIL_USERNAME & MAIL_PASSWORD) sudah aktif.');
+            ->with('error', 'Gagal mengirim email invoice: ' . ($result['error'] ?? 'Periksa konfigurasi SMTP Gmail.'));
     }
 
     private function markBookingAsPaid(Booking $booking, Transaksi $transaksi, string $paymentMethod, string $gatewayRef): void
@@ -657,25 +657,33 @@ class BookingController extends Controller
         }
     }
 
-    private function sendInvoiceEmail(Booking $booking, Transaksi $transaksi): bool
+    /**
+     * @return array{ok: bool, error: ?string}
+     */
+    private function sendInvoiceEmail(Booking $booking, Transaksi $transaksi): array
     {
         try {
             $booking->loadMissing(['customer.user', 'teknisi']);
             $recipientEmail = $booking->customer?->user?->email;
             if (!$recipientEmail) {
-                return false;
+                return ['ok' => false, 'error' => 'Email customer tidak ditemukan.'];
+            }
+
+            if (config('mail.default') === 'log') {
+                Mail::to($recipientEmail)->send(new PaymentInvoiceMail($booking, $transaksi));
+                return ['ok' => false, 'error' => 'MAIL_MAILER masih bernilai "log". Ubah ke "smtp" di Vercel Environment Variables lalu Redeploy.'];
             }
 
             Mail::to($recipientEmail)->send(new PaymentInvoiceMail($booking, $transaksi));
 
-            return true;
+            return ['ok' => true, 'error' => null];
         } catch (\Throwable $e) {
             Log::warning('Failed to send payment invoice email', [
                 'booking_id' => $booking->id,
                 'error' => $e->getMessage(),
             ]);
 
-            return false;
+            return ['ok' => false, 'error' => $e->getMessage()];
         }
     }
 
