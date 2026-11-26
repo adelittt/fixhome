@@ -27,7 +27,7 @@ class PublicPageController extends Controller
                     'Pemasangan & servis pompa air, booster, dan pelampung toren',
                     'Penggantian kran, jet shower, & seal karet anti-rembes',
                 ],
-                'warranty' => 'Garansi pengerjaan 14 hari terhadap kebocoran ulang',
+                'warranty' => 'Pengerjaan rapi sesuai standar teknisi terverifikasi',
             ],
             [
                 'slug' => 'listrik',
@@ -46,7 +46,7 @@ class PublicPageController extends Controller
                     'Perapian & upgrade box MCB / ELCB anti-sengat',
                     'Pengecekan beban daya & instalasi grounding rumah',
                 ],
-                'warranty' => 'Garansi keamanan instalasi resmi 14 hari',
+                'warranty' => 'Pemeriksaan keamanan instalasi standar SNI',
             ],
             [
                 'slug' => 'ac-pendingin',
@@ -65,7 +65,7 @@ class PublicPageController extends Controller
                     'Atasi AC netes air, bau tidak sedap, & unit kurang dingin',
                     'Bongkar-pasang AC baru/lama serta penggantian kapasitor',
                 ],
-                'warranty' => 'Garansi dingin & bebas bocor 14 hari',
+                'warranty' => 'Pengecekan tekanan & kebersihan unit menyeluruh',
             ],
             [
                 'slug' => 'atap-plafon',
@@ -84,7 +84,7 @@ class PublicPageController extends Controller
                     'Tambal & ganti papan plafon gypsum/GRC yang lapuk atau berjamur',
                     'Pelapisan waterproofing anti-bocor untuk area rawan hujan',
                 ],
-                'warranty' => 'Garansi bebas rembes 14 hari pasca pengerjaan',
+                'warranty' => 'Pengecekan titik rembesan secara menyeluruh',
             ],
             [
                 'slug' => 'pengecatan',
@@ -103,7 +103,7 @@ class PublicPageController extends Controller
                     'Pengecatan eksterior cuaca tropis & lapisan sealer anti-lembab',
                     'Pembersihan area kerja & penutupan furnitur sebelum mengecat',
                 ],
-                'warranty' => 'Garansi kerapian lapisan cat 14 hari',
+                'warranty' => 'Hasil lapisan cat rapi dan bersih',
             ],
             [
                 'slug' => 'kebersihan',
@@ -122,7 +122,7 @@ class PublicPageController extends Controller
                     'Vacuum tungau & debu halus untuk kasur, sofa, dan karpet',
                     'Pembersihan kaca jendela, kusen, & lantai secara menyeluruh',
                 ],
-                'warranty' => 'Garansi puas & pembersihan ulang bila ada area terlewat',
+                'warranty' => 'Pembersihan menyeluruh sesuai daftar layanan',
             ],
         ];
     }

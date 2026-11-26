@@ -22,7 +22,7 @@
                 <div class="relative z-10 space-y-3">
                     <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-[11px] font-medium text-white">
                         <span class="material-symbols-outlined text-[14px] text-[#4ADE80]">verified</span>
-                        <span>Terverifikasi &amp; Bergaransi 14 Hari</span>
+                        <span>Mitra Teknisi Terverifikasi</span>
                     </div>
                     <h2 class="text-[22px] leading-[1.25] font-bold text-white tracking-[-0.02em]">
                         Perbaikan rumah tuntas, tanpa ribet.

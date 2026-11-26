@@ -1,6 +1,6 @@
 <x-layouts.public
     activeNav="layanan"
-    description="Daftar lengkap layanan perbaikan rumah FixHome: pipa & saluran air, instalasi listrik, perawatan AC, atap & plafon, pengecatan, dan deep cleaning bergaransi 14 hari."
+    description="Daftar lengkap layanan perbaikan rumah FixHome: pipa & saluran air, instalasi listrik, perawatan AC, atap & plafon, pengecatan, dan deep cleaning terverifikasi."
     title="Layanan Perbaikan Rumah — FixHome"
 >
     <!-- Page Hero Header -->
@@ -15,7 +15,7 @@
                     Semua Kebutuhan <span class="text-[#16A34A]">Perbaikan Rumah</span> dalam Satu Platform
                 </h1>
                 <p class="fh-hero-anim font-body-lg text-[14.5px] text-[#4B5563] mt-3" data-hero-step="3">
-                    Pilih layanan yang Anda perlukan. Setiap pengerjaan dilengkapi estimasi tarif dasar transparan, diskusi langsung dengan teknisi, dan garansi resmi 14 hari.
+                    Pilih layanan yang Anda perlukan. Setiap pengerjaan dilengkapi estimasi tarif dasar transparan dan diskusi langsung dengan teknisi terverifikasi.
                 </p>
             </div>
 
@@ -63,7 +63,7 @@
                                     <span>&middot;</span>
                                     <span class="inline-flex items-center gap-1 font-medium text-[#15803D]">
                                         <span class="material-symbols-outlined text-[14px]">verified_user</span>
-                                        Garansi 14 Hari
+                                        Teknisi Terverifikasi
                                     </span>
                                 </div>
 

@@ -1,7 +1,7 @@
 @props([
-    'title' => 'FixHome - Layanan Perbaikan Rumah Terverifikasi & Bergaransi',
+    'title' => 'FixHome - Layanan Perbaikan Rumah Terverifikasi',
     'activeNav' => 'beranda',
-    'description' => 'Pesan teknisi perbaikan rumah terverifikasi untuk AC, listrik, pipa, atap, hingga pengecatan. Biaya jelas, live chat, dan garansi resmi 14 hari.',
+    'description' => 'Pesan teknisi perbaikan rumah terverifikasi untuk AC, listrik, pipa, atap, hingga pengecatan dengan biaya jelas dan live chat.',
 ])
 @php
     $dashboardUrl = Auth::check()
@@ -151,16 +151,12 @@
                             <img alt="FixHome" class="h-8 w-auto object-contain" src="{{ asset('images/fixhome-logo-full.png') }}" />
                         </a>
                         <p class="text-[13px] leading-relaxed text-[#4B5563] max-w-xs">
-                            Platform layanan perbaikan rumah terverifikasi dengan tarif transparan, live chat teknisi, dan garansi pengerjaan resmi 14 hari.
+                            Platform layanan perbaikan rumah terverifikasi dengan tarif transparan, pelacakan GPS, dan live chat teknisi.
                         </p>
                         <div class="flex flex-wrap items-center gap-2 pt-1">
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-[#E5E7EB] text-[11.5px] font-medium text-[#374151]">
                                 <span class="material-symbols-outlined text-[14px] text-[#16A34A]">location_on</span>
                                 Jabodetabek
-                            </span>
-                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] text-[11.5px] font-semibold text-[#15803D]">
-                                <span class="material-symbols-outlined text-[14px]">verified_user</span>
-                                Garansi 14 Hari
                             </span>
                         </div>
                     </div>

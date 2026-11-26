@@ -33,7 +33,7 @@
                 <div class="p-6 sm:p-8 border-b border-[#E5E7EB] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                         <img alt="FixHome" class="h-8 w-auto object-contain mb-3" src="{{ asset('images/fixhome-logo-full.png') }}" />
-                        <p class="text-[12px] text-[#6B7280]">Layanan Perbaikan Rumah Terverifikasi &amp; Bergaransi 14 Hari</p>
+                        <p class="text-[12px] text-[#6B7280]">Layanan Perbaikan Rumah Terverifikasi</p>
                     </div>
                     <div class="sm:text-right">
                         <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#DCFCE7] text-[#15803D] text-[11px] font-bold uppercase tracking-wider">
@@ -100,7 +100,7 @@
                     <div class="mt-5 p-4 rounded-2xl bg-[#F8FAFC] border border-[#E5E7EB] flex items-start gap-3 text-[12.5px] text-[#4B5563]">
                         <span class="material-symbols-outlined text-[#16A34A] text-[20px] shrink-0">verified_user</span>
                         <p>
-                            <strong class="text-[#111827]">Perlindungan Garansi Resmi 14 Hari.</strong>
+                            <strong class="text-[#111827]">Bukti Pembayaran Resmi FixHome.</strong>
                             Pesanan ini tercatat secara transparan (95% hak mitra teknisi &amp; 5% komisi pemeliharaan platform).
                         </p>
                     </div>

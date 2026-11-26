@@ -105,9 +105,9 @@
                                 </tr>
                             </table>
 
-                            <!-- Warranty Note -->
+                            <!-- Official Receipt Note -->
                             <div style="background-color:#F0FDF4; border:1px solid #BBF7D0; border-radius:12px; padding:12px 16px; font-size:12.5px; color:#15803D; margin-bottom:24px;">
-                                <strong>Garansi Resmi 14 Hari:</strong> Simpan invoice ini sebagai bukti perlindungan garansi pengerjaan resmi FixHome.
+                                <strong>Bukti Pembayaran Resmi:</strong> Simpan invoice ini sebagai catatan transaksi resmi FixHome Anda.
                             </div>
 
                             <!-- Action CTA -->
@@ -126,7 +126,7 @@
                     <!-- Footer -->
                     <tr>
                         <td style="padding:18px 32px; background-color:#F8FAFC; border-top:1px solid #E5E7EB; text-align:center; font-size:11.5px; color:#6B7280;">
-                            &copy; {{ date('Y') }} FixHome Indonesia &middot; Solusi Perbaikan Rumah Terverifikasi &amp; Bergaransi.
+                            &copy; {{ date('Y') }} FixHome Indonesia &middot; Solusi Perbaikan Rumah Terverifikasi.
                         </td>
                     </tr>
                 </table>

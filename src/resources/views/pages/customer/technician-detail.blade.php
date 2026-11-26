@@ -95,7 +95,7 @@
                             <div class="p-5 rounded-[22px] neu-icon-gold flex flex-col items-center text-center gap-1.5">
                                 <span class="material-symbols-outlined text-[28px] text-primary">electric_bolt</span>
                                 <span class="font-title-sm text-xs font-bold text-primary font-butler">Isi Freon &amp; Cek Arus</span>
-                                <span class="text-[11px] text-on-tertiary-fixed-variant">Garansi Tekanan</span>
+                                <span class="text-[11px] text-on-tertiary-fixed-variant">Tekanan Terukur</span>
                             </div>
                             <div class="p-5 rounded-[22px] neu-inset flex flex-col items-center text-center gap-1.5">
                                 <span class="material-symbols-outlined text-[28px] text-primary">build</span>
@@ -109,10 +109,9 @@
                     <div class="neu-card p-6 sm:p-8 space-y-3">
                         <h3 class="font-headline-sm text-primary font-bold font-recoleta">Tentang Teknisi</h3>
                         <p class="font-body-md text-on-surface-variant leading-relaxed">
-                            Mitra teknisi terverifikasi platform FixHome dengan spesialisasi <strong class="text-primary">{{ $technician->keahlian }}</strong>. Menyediakan pemeriksaan komprehensif, pengerjaan rapi standar SNI, dan garansi kualitas hasil kerja resmi 14 hari. Peralatan servis lengkap dan siap dipanggil sesuai jadwal.
+                            Mitra teknisi terverifikasi platform FixHome dengan spesialisasi <strong class="text-primary">{{ $technician->keahlian }}</strong>. Menyediakan pemeriksaan komprehensif dan pengerjaan rapi standar SNI. Peralatan servis lengkap dan siap dipanggil sesuai jadwal.
                         </p>
                         <div class="flex flex-wrap items-center gap-2 pt-2 text-xs">
-                            <span class="neu-pill px-3.5 py-1.5 text-primary font-semibold">✓ Garansi Servis 14 Hari</span>
                             <span class="neu-pill px-3.5 py-1.5 text-primary font-semibold">✓ Peralatan Lengkap</span>
                             <span class="neu-pill px-3.5 py-1.5 text-primary font-semibold">✓ Protokol Rapi &amp; Bersih</span>
                         </div>

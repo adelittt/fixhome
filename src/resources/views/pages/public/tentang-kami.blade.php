@@ -1,6 +1,6 @@
 <x-layouts.public
     activeNav="tentang-kami"
-    description="Kenali FixHome — platform layanan perbaikan rumah terverifikasi, transparan, dan bergaransi 14 hari yang beroperasi di wilayah Jabodetabek."
+    description="Kenali FixHome — platform layanan perbaikan rumah terverifikasi dan transparan yang beroperasi di wilayah Jabodetabek."
     title="Tentang Kami — FixHome"
 >
     <!-- Page Hero Header -->
@@ -15,7 +15,7 @@
                     Membuat Perbaikan Rumah <span class="text-[#16A34A]">Lebih Mudah, Jelas, dan Tenang</span>
                 </h1>
                 <p class="fh-hero-anim font-body-lg text-[14.5px] text-[#4B5563] mt-3" data-hero-step="3">
-                    FixHome lahir dari pengalaman sederhana: mencari tukang yang bisa dipercaya itu sulit, harganya sering tidak jelas, dan hasilnya jarang bergaransi.
+                    FixHome lahir dari pengalaman sederhana: mencari tukang yang bisa dipercaya itu sulit, harganya sering tidak jelas, dan prosesnya sulit dipantau.
                 </p>
             </div>
         </div>
@@ -47,7 +47,7 @@
                             <span class="material-symbols-outlined text-[20px] text-[#16A34A]">flag</span>
                             <h2 class="font-title-md text-[15.5px] font-bold text-[#111827]">Misi</h2>
                         </div>
-                        <p class="text-[13px] text-[#4B5563]">Menghadirkan perbaikan yang cepat, transparan, dan bergaransi 14 hari bagi setiap keluarga.</p>
+                        <p class="text-[13px] text-[#4B5563]">Menghadirkan perbaikan yang cepat, transparan, dan terpercaya bagi setiap keluarga.</p>
                     </div>
                 </div>
             </div>
@@ -86,8 +86,8 @@
                                 <span class="material-symbols-outlined text-[20px]">workspace_premium</span>
                             </div>
                             <div>
-                                <h3 class="text-[14px] font-bold text-[#111827]">Kualitas Bergaransi</h3>
-                                <p class="text-[13px] text-[#4B5563]">Setiap hasil kerja dilindungi garansi resmi selama 14 hari demi ketenangan rumah Anda.</p>
+                                <h3 class="text-[14px] font-bold text-[#111827]">Kualitas Terjaga</h3>
+                                <p class="text-[13px] text-[#4B5563]">Setiap pengerjaan dinilai langsung lewat sistem rating dan ulasan pelanggan yang transparan.</p>
                             </div>
                         </div>
                     </div>
@@ -124,10 +124,10 @@
                 </div>
             </div>
             <div class="stitch-surface-card rounded-[20px] overflow-hidden bg-white">
-                <img alt="Perawatan AC & kelistrikan bergaransi" class="w-full h-40 object-cover" loading="lazy" src="{{ asset('images/services/ac-pendingin.jpg') }}" />
+                <img alt="Perawatan AC & kelistrikan profesional" class="w-full h-40 object-cover" loading="lazy" src="{{ asset('images/services/ac-pendingin.jpg') }}" />
                 <div class="p-4">
-                    <h3 class="text-[14.5px] font-bold text-[#111827]">Bergaransi Resmi 14 Hari</h3>
-                    <p class="text-[12.5px] text-[#4B5563] mt-1">Setiap transaksi tercatat di sistem untuk memastikan perlindungan garansi penuh tanpa ribet.</p>
+                    <h3 class="text-[14.5px] font-bold text-[#111827]">Transaksi Tercatat Rapi</h3>
+                    <p class="text-[12.5px] text-[#4B5563] mt-1">Setiap pembayaran QRIS otomatis tercatat di sistem dengan invoice digital langsung ke Gmail Anda.</p>
                 </div>
             </div>
         </div>
