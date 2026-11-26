@@ -78,19 +78,9 @@
 
                     <!-- Minimalist Trust Row -->
                     <div class="fh-hero-anim mt-5 flex flex-wrap items-center gap-y-2 text-[#374151] font-label-md text-[12px] font-medium" data-hero-step="5">
-                        <span class="inline-flex items-center gap-1.5 pr-3 sm:pr-4">
+                        <span class="inline-flex items-center gap-1.5">
                             <span class="material-symbols-outlined text-[16px] text-[#16A34A]">verified_user</span>
                             Estimasi Biaya Jelas
-                        </span>
-                        <span aria-hidden="true" class="hidden sm:inline-block h-3.5 w-px bg-[#D1D5DB]"></span>
-                        <span class="inline-flex items-center gap-1.5 px-0 sm:px-4 pr-3">
-                            <span class="material-symbols-outlined text-[16px] text-[#16A34A]">shield</span>
-                            Garansi 14 Hari
-                        </span>
-                        <span aria-hidden="true" class="hidden sm:inline-block h-3.5 w-px bg-[#D1D5DB]"></span>
-                        <span class="inline-flex items-center gap-1.5 sm:pl-4">
-                            <span class="material-symbols-outlined text-[16px] text-[#16A34A]">groups</span>
-                            1.200+ Teknisi Siap
                         </span>
                     </div>
                 </div>
@@ -100,9 +90,6 @@
         <!-- 2. LAYANAN PERBAIKAN RUMAH TERPOPULER (Photo-Top Editorial Cards) -->
         <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl" data-reveal>
             <div class="text-center max-w-2xl mx-auto mb-8">
-                <span class="inline-flex items-center px-3.5 py-1 rounded-full bg-[#DCFCE7] text-[#15803D] text-[11.5px] font-semibold mb-3">
-                    Keahlian Lengkap &amp; Terstandar
-                </span>
                 <h2 class="font-headline-lg text-[26px] sm:text-[32px] leading-[1.18] font-extrabold tracking-[-0.02em]">
                     <span class="block text-[#16A34A]">Layanan Perbaikan Rumah</span>
                     <span class="block text-[#111827]">Terpopuler</span>
@@ -112,13 +99,22 @@
                 </p>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 @foreach ($services as $svc)
                     <a
+                        class="fh-page-link stitch-surface-card group cursor-pointer rounded-[20px] p-5 bg-white hover:-translate-y-1 transition-all flex flex-col justify-between h-full"
                         class="fh-page-link stitch-surface-card group cursor-pointer rounded-[20px] overflow-hidden bg-white hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full"
                         href="{{ route('public.layanan', ['kategori' => $svc['slug']]) }}"
                     >
                         <div>
+                            <div class="flex items-center justify-between mb-3.5">
+                                <div class="w-11 h-11 rounded-xl bg-[#DCFCE7] text-[#15803D] flex items-center justify-center group-hover:scale-105 transition-transform">
+                                    <span class="material-symbols-outlined text-[22px]">{{ $svc['icon'] }}</span>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-[#F8FAFC] border border-[#E5E7EB] text-[11px] font-semibold text-[#15803D]">
+                                    {{ $svc['price'] }}
+                                </span>
                             <div class="relative w-full h-40 overflow-hidden bg-[#F3F4F6]">
                                 <img
                                     alt="{{ $svc['title'] }}"
@@ -127,6 +123,12 @@
                                     src="{{ asset($svc['image']) }}"
                                 />
                             </div>
+                            <h3 class="font-title-md text-[15.5px] text-[#111827] font-bold mb-1">
+                                {{ $svc['title'] }}
+                            </h3>
+                            <p class="font-body-md text-[13px] text-[#4B5563]">
+                                {{ $svc['desc'] }}
+                            </p>
                             <div class="p-4 sm:p-5 pb-3">
                                 <h3 class="font-title-md text-[15.5px] text-[#111827] font-bold">
                                     {{ $svc['title'] }}
@@ -136,6 +138,10 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="mt-4 pt-3 border-t border-[#E5E7EB]/60 flex items-center justify-between">
+                            <span class="text-[11.5px] text-[#15803D] font-semibold">{{ $svc['count'] }}</span>
+                            <span class="inline-flex items-center gap-1 text-[12px] font-semibold text-[#111827] group-hover:text-[#16A34A] transition-colors">
+                                Detail <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
                         <div class="px-4 sm:px-5 pb-4 pt-1 flex items-center justify-between">
                             <span class="text-[13px] text-[#16A34A] font-bold">{{ $svc['price'] }}</span>
                             <span class="w-8 h-8 rounded-full bg-[#F0FDF4] text-[#16A34A] group-hover:bg-[#16A34A] group-hover:text-white flex items-center justify-center transition-colors duration-200">
@@ -158,10 +164,6 @@
         <section class="fh-reveal w-full max-w-[1140px] mx-auto px-gutter lg:px-margin py-space-xl" data-reveal>
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm mb-space-lg">
                 <div>
-                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D] text-[11.5px] font-semibold mb-2">
-                        <span class="material-symbols-outlined text-[14px]">engineering</span>
-                        Katalog Teknisi Terverifikasi
-                    </span>
                     <h2 class="font-headline-lg text-[24px] font-bold text-[#111827]">
                         Teknisi Siap Meluncur Hari Ini
                     </h2>
