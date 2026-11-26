@@ -32,13 +32,8 @@
             <!-- Hero Foreground Content -->
             <div class="relative z-10 w-full max-w-[1140px] mx-auto px-5 sm:px-8 pt-24 sm:pt-28 pb-14">
                 <div class="max-w-[540px] flex flex-col items-start">
-                    <!-- Pill Eyebrow -->
-                    <div class="fh-hero-anim inline-flex items-center px-3.5 py-1 rounded-full bg-[#DCFCE7]/95 text-[#15803D] font-label-md text-[12px] font-semibold tracking-tight" data-hero-step="1">
-                        Solusi Perbaikan Rumah Anda
-                    </div>
-
                     <!-- Two-Tone Display Headline -->
-                    <h1 class="fh-hero-anim font-headline-xl text-[30px] sm:text-[40px] lg:text-[44px] leading-[1.14] font-extrabold tracking-[-0.03em] mt-4" data-hero-step="2">
+                    <h1 class="fh-hero-anim font-headline-xl text-[30px] sm:text-[40px] lg:text-[44px] leading-[1.14] font-extrabold tracking-[-0.03em]" data-hero-step="1">
                         <span class="block text-[#16A34A]">Perbaikan Rumah Tuntas,</span>
                         <span class="block text-[#111827]">Material Tepat Tanpa Ribet</span>
                     </h1>
