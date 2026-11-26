@@ -6,10 +6,6 @@
             <!-- Header Section -->
             <div class="neu-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-space-lg">
                 <div>
-                    <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full neu-pill text-secondary font-label-sm font-semibold mb-1.5 font-lucy-rose">
-                        <span class="material-symbols-outlined text-[14px] text-tertiary">receipt_long</span>
-                        <span>Aktivitas Servis Rumah</span>
-                    </div>
                     <h1 class="font-headline-md text-headline-md text-primary font-bold font-recoleta leading-tight">Aktivitas &amp; Riwayat Pesanan</h1>
                     <p class="font-body-sm text-on-surface-variant mt-0.5">Pantau status teknisi, chat langsung, dan riwayat perbaikan rumah Anda</p>
                 </div>
