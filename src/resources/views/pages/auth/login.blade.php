@@ -57,12 +57,73 @@
                         <span id="login-alert-text" class="leading-relaxed">{{ $serverAlert }}</span>
                     </div>
 
+                    <form id="login-form" action="{{ route('login') }}" method="POST" novalidate class="space-y-3.5">
+                        @csrf
+
+                        <div>
+                            <label for="email" class="block text-[12.5px] font-semibold text-[#374151] mb-1.5">
+                                Alamat Gmail
+                            </label>
+                            <div id="email-wrap" class="flex items-center rounded-xl bg-white border border-[#D1D5DB] px-3.5 py-2.5 focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#16A34A]/10 transition-all {{ ($errors->has('email') || $errors->has('auth')) ? 'border-[#EF4444] ring-2 ring-[#EF4444]/15' : '' }}">
+                                <span class="material-symbols-outlined text-[#9CA3AF] text-[18px] mr-2.5">mail</span>
+                                <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
+                                    class="w-full bg-transparent text-[13.5px] text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none"
+                                    placeholder="nama@gmail.com">
+                            </div>
+                            <p id="email-error" class="{{ $errors->has('email') ? '' : 'hidden' }} mt-1 text-[11.5px] font-medium text-[#DC2626] flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">info</span>
+                                <span id="email-error-text">{{ $errors->first('email') }}</span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label for="password" class="block text-[12.5px] font-semibold text-[#374151]">
+                                    Kata Sandi
+                                </label>
+                                <a href="{{ route('public.cara-kerja') }}" class="text-[12px] font-medium text-[#16A34A] hover:underline">Butuh bantuan?</a>
+                            </div>
+                            <div id="password-wrap" class="flex items-center rounded-xl bg-white border border-[#D1D5DB] px-3.5 py-2.5 focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#16A34A]/10 transition-all {{ ($errors->has('password') || $errors->has('auth')) ? 'border-[#EF4444] ring-2 ring-[#EF4444]/15' : '' }}">
+                                <span class="material-symbols-outlined text-[#9CA3AF] text-[18px] mr-2.5">lock</span>
+                                <input type="password" id="password" name="password" required
+                                    class="w-full bg-transparent text-[13.5px] text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none"
+                                    placeholder="Masukkan kata sandi">
+                                <button type="button" onclick="togglePassword()" aria-label="Tampilkan kata sandi" class="text-[#9CA3AF] hover:text-[#4B5563] transition-colors ml-2 flex items-center">
+                                    <span id="password-eye" class="material-symbols-outlined text-[18px]">visibility</span>
+                                </button>
+                            </div>
+                            <p id="password-error" class="{{ $errors->has('password') ? '' : 'hidden' }} mt-1 text-[11.5px] font-medium text-[#DC2626] flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">info</span>
+                                <span id="password-error-text">{{ $errors->first('password') }}</span>
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-0.5">
+                            <label class="inline-flex items-center gap-2 cursor-pointer text-[12.5px] text-[#4B5563]">
+                                <input type="checkbox" name="remember" class="w-4 h-4 rounded border-[#D1D5DB] text-[#16A34A] focus:ring-[#16A34A] accent-[#16A34A]">
+                                <span>Ingat saya</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full py-2.5 px-5 rounded-xl bg-[#16A34A] hover:bg-[#15803D] text-white text-[13.5px] font-semibold shadow-[0_6px_16px_rgba(22,163,74,0.22)] active:scale-[0.99] transition-all inline-flex items-center justify-center gap-2">
+                            <span>Masuk</span>
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        </button>
+                    </form>
+
+                    <!-- Divider -->
+                    <div class="relative my-4 flex items-center">
+                        <div class="flex-grow border-t border-[#E5E7EB]"></div>
+                        <span class="mx-3 text-[11px] font-medium text-[#9CA3AF]">atau</span>
+                        <div class="flex-grow border-t border-[#E5E7EB]"></div>
+                    </div>
+
                     <!-- Official Google Sign-In CTA -->
                     <a
                         href="{{ route('auth.google') }}"
-                        class="w-full py-3 px-5 rounded-xl bg-white hover:bg-[#F8FAFC] border border-[#D1D5DB] hover:border-[#16A34A] text-[#111827] text-[13.5px] font-semibold shadow-xs active:scale-[0.99] transition-all inline-flex items-center justify-center gap-3"
+                        class="w-full py-2.5 px-5 rounded-xl bg-white hover:bg-[#F8FAFC] border border-[#D1D5DB] hover:border-[#16A34A] text-[#111827] text-[13px] font-semibold shadow-xs active:scale-[0.99] transition-all inline-flex items-center justify-center gap-2.5"
                     >
-                        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
                             <path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
                             <path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.565 24 12.255 24z"/>
                             <path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 000 10.76l3.98-3.09z"/>
@@ -70,76 +131,9 @@
                         </svg>
                         <span>Lanjutkan dengan Google</span>
                     </a>
-
-                    @if (empty($googleOAuthEnabled))
-                        <div class="relative my-4 flex items-center">
-                            <div class="flex-grow border-t border-[#E5E7EB]"></div>
-                            <span class="mx-3 text-[11px] font-medium text-[#9CA3AF]">atau masuk dengan Gmail</span>
-                            <div class="flex-grow border-t border-[#E5E7EB]"></div>
-                        </div>
-
-                        <form id="login-form" action="{{ route('login') }}" method="POST" novalidate class="space-y-3.5">
-                            @csrf
-
-                            <div>
-                                <label for="email" class="block text-[12.5px] font-semibold text-[#374151] mb-1.5">
-                                    Alamat Gmail
-                                </label>
-                                <div id="email-wrap" class="flex items-center rounded-xl bg-white border border-[#D1D5DB] px-3.5 py-2.5 focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#16A34A]/10 transition-all {{ ($errors->has('email') || $errors->has('auth')) ? 'border-[#EF4444] ring-2 ring-[#EF4444]/15' : '' }}">
-                                    <span class="material-symbols-outlined text-[#9CA3AF] text-[18px] mr-2.5">mail</span>
-                                    <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
-                                        class="w-full bg-transparent text-[13.5px] text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none"
-                                        placeholder="nama@gmail.com">
-                                </div>
-                                <p id="email-error" class="{{ $errors->has('email') ? '' : 'hidden' }} mt-1 text-[11.5px] font-medium text-[#DC2626] flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[14px]">info</span>
-                                    <span id="email-error-text">{{ $errors->first('email') }}</span>
-                                </p>
-                            </div>
-
-                            <div>
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <label for="password" class="block text-[12.5px] font-semibold text-[#374151]">
-                                        Kata Sandi
-                                    </label>
-                                    <a href="{{ route('public.cara-kerja') }}" class="text-[12px] font-medium text-[#16A34A] hover:underline">Butuh bantuan?</a>
-                                </div>
-                                <div id="password-wrap" class="flex items-center rounded-xl bg-white border border-[#D1D5DB] px-3.5 py-2.5 focus-within:border-[#16A34A] focus-within:ring-4 focus-within:ring-[#16A34A]/10 transition-all {{ ($errors->has('password') || $errors->has('auth')) ? 'border-[#EF4444] ring-2 ring-[#EF4444]/15' : '' }}">
-                                    <span class="material-symbols-outlined text-[#9CA3AF] text-[18px] mr-2.5">lock</span>
-                                    <input type="password" id="password" name="password" required
-                                        class="w-full bg-transparent text-[13.5px] text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none"
-                                        placeholder="Masukkan kata sandi">
-                                    <button type="button" onclick="togglePassword()" aria-label="Tampilkan kata sandi" class="text-[#9CA3AF] hover:text-[#4B5563] transition-colors ml-2 flex items-center">
-                                        <span id="password-eye" class="material-symbols-outlined text-[18px]">visibility</span>
-                                    </button>
-                                </div>
-                                <p id="password-error" class="{{ $errors->has('password') ? '' : 'hidden' }} mt-1 text-[11.5px] font-medium text-[#DC2626] flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[14px]">info</span>
-                                    <span id="password-error-text">{{ $errors->first('password') }}</span>
-                                </p>
-                            </div>
-
-                            <div class="flex items-center justify-between pt-0.5">
-                                <label class="inline-flex items-center gap-2 cursor-pointer text-[12.5px] text-[#4B5563]">
-                                    <input type="checkbox" name="remember" class="w-4 h-4 rounded border-[#D1D5DB] text-[#16A34A] focus:ring-[#16A34A] accent-[#16A34A]">
-                                    <span>Ingat saya</span>
-                                </label>
-                            </div>
-
-                            <button type="submit" class="w-full py-3 px-5 rounded-xl bg-[#16A34A] hover:bg-[#15803D] text-white text-[13.5px] font-semibold shadow-[0_6px_16px_rgba(22,163,74,0.22)] active:scale-[0.99] transition-all inline-flex items-center justify-center gap-2">
-                                <span>Masuk dengan Gmail</span>
-                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                            </button>
-                        </form>
-                    @else
-                        <div class="mt-5 p-4 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] text-[12.5px] text-[#4B5563] leading-relaxed">
-                            <p class="font-semibold text-[#111827] mb-1">Akses Aman Khusus Akun Google</p>
-                            <p>Untuk mencegah akun dummy dan memastikan invoice pembayaran terkirim langsung ke Gmail aktif Anda, login FixHome hanya menggunakan verifikasi akun Google resmi.</p>
-                        </div>
-                    @endif
                 </div>
 
-                <div class="pt-5 text-center text-[12.5px] text-[#6B7280]">
+                <div class="pt-4 text-center text-[12.5px] text-[#6B7280]">
                     Belum punya akun?
                     <a href="{{ route('register') }}" class="font-semibold text-[#16A34A] hover:underline ml-1">Daftar dengan Gmail</a>
                 </div>

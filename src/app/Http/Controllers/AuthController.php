@@ -39,12 +39,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if ($this->isGoogleOAuthEnabled()) {
-            return redirect()->route('login')->withErrors([
-                'auth' => 'Silakan masuk menggunakan tombol "Lanjutkan dengan Google" di bawah ini.',
-            ]);
-        }
-
         $credentials = $request->validate([
             'email' => ['required', 'email', 'regex:/^[A-Za-z0-9._%+-]+@gmail\.com$/i'],
             'password' => ['required'],
