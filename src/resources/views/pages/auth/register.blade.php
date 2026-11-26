@@ -69,10 +69,10 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-[12.5px] font-semibold text-[#374151] mb-1.5">Email</label>
-                                <input type="email" name="email" value="{{ old('email') }}" required
+                                <label class="block text-[12.5px] font-semibold text-[#374151] mb-1.5">Alamat Gmail (@gmail.com)</label>
+                                <input type="email" name="email" value="{{ old('email') }}" required pattern="^[A-Za-z0-9._%+-]+@gmail\.com$" title="Gunakan alamat Gmail aktif (@gmail.com)"
                                     class="w-full rounded-xl bg-white border border-[#D1D5DB] px-3.5 py-2.5 text-[13.5px] text-[#111827] placeholder:text-[#9CA3AF] focus:border-[#16A34A] focus:ring-4 focus:ring-[#16A34A]/10 focus:outline-none transition-all"
-                                    placeholder="nama@email.com">
+                                    placeholder="nama@gmail.com">
                             </div>
                             <div>
                                 <label class="block text-[12.5px] font-semibold text-[#374151] mb-1.5">No. WhatsApp</label>
