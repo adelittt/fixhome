@@ -544,7 +544,13 @@
                     const s = await r.json();
                     if (s.paid && s.redirect_url) {
                         clearInterval(pollTimer);
-                        window.location.href = s.redirect_url;
+                        const toast = document.createElement('div');
+                        toast.className = 'fixed top-6 right-6 z-[999] max-w-sm rounded-2xl bg-[#16A34A] text-white px-5 py-4 shadow-2xl flex items-start gap-3';
+                        toast.innerHTML = '<span class="material-symbols-outlined text-[22px] shrink-0">check_circle</span><div class="text-xs leading-relaxed"><strong class="block text-[13px] mb-0.5">Pembayaran Berhasil!</strong><span>' + (s.message || 'Invoice resmi sudah dikirim ke Gmail kamu. Mengalihkan ke halaman Invoice...') + '</span></div>';
+                        document.body.appendChild(toast);
+                        setTimeout(() => {
+                            window.location.href = s.redirect_url;
+                        }, 1300);
                     }
                 } catch (e) {}
             }, 5000);

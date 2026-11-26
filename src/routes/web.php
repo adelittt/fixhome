@@ -60,6 +60,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payment/{bookingId}', [BookingController::class, 'processPayment'])->name('booking.process-payment');
     Route::post('/payment/{bookingId}/midtrans/snap', [BookingController::class, 'createMidtransSnap'])->name('booking.midtrans-snap');
     Route::get('/payment/{bookingId}/midtrans/status', [BookingController::class, 'checkMidtransStatus'])->name('booking.midtrans-status');
+    Route::get('/invoice/{bookingId}', [BookingController::class, 'showInvoice'])->name('booking.invoice');
+    Route::post('/invoice/{bookingId}/resend', [BookingController::class, 'resendInvoiceEmail'])->name('booking.invoice-resend');
     Route::post('/review/{bookingId}', [FieldController::class, 'submitReview'])->name('review.submit');
 
     // Field Tracking & Chat

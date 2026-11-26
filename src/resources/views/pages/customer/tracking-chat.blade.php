@@ -50,6 +50,10 @@
                         </div>
                     @else
                         <div id="customer-action-box" class="flex items-center gap-2">
+                            <a href="{{ route('booking.invoice', $booking->id) }}" class="neu-pill px-3.5 py-2 text-[11px] font-bold text-[#15803D] hover:border-[#16A34A] transition-all inline-flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[15px]">receipt_long</span>
+                                <span>Lihat Invoice</span>
+                            </a>
                             <button type="button" onclick="simulateTeknisiBerangkat()" class="neu-pill px-3.5 py-2 text-[11px] font-bold text-primary hover:-translate-y-0.5 transition-all" title="Klik ini jika ingin menguji saat teknisi menekan tombol OTW">
                                 <span>⚡ Uji Teknisi Tekan OTW</span>
                             </button>

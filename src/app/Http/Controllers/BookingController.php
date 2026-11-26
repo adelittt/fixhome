@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentInvoiceMail;
 use App\Models\Booking;
 use App\Models\ChatMessage;
 use App\Models\PelacakanLokasi;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
@@ -393,12 +395,18 @@ class BookingController extends Controller
             }
 
             if ($transaksi->isPaid()) {
+                $customerEmail = $booking->customer?->user?->email ?? Auth::user()->email;
+                $invoiceNumber = 'INV-FH-' . str_pad((string) $booking->id, 5, '0', STR_PAD_LEFT);
                 if ($request->wantsJson()) {
-                    return response()->json(['paid' => true, 'redirect_url' => route('tracking.chat', $booking->id)]);
+                    return response()->json([
+                        'paid' => true,
+                        'redirect_url' => route('booking.invoice', $booking->id),
+                        'message' => "Pembayaran berhasil! Invoice {$invoiceNumber} sudah dikirim ke Gmail ({$customerEmail}).",
+                    ]);
                 }
 
-                return redirect()->route('tracking.chat', $booking->id)
-                    ->with('success', 'Pembayaran sudah terverifikasi!');
+                return redirect()->route('booking.invoice', $booking->id)
+                    ->with('success', "Pembayaran berhasil! Invoice resmi {$invoiceNumber} sudah terkirim ke Gmail kamu ({$customerEmail}).");
             }
 
             $serverKey = (string) config('services.midtrans.server_key');
@@ -437,13 +445,19 @@ class BookingController extends Controller
 
             if ($trxStatus === 'settlement' || ($trxStatus === 'capture' && $fraudStatus === 'accept')) {
                 $this->markBookingAsPaid($booking, $transaksi, $this->formatMidtransPaymentMethod($paymentType), $transactionId);
+                $customerEmail = $booking->customer?->user?->email ?? Auth::user()->email;
+                $invoiceNumber = 'INV-FH-' . str_pad((string) $booking->id, 5, '0', STR_PAD_LEFT);
 
                 if ($request->wantsJson()) {
-                    return response()->json(['paid' => true, 'redirect_url' => route('tracking.chat', $booking->id)]);
+                    return response()->json([
+                        'paid' => true,
+                        'redirect_url' => route('booking.invoice', $booking->id),
+                        'message' => "Pembayaran berhasil! Invoice {$invoiceNumber} otomatis dikirim ke Gmail ({$customerEmail}).",
+                    ]);
                 }
 
-                return redirect()->route('tracking.chat', $booking->id)
-                    ->with('success', 'Pembayaran Midtrans berhasil diverifikasi! Menunggu teknisi berangkat ke lokasi Anda.');
+                return redirect()->route('booking.invoice', $booking->id)
+                    ->with('success', "Pembayaran berhasil! Invoice resmi {$invoiceNumber} otomatis terkirim ke Gmail kamu ({$customerEmail}).");
             }
 
             if ($request->wantsJson()) {
@@ -544,14 +558,68 @@ class BookingController extends Controller
         );
 
         $this->markBookingAsPaid($booking, $transaksi, $validated['payment_method'], 'PG-SIM-' . time());
+        $customerEmail = $booking->customer?->user?->email ?? Auth::user()->email;
+        $invoiceNumber = 'INV-FH-' . str_pad((string) $booking->id, 5, '0', STR_PAD_LEFT);
 
-        return redirect()->route('tracking.chat', $booking->id)
-            ->with('success', 'Pembayaran berhasil diverifikasi! Menunggu teknisi berangkat ke lokasi Anda.');
+        return redirect()->route('booking.invoice', $booking->id)
+            ->with('success', "Pembayaran berhasil! Invoice resmi {$invoiceNumber} otomatis terkirim ke Gmail kamu ({$customerEmail}).");
+    }
+
+    public function showInvoice(int $bookingId)
+    {
+        $booking = Booking::with(['customer.user', 'teknisi.user', 'transaksi'])->findOrFail($bookingId);
+        $user = Auth::user();
+
+        $isOwnerCustomer = $user->customer && $booking->customer_id === $user->customer->id;
+        $isAssignedTeknisi = $user->teknisi && $booking->teknisi_id === $user->teknisi->id;
+        if (!$isOwnerCustomer && !$isAssignedTeknisi && !$user->isAdmin()) {
+            abort(403, 'Akses invoice tidak diizinkan.');
+        }
+
+        $transaksi = $booking->transaksi;
+        if (!$transaksi || !$transaksi->isPaid()) {
+            return redirect()->route('booking.payment', $booking->id)
+                ->with('error', 'Invoice baru tersedia setelah pembayaran berhasil diverifikasi.');
+        }
+
+        $invoiceNumber = 'INV-FH-' . str_pad((string) $booking->id, 5, '0', STR_PAD_LEFT);
+        $customerEmail = $booking->customer?->user?->email ?? $user->email;
+
+        return view('pages.customer.invoice', compact('booking', 'transaksi', 'invoiceNumber', 'customerEmail'));
+    }
+
+    public function resendInvoiceEmail(int $bookingId)
+    {
+        $booking = Booking::with(['customer.user', 'teknisi.user', 'transaksi'])->findOrFail($bookingId);
+        $user = Auth::user();
+
+        if (!$user->isAdmin() && (!$user->customer || $booking->customer_id !== $user->customer->id)) {
+            abort(403, 'Akses tidak diizinkan.');
+        }
+
+        $transaksi = $booking->transaksi;
+        if (!$transaksi || !$transaksi->isPaid()) {
+            return redirect()->route('booking.payment', $booking->id)
+                ->with('error', 'Pembayaran belum lunas.');
+        }
+
+        $customerEmail = $booking->customer?->user?->email ?? $user->email;
+        $sent = $this->sendInvoiceEmail($booking, $transaksi);
+
+        if ($sent) {
+            return redirect()->route('booking.invoice', $booking->id)
+                ->with('success', "Invoice resmi berhasil dikirim ulang ke Gmail kamu ({$customerEmail}).");
+        }
+
+        return redirect()->route('booking.invoice', $booking->id)
+            ->with('error', 'Gagal mengirim email invoice. Pastikan konfigurasi SMTP Gmail (MAIL_USERNAME & MAIL_PASSWORD) sudah aktif.');
     }
 
     private function markBookingAsPaid(Booking $booking, Transaksi $transaksi, string $paymentMethod, string $gatewayRef): void
     {
-        if (!$transaksi->isPaid()) {
+        $wasUnpaid = !$transaksi->isPaid();
+
+        if ($wasUnpaid) {
             $transaksi->update([
                 'status_pembayaran' => 'paid',
                 'payment_method' => Str::limit($paymentMethod, 100, ''),
@@ -582,6 +650,32 @@ class BookingController extends Controller
                 'current_lng' => 106.8230,
                 'is_active' => true,
             ]);
+        }
+
+        if ($wasUnpaid) {
+            $this->sendInvoiceEmail($booking, $transaksi);
+        }
+    }
+
+    private function sendInvoiceEmail(Booking $booking, Transaksi $transaksi): bool
+    {
+        try {
+            $booking->loadMissing(['customer.user', 'teknisi']);
+            $recipientEmail = $booking->customer?->user?->email;
+            if (!$recipientEmail) {
+                return false;
+            }
+
+            Mail::to($recipientEmail)->send(new PaymentInvoiceMail($booking, $transaksi));
+
+            return true;
+        } catch (\Throwable $e) {
+            Log::warning('Failed to send payment invoice email', [
+                'booking_id' => $booking->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return false;
         }
     }
 
