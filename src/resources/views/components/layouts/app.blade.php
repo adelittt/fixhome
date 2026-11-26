@@ -119,6 +119,18 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div id="session-error-banner" class="max-w-md lg:max-w-4xl mx-auto w-full px-4 pt-4 z-40">
+                <div class="rounded-2xl bg-[#FEF2F2] border border-[#FECACA] text-[#991B1B] text-xs font-semibold px-5 py-3.5 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2.5">
+                        <span class="material-symbols-outlined text-[#EF4444] text-[20px] shrink-0">error</span>
+                        <span>{{ session('error') }}</span>
+                    </div>
+                    <button type="button" onclick="document.getElementById('session-error-banner').remove()" class="text-[#991B1B]/70 hover:text-[#991B1B] text-base font-bold px-1">&times;</button>
+                </div>
+            </div>
+        @endif
+
         @if($errors->any() && !request()->routeIs('login'))
             <div id="error-banner" class="max-w-md lg:max-w-4xl mx-auto w-full px-4 pt-4 z-40">
                 <div class="neu-card-sm bg-error-container text-on-error-container text-xs font-semibold px-5 py-3.5 flex items-center justify-between gap-3">
