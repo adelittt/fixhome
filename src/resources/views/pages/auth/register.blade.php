@@ -134,6 +134,18 @@
                             </div>
                         </div>
 
+                        <!-- Persetujuan Pelindungan Data Pribadi (UU PDP) -->
+                        <label class="flex items-start gap-2.5 p-3 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] cursor-pointer">
+                            <input type="checkbox" name="privacy_consent" value="1" {{ old('privacy_consent') ? 'checked' : '' }} required
+                                class="mt-0.5 h-4 w-4 rounded border-[#D1D5DB] text-[#16A34A] focus:ring-[#16A34A] shrink-0">
+                            <span class="text-[11.5px] leading-relaxed text-[#4B5563]">
+                                Saya menyetujui <strong class="text-[#111827]">Kebijakan Privasi &amp; Pelindungan Data Pribadi (UU PDP)</strong> FixHome. Nomor HP, alamat, dan data identitas saya dienkripsi (AES-256) dan hanya digunakan untuk kebutuhan layanan servis.
+                            </span>
+                        </label>
+                        @error('privacy_consent')
+                            <p class="text-[11.5px] text-red-600 font-medium -mt-2">{{ $message }}</p>
+                        @enderror
+
                         <button type="submit" class="w-full py-3 px-5 rounded-xl bg-[#16A34A] hover:bg-[#15803D] text-white text-[13.5px] font-semibold shadow-[0_6px_16px_rgba(22,163,74,0.22)] active:scale-[0.99] transition-all inline-flex items-center justify-center gap-2">
                             <span>Daftar Sekarang</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>

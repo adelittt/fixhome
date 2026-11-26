@@ -174,6 +174,7 @@ class AuthController extends Controller
                     'role' => 'customer',
                     'password' => Hash::make(Str::random(32)),
                     'email_verified_at' => now(),
+                    'privacy_consent_at' => now(),
                 ]);
                 $user->assignRole('customer');
 
@@ -215,10 +216,12 @@ class AuthController extends Controller
             'tarif_dasar' => ['required_if:role,teknisi', 'nullable', 'numeric', 'min:10000'],
             'no_ktp' => ['nullable', 'string', 'max:30'],
             'sertifikasi' => ['nullable', 'string', 'max:255'],
+            'privacy_consent' => ['accepted'],
         ], [
             'email.regex' => 'Hanya alamat Gmail (@gmail.com) yang diperbolehkan untuk mendaftar.',
             'tarif_dasar.required_if' => 'Tarif dasar jasa wajib diisi untuk Mitra Teknisi.',
             'tarif_dasar.min' => 'Tarif dasar jasa minimal Rp 10.000 (tidak boleh Rp 0).',
+            'privacy_consent.accepted' => 'Anda wajib menyetujui Kebijakan Privasi & Pelindungan Data Pribadi (UU PDP) untuk mendaftar.',
         ]);
 
         $user = User::create([
@@ -227,6 +230,7 @@ class AuthController extends Controller
             'no_telepon' => $validated['no_telepon'],
             'role' => $validated['role'],
             'password' => Hash::make($validated['password']),
+            'privacy_consent_at' => now(),
         ]);
 
         $user->assignRole($validated['role']);

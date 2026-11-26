@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\SafeEncrypted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,7 @@ class Customer extends Model
     ];
 
     protected $casts = [
+        'alamat_lengkap' => SafeEncrypted::class,
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
         'is_address_completed' => 'boolean',

@@ -74,6 +74,18 @@
                                 <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">tips_and_updates</span>
                                 <span><strong>Tips:</strong> Ketik alamat di kolom cari pada peta atau klik langsung di area peta mana saja untuk memindahkan pin penanda secara presisi.</span>
                             </div>
+
+                            <!-- Persetujuan Privasi Lokasi (UU PDP) -->
+                            <label class="flex items-start gap-2.5 p-3.5 rounded-2xl bg-white border border-[#E5E7EB] cursor-pointer">
+                                <input type="checkbox" name="address_consent" value="1" checked required
+                                    class="mt-0.5 h-4 w-4 rounded border-[#D1D5DB] text-[#16A34A] focus:ring-[#16A34A] shrink-0">
+                                <span class="text-[11.5px] leading-relaxed text-[#4B5563]">
+                                    <strong class="text-[#111827]">Perlindungan Data Pribadi (UU PDP):</strong> Alamat rumah Anda disimpan terenkripsi (AES-256) dan hanya ditampilkan kepada teknisi yang menangani pesanan aktif Anda.
+                                </span>
+                            </label>
+                            @error('address_consent')
+                                <p class="text-xs text-red-600 font-semibold">{{ $message }}</p>
+                            @enderror
                         </form>
                     </div>
 

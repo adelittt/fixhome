@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\SafeEncrypted;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,7 +52,12 @@ class Teknisi extends Model
         return asset("images/technicians/teknisi-{$index}.jpg");
     }
 
+    protected $hidden = [
+        'no_ktp',
+    ];
+
     protected $casts = [
+        'no_ktp' => SafeEncrypted::class,
         'tarif_dasar' => 'decimal:2',
         'rating' => 'decimal:2',
         'off_start_date' => 'datetime',

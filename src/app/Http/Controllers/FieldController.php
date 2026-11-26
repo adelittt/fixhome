@@ -13,20 +13,26 @@ use Illuminate\Support\Facades\Http;
 
 class FieldController extends Controller
 {
+    private function authorizeBookingParticipant(Booking $booking): array
+    {
+        $currentUser = Auth::user();
+        $isCustomer = $currentUser->customer && $currentUser->customer->id === $booking->customer_id;
+        $isTeknisi = $currentUser->teknisi && $currentUser->teknisi->id === $booking->teknisi_id;
+        $isAdmin = $currentUser->role === 'admin' || $currentUser->isAdmin();
+
+        if (!$isCustomer && !$isTeknisi && !$isAdmin) {
+            abort(403, 'Akses tidak diizinkan.');
+        }
+
+        return [$isCustomer, $isTeknisi, $isAdmin];
+    }
+
     public function showTrackingChat(int $bookingId)
     {
         $booking = Booking::with(['customer.user', 'teknisi.user', 'transaksi', 'chatMessages.sender', 'latestPelacakan', 'ulasan'])
             ->findOrFail($bookingId);
 
-        $currentUser = Auth::user();
-
-        // Validasi akses (hanya customer atau teknisi yang terlibat)
-        $isCustomer = $currentUser->customer && $currentUser->customer->id === $booking->customer_id;
-        $isTeknisi = $currentUser->teknisi && $currentUser->teknisi->id === $booking->teknisi_id;
-
-        if (!$isCustomer && !$isTeknisi && $currentUser->role !== 'admin') {
-            abort(403, 'Akses tidak diizinkan.');
-        }
+        [$isCustomer, $isTeknisi] = $this->authorizeBookingParticipant($booking);
 
         // Cek klausul BR-03: Chat hanya boleh aktif setelah pembayaran lunas
         $chatAllowed = $booking->canChat();
@@ -38,6 +44,7 @@ class FieldController extends Controller
     public function sendChatMessage(int $bookingId, Request $request)
     {
         $booking = Booking::findOrFail($bookingId);
+        $this->authorizeBookingParticipant($booking);
 
         // Klausul BR-03: Tolak chat jika belum dibayar
         if (!$booking->canChat()) {
@@ -69,6 +76,7 @@ class FieldController extends Controller
     public function fetchChatMessages(int $bookingId)
     {
         $booking = Booking::findOrFail($bookingId);
+        $this->authorizeBookingParticipant($booking);
 
         if (!$booking->canChat()) {
             return response()->json(['messages' => []]);
@@ -88,16 +96,20 @@ class FieldController extends Controller
     public function fetchGpsLocation(int $bookingId)
     {
         $booking = Booking::with('customer')->findOrFail($bookingId);
+        [$isCustomer, $isTeknisi, $isAdmin] = $this->authorizeBookingParticipant($booking);
 
         $location = PelacakanLokasi::where('booking_id', $bookingId)
             ->latest()
             ->first();
 
+        // Pembatasan akses lokasi (UU PDP): teknisi hanya dapat mengakses koordinat rumah customer selama pesanan aktif
+        $canViewCustomerCoords = $isCustomer || $isAdmin || ($isTeknisi && in_array($booking->status_order, ['paid', 'otw', 'working']));
+
         return response()->json([
             'technician_lat' => $location ? (float) $location->current_lat : -6.2190,
             'technician_lng' => $location ? (float) $location->current_lng : 106.8230,
-            'customer_lat' => $booking->customer ? (float) $booking->customer->latitude : -6.2155,
-            'customer_lng' => $booking->customer ? (float) $booking->customer->longitude : 106.8205,
+            'customer_lat' => $canViewCustomerCoords && $booking->customer ? (float) $booking->customer->latitude : null,
+            'customer_lng' => $canViewCustomerCoords && $booking->customer ? (float) $booking->customer->longitude : null,
             'status' => $booking->status_order,
             'status_order' => $booking->status_order,
             'is_otw' => in_array($booking->status_order, ['otw', 'working', 'completed']),
@@ -108,6 +120,8 @@ class FieldController extends Controller
 
     public function updateGpsLocation(int $bookingId, Request $request)
     {
+        $booking = Booking::findOrFail($bookingId);
+        $this->authorizeBookingParticipant($booking);
         $validated = $request->validate([
             'current_lat' => ['required', 'numeric'],
             'current_lng' => ['required', 'numeric'],

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Casts\SafeEncrypted;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -30,6 +31,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'password',
         'role',
         'no_telepon',
+        'privacy_consent_at',
     ];
 
     /**
@@ -51,7 +53,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return [
             'email_verified_at' => 'datetime',
+            'privacy_consent_at' => 'datetime',
             'password' => 'hashed',
+            'no_telepon' => SafeEncrypted::class,
         ];
     }
 

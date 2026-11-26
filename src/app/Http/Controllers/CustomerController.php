@@ -149,13 +149,21 @@ class CustomerController extends Controller
             'alamat_lengkap' => ['required', 'string', 'min:5'],
             'latitude' => ['required', 'numeric'],
             'longitude' => ['required', 'numeric'],
+            'address_consent' => ['accepted'],
+        ], [
+            'address_consent.accepted' => 'Anda wajib menyetujui penyimpanan alamat & titik koordinat terenkripsi sesuai UU PDP.',
         ]);
 
-        $customer = Auth::user()->customer;
+        $user = Auth::user();
+        if (!$user->privacy_consent_at) {
+            $user->update(['privacy_consent_at' => now()]);
+        }
+
+        $customer = $user->customer;
         if (!$customer) {
             $customer = Customer::create([
-                'user_id' => Auth::id(),
-                'nama_lengkap' => Auth::user()->name,
+                'user_id' => $user->id,
+                'nama_lengkap' => $user->name,
             ]);
         }
 
@@ -166,7 +174,7 @@ class CustomerController extends Controller
             'is_address_completed' => true,
         ]);
 
-        return redirect()->route('customer.home')->with('success', 'Alamat rumah berhasil disimpan!');
+        return redirect()->route('customer.home')->with('success', 'Alamat rumah berhasil disimpan & dienkripsi dengan aman!');
     }
 
     public function home()
