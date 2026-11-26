@@ -34,10 +34,6 @@
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                 <div class="flex items-center gap-2 justify-center sm:justify-start flex-wrap">
                                     <h1 class="font-headline-md text-headline-md text-primary font-bold font-recoleta">{{ $technician->nama_lengkap }}</h1>
-                                    <span class="inline-flex items-center gap-1 px-3 py-0.5 bg-secondary-container text-primary rounded-full text-[11px] font-bold" title="Identitas KTP & Kompetensi Terverifikasi Admin">
-                                        <span class="material-symbols-outlined text-[14px] text-tertiary">verified</span>
-                                        <span>Terverifikasi</span>
-                                    </span>
                                 </div>
                                 <span class="inline-flex items-center px-3.5 py-1 neu-inset-sm text-xs font-bold text-primary">
                                     {{ $technician->keahlian }}

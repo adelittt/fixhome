@@ -11,10 +11,6 @@
                             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                         </a>
                         <div>
-                            <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full neu-pill text-secondary font-label-sm font-semibold mb-1.5 font-lucy-rose">
-                                <span class="material-symbols-outlined text-[14px] text-tertiary">verified</span>
-                                <span>Radius Geospasial Aktif</span>
-                            </div>
                             <h1 class="font-headline-md text-headline-md text-primary font-bold font-recoleta leading-tight">Daftar Teknisi Siap Kerja (Ready)</h1>
                         </div>
                     </div>
